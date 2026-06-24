@@ -1,35 +1,277 @@
-* { box-sizing: border-box; }
 body {
-    background-color: #121214;
+    background-color: #121212;
     color: #e0e0e0;
-    font-family: 'Pretendard', 'Arial', sans-serif;
+    
+    /* 여기서 font-family를 'Noto Sans'로 바꿉니다 */
+    font-family: 'Noto Sans', sans-serif; 
+    
     margin: 0;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
+    padding: 0; /* 아까 말씀드린 대로 패딩은 0으로! */
 }
-.game-container { width: 100%; max-width: 500px; padding: 20px; }
 
-/* 탭 스타일 */
-.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-.tab-btn { flex: 1; padding: 12px; background: #1e1e24; color: #888; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+/* 2. 새롭게 추가할 컨테이너 (중앙 정렬 핵심) */
+.game-container {
+    max-width: 800px; /* 게임의 최대 가로 폭 */
+    margin: 0 auto;   /* 화면 중앙 정렬 */
+    padding: 20px;    /* 게임 내부의 적당한 여백 */
+    box-sizing: border-box; /* 중요: 패딩이 너비를 밀어내지 않게 함 */
+}
+
+.small-sell-btn {
+    padding: 5px 12px;           /* 버튼 크기를 조금 더 확보하여 클릭하기 쉽게 함 */
+    background-color: #2f80ed;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;             /* 마우스 올렸을 때 손가락 모양 */
+    transition: all 0.2s ease;   /* 부드러운 전환 효과 */
+    font-weight: bold;           /* 텍스트 가독성 향상 */
+    font-size: 13px;
+}
+
+.small-sell-btn:disabled {
+    background-color: #333;      /* 배경색을 더 어둡게 하여 비활성화 느낌 강조 */
+    color: #666;
+    cursor: not-allowed;         /* 클릭 불가능한 느낌의 커서 */
+    opacity: 0.7;                /* 살짝 투명하게 */
+}
+
+.small-sell-btn:hover:not(:disabled) {
+    background-color: #3b8cf5;   /* 약간 더 밝은 파란색 */
+    box-shadow: 0 0 8px rgba(47, 128, 237, 0.5); /* 게임의 다른 glow 효과와 맞춤 */
+    transform: translateY(-1px); /* 살짝 떠오르는 느낌 */
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #d32f2f, #8b0000); /* 진한 빨간색 그라데이션 */
+    color: white;
+    border: 2px solid #5e0000;
+    padding: 12px 20px;
+    font-weight: bold;
+    text-transform: uppercase; /* 대문자로 강한 느낌 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(211, 47, 47, 0.4); /* 희미한 붉은 광채 */
+    border-radius: 4px;
+}
+
+/* 마우스를 올렸을 때: 훨씬 더 위험하게 */
+.btn-danger:hover {
+    background: #ff1a1a;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); /* 강렬한 붉은 빛 */
+    transform: scale(1.05); /* 살짝 커짐 */
+    animation: shake 0.2s infinite; /* 떨리는 애니메이션 추가 */
+}
+
+/* 버튼이 떨리는 애니메이션 (긴장감 조성) */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    50% { transform: translate(-1px, -1px) rotate(1deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+
+/* 모든 패널을 '카드' 형태로 만들기 */
+.section {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    border: 1px solid #333;
+}
+
+/* 2. 메인 컨테이너 */
+.tab-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.recipe-card {
+    background-color: #25252b;
+    border-left: 4px solid #3498db; /* 왼쪽 테두리에 포인트 */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.recipe-card h3 {
+    margin-top: 0;
+    color: #fff;
+}
+
+
+.tab-btn.active {
+    background-color: #3498db; /* 선택된 탭은 파란색 */
+    font-weight: bold;
+}
+/* 3. 헤더 및 통계 */
+.header { text-align: center; margin-bottom: 20px; }
+.header h1 { font-size: 1.5rem; color: #fff; margin-bottom: 5px; }
+.stats { color: #888; font-size: 0.9rem; }
+
+/* 4. 탭 메뉴 */
+.tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #26262e; padding: 5px; border-radius: 10px; }
+.tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #888; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.3s; }
 .tab-btn.active { background: #2f80ed; color: white; }
 
-/* 섹션 스타일 */
+/* 5. 카드 스타일 (모든 박스 공통) */
+.card { background: #2a2a30; border: 1px solid #3d3d45; padding: 15px; margin-bottom: 15px; border-radius: 12px; }
+
+/* 6. 버튼 스타일 */
+button { cursor: pointer; transition: 0.2s; border: none; border-radius: 6px; font-weight: bold; }
+button:hover { filter: brightness(1.2); }
+
+.action-bar { display: flex; gap: 10px; margin-bottom: 10px; }
+.main-btn { flex: 2; padding: 15px; background: #2f80ed; color: white; font-size: 16px; }
+.sub-btn { flex: 1; padding: 15px; background: #444; color: #eee; }
+
+.mining-btn { width: 100%; padding: 12px; background: #cc3333; color: white; font-size: 14px; margin-bottom: 15px; }
+.mining-btn.active { background: #27ae60; }
+
+/* 7. 결과 및 알림 영역 */
+.result-card { border-left: 5px solid #2f80ed; }
+#result { font-size: 1rem; margin-bottom: 5px; font-weight: 500; min-height: 20px; }
+#notification-area { color: #f1c40f; font-size: 0.9rem; font-weight: bold; min-height: 20px; }
+
+/* 8. 레이어 제어 */
+.layer-card { display: flex; justify-content: space-between; align-items: center; }
+.layer-card button { padding: 8px 16px; background: #444; color: white; }
+
+/* 9. 기타 요소들 */
+h2 { font-size: 1.2rem; margin-bottom: 10px; }
+h3 { font-size: 1rem; margin-bottom: 8px; }
+
+/* 섹션 전환 애니메이션 */
 .section { display: none; }
-.section.active { display: block; animation: fadeIn 0.3s; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* 카드 및 기타 */
-.card { background: #1e1e24; border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
-button { background-color: #2f80ed; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-button:hover { background-color: #1b60c4; transform: scale(1.02); }
-button:disabled { background-color: #444; color: #888; cursor: not-allowed; }
+/* 툴팁 컨테이너 */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+#potion-container {
+    background-color: #25252b;
+    margin-bottom: 20px;
+}
+
+#potion-list button {
+    width: 100%;
+    padding: 8px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#potion-list .card {
+    background: #2a2a30;
+    border: 1px solid #444;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left; /* 곡괭이처럼 왼쪽 정렬이 더 깔끔합니다 */
+}
+
+#active-effects-box {
+    background-color: #1e1e24; /* 약간 다른 배경색으로 구분 */
+    border-left: 3px solid #2f80ed; /* 왼쪽 테두리 포인트 */
+}
+#effects-list {
+    font-size: 0.9em;
+    color: #ddd;
+}
+
+/* 탭 전환 시 화면 깜빡임 방지용 */
+.sub-section {
+    min-height: 200px;
+}
+
+#potion-list button:hover:not(:disabled) {
+    background-color: #555;
+}
+
+#potion-list button:disabled {
+    background-color: #27ae60; /* 활성화 시 초록색 */
+    cursor: default;
+}
+
+/* 서브 탭 스타일 */
+.sub-tab-btn {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sub-tab-btn.active {
+    background: #2f80ed;
+    border-color: #2f80ed;
+}
+
+/* 서브 섹션 전환용 */
+.sub-section { display: none; }
+.sub-section.active { display: block; }
+
+/* 툴팁 텍스트 박스 */
+
+/* 툴팁 스타일 수정 */
+.tooltip-text {
+    visibility: hidden;
+    width: 250px;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    
+    position: absolute;
+    bottom: 150%; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s;
+    
+    /* --- Noto Sans 적용 --- */
+    font-size: 14px;
+    font-weight: 600; /* 볼드체보다 500~600 두께가 가독성에 좋습니다 */
+    font-family: 'Noto Sans', sans-serif; 
+    font-style: none; 
+    pointer-events: none;
+}
+
+/* 말풍선 꼬리 만들기 */
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* 툴팁 아래쪽에 위치 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* 호버 시 표시 */
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
 
 /* 배지 및 리스트 */
 .inventory-list { list-style: none; padding: 0; }
 .inventory-list li { padding: 10px; border-bottom: 1px solid #222; display: flex; align-items: center; }
 .rarity-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 900; color: white; margin-right: 10px; }
+.badge-unknown { background-color: #000000; }
 .badge-common { background-color: #7f8c8d; }
 .badge-uncommon { background-color: #27ae60; }
 .badge-rare { background-color: #e67e22; }
@@ -41,6 +283,7 @@ button:disabled { background-color: #444; color: #888; cursor: not-allowed; }
 .badge-abstruse { background-color: #131c99ff; color: #818181;}
 .badge-creative { background-color: #fcff52; color: #424242; }
 .badge-meaninglessness { background-color: #e2ffed; color: #303030; }
+.badge-illimitátus { background-color: #202020; color: #f8f8f8; }
 
 /* 글로우 애니메이션 정의 */
 @keyframes badgeGlow {
@@ -52,4 +295,74 @@ button:disabled { background-color: #444; color: #888; cursor: not-allowed; }
 /* 애니메이션을 적용할 클래스 */
 .glow-effect {
     animation: badgeGlow 1.5s infinite ease-in-out;
+}
+
+.glow-text {
+    /* 텍스트 주변으로 빛이 은은하게 퍼지는 효과입니다 */
+    /* currentColor를 사용하여, 텍스트의 원래 색상을 그대로 빛 색깔로 사용합니다 */
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px rgba(0,0,0,0.5);
+    font-weight: bold;
+}
+
+/* 새로운 글로우 효과 (void) */
+.glow-void {
+    text-shadow: 0 0 10px #800080, 0 0 20px #800080;
+    font-style: italic;
+}
+
+/* 나중에 또 다른 효과를 추가하고 싶다면? */
+.glow-fire {
+    text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
+}
+
+.glow-frost {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #58ff15, #16ff6f, #00cbfd);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.glow-rainbow {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.glow-legendary {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #8cd662, #408811);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 10px #114721, 0 0 20px #19351a;
+}
+
+
+
+.glow-aby1 {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #3190cf, #549bca, #83bde4);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }

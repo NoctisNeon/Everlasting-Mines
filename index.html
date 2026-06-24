@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Everlasting Mines</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* 탭 전환을 위한 핵심 CSS */
         .section { display: none; }
@@ -14,66 +15,86 @@
 </head>
 <body>
 
-    <div class="game-container">
+<div class="game-container">
+    <div class="header">
+        <h1>Everlasting Mines v1.2</h1>
+        <p id="total-mined-display" class="stats">Total Mined: 0</p>
+    </div>
+<div class="tabs">
+    <button class="tab-btn active" data-target="mine">Main</button>
+    <button class="tab-btn" data-target="shop">Shop</button>
+    <button class="tab-btn" data-target="encyclopedia">Encyclopedia</button>
+</div>
+
+    <div id="mine" class="section active">
+        <div class="action-bar">
+            <button class="main-btn" onclick="onMineButtonClick()">MINE IT!</button>
+            <button class="sub-btn" onclick="resetGame()">Reset</button>
+        </div>
+        <button id="autoMineBtn" class="mining-btn">Auto Mining OFF</button>
         
-        <div class="tabs">
-            <button onclick="showSection('mine')">Main</button>
-            <button onclick="showSection('shop')">Shop</button>
-            <button onclick="showSection('encyclopedia')">Encyclopedia</button>
+        <div class="card result-card">
+            <div id="result">Let Your Dream Come True.</div>
+            <div id="notification-area"></div>
+        </div>
+        
+<div id="active-effects-box" class="card" style="display: none;">
+    <h3>Active Effects</h3>
+    <div id="effects-list"></div>
+</div>
+
+<h2>Inventory</h2> <div id="inventory" class="card"></div>
+        
+        <div id="layer-control" class="card layer-card">
+            <button onclick="moveLayer(-1)">◀</button>
+            <span id="layer-display">Surface</span>
+            <button onclick="moveLayer(1)">▶</button>
         </div>
 
-        <div id="mine" class="section active">
-            <h1>Everlasting Mines v1.04</h1>
-            <p id="total-mined-display" style="color: #aaa; font-size: 14px;">Total Mined: 0</p>
-            
-            <button onclick="onMineButtonClick()">Mine It!</button>
-            <button onclick="resetGame()">Reset</button>
-            <p id="result">Let Your Dream Come True.</p>
-
-            <div id="notification-area" style="margin-top: 5px; color: #f1c40f; font-size: 14px;"></div>
-            
-            <h2>Inventory</h2>
-            <div id="inventory"></div>
-            
-            <div id="layer-control" class="card">
-                <button onclick="moveLayer(-1)">Go Upper</button>
-                <span id="layer-display">Currently in: Surface</span>
-                <button onclick="moveLayer(1)">Go Lower</button>
-            </div>
-
-            <div class="card">
-                <h3 style="margin-top: 0; font-size: 14px;">🛠️ Debug Tool</h3>
-                <input type="text" id="debug-input" placeholder="Ore's Name (Copy and Paste!)">
-                <button onclick="forceMine()">Force</button>
-            </div>
+        <div class="card">
+            <h3 style="margin-top: 0; font-size: 14px;">🛠️ Debug Tool</h3>
+            <input type="text" id="debug-input" placeholder="Ore's Name (Copy and Paste!)">
+            <button onclick="forceMine()">Force</button>
         </div>
-
-        <div id="shop" class="section">
-            <h2>Blacksmith & Shop</h2>
-            <div id="shop-box" class="card">
-                <p id="coin-display">Coins: 0</p>
-                <button onclick="sellAllOres()">Sell All Ores</button>
-            </div>
-            
-            <div id="blacksmith-panel" class="card">
-                <h3>Current Pickaxe</h3>
-                <div id="pickaxe-list"></div>
-            </div>
-            
-            <div id="forge-list-container" class="card">
-                <h3>Forge Recipes</h3>
-                <div id="recipe-list"></div>
-            </div>
-        </div>
-
-        <div id="encyclopedia" class="section">
-            <h2>Ore Encyclopedia</h2>
-            </div>
-
     </div>
 
-    <script src="debug.js"></script>
-    <script src="pickaxe.js"></script>
-    <script src="script.js"></script>
+<div id="shop" class="section">
+    <h2>Blacksmith & Shop</h2>
+
+            <div class="card">          
+            <p id="coin-display">Coins: 0</p>
+            <button class="btn-danger" onclick="sellAllOres()" style="width: 100%; padding: 10px;">SELL ALL ORES</button>
+        </div>
+    
+    <div class="sub-tabs" style="display: flex; gap: 5px; margin-bottom: 15px;">
+        <button class="sub-tab-btn active" onclick="switchShopTab('alchemist')" style="flex: 1; padding: 10px;">🧪 Alchemist</button>
+        <button class="sub-tab-btn" onclick="switchShopTab('blacksmith')" style="flex: 1; padding: 10px;">⚒️ Blacksmith</button>
+    </div>
+
+    <div id="alchemist-section" class="sub-section active">
+        <div id="potion-container" class="card">
+            <h3>Alchemist's Potions</h3>
+            <div id="potion-list" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+        </div>
+    </div>
+
+    <div id="blacksmith-section" class="sub-section" style="display: none;">
+        <div id="current-pickaxe-section">
+            <h3>Pickaxes</h3>
+            <div id="pickaxe-ui-list"></div>
+        </div>
+        <div id="forge-list-container" class="card">
+            <h3>Forge Recipes</h3>
+            <div id="recipe-list"></div>
+        </div>
+    </div>
+</div>
+    <div id="encyclopedia" class="section">
+        <h2>Ore Encyclopedia</h2>
+    </div>
+
+<script src="debug.js" defer></script>
+<script src="pickaxe.js" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>
