@@ -6,13 +6,13 @@ function craftPickaxe(id) {
     
     // 1. 이미 제작했는지 확인
     if (unlockedPickaxes.includes(id)) {
-        return alert("이미 제작한 곡괭이입니다!");
+        return alert("Already crafted!");
     }
 
     // 2. 재료 확인 (inventory 객체 사용)
     for (let mat in recipe.cost) {
         if ((inventory[mat] || 0) < recipe.cost[mat]) {
-            return alert(`재료가 부족합니다! 필요: ${mat} ${recipe.cost[mat]}개`);
+            return alert(`You need these to make a pickaxe: ${mat} ${recipe.cost[mat]}개`);
         }
     }
 
@@ -23,7 +23,7 @@ function craftPickaxe(id) {
 
     // 4. 해금 및 저장
     unlockedPickaxes.push(id);
-    alert(`${recipe.name} 제작 성공!`);
+    alert(`${recipe.name} Crafted a pickaxe successfully!`);
     
     // UI 및 데이터 갱신
     renderInventory(); 
@@ -35,7 +35,7 @@ function craftPickaxe(id) {
 // 5. 곡괭이 선택(장착) 함수
 function equipPickaxe(id) {
     currentPickaxe = id;
-    alert(`${pickaxes[id].name} 장착 완료!`);
+    alert(`${pickaxes[id].name} Equipped!`);
     renderPickaxeUI();
     saveGame();
 }

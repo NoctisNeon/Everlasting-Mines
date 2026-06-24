@@ -5,7 +5,7 @@ function forceMine() {
     const targetOre = ores.find(o => o.name.toLowerCase() === inputName.toLowerCase());
 
     if (!targetOre) {
-        alert("해당 이름의 광물을 찾을 수 없습니다.");
+        alert("Please enter an ore's name correctly.");
         return;
     }
 
@@ -15,7 +15,7 @@ function forceMine() {
     if (raritySounds[targetOre.rarity]) {
         const sound = raritySounds[targetOre.rarity];
         sound.currentTime = 0;
-        sound.play().catch(e => console.log("사운드 재생 오류:", e));
+        sound.play().catch(e => console.log("Failed to play:", e));
     }
 
     // 2. [DEBUG] 표시와 함께 결과 출력 (인벤토리 업데이트 로직은 아예 없음)
@@ -25,5 +25,5 @@ function forceMine() {
     `;
 
     // 인벤토리에는 아무것도 더하지 않음 (상태 유지)
-    console.log(`디버그로 ${targetOre.name} 소환 성공 (인벤토리 미포함)`);
+    console.log(`Successfully spawned ${targetOre.name}! (DEBUG)`);
 }

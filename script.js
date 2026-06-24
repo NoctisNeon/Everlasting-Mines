@@ -127,7 +127,7 @@ function onMineButtonClick() {
     // 소리 및 알림 처리
     if (isSuper) {
         playSound(superSound);
-        showNotification("✨ 슈퍼 마이닝 발동!", false); 
+        showNotification("✨ Bulk Mining Activated!", false); 
         setTimeout(() => {
             document.getElementById('result').innerHTML = resultText;
         }, 1000);
@@ -154,7 +154,7 @@ function showNotification(message, playSound = false) {
     // 2. 소리 재생 (playSound가 true일 때만)
     if (playSound) {
         abilitySound.currentTime = 0;
-        abilitySound.play().catch(e => console.log("사운드 재생 실패:", e));
+        abilitySound.play().catch(e => console.log("Failed to Load sound:", e));
     }
     
     // 3. 2초 뒤에 텍스트 사라지게 하기
@@ -179,7 +179,7 @@ function renderInventory() {
             </span>
             <span style="color: ${o.color}; font-weight: bold;">${o.name}</span>
             <span style="font-size: 10px; color: #888; margin-left: 5px;">(1/${o.chance.toLocaleString()})</span>
-            : ${inventory[o.name]}개
+            : ${inventory[o.name]}'s
         </li>
     `).join('') + `</ul>`;
 }
@@ -192,7 +192,7 @@ function renderEncyclopedia() {
         // 발견된 경우에만 확률 표시
         const chanceDisplay = isFound ? `<span style="font-size: 10px; color: #888; margin-left: 5px;">(1/${o.chance.toLocaleString()})</span>` : '';
         return `<div style="margin-bottom: 10px; opacity: ${isFound ? 1 : 0.6};">
-            <strong>${isFound ? o.name : "???"}</strong>${chanceDisplay} : ${foundCount[o.name]}개
+            <strong>${isFound ? o.name : "???"}</strong>${chanceDisplay} : ${foundCount[o.name]}'s
         </div>`;
     }).join('');
 }
@@ -209,7 +209,7 @@ function moveLayer(direction) {
 }
 
 
-function updateLayerUI() { const el = document.getElementById('layer-display'); if (el) el.innerText = `현재 위치: ${layers[currentLayerIndex].name}`; }
+function updateLayerUI() { const el = document.getElementById('layer-display'); if (el) el.innerText = `Current Layer: ${layers[currentLayerIndex].name}`; }
 function updateTotalMinedUI() { const el = document.getElementById('total-mined-display'); if(el) el.innerText = `Total Mined: ${totalBlocksMined.toLocaleString()}`; }
 function updateShopUI() { document.getElementById('coin-display').innerText = `Coins: ${coins.toLocaleString()}`; }
 function showSection(id) {
@@ -217,7 +217,7 @@ function showSection(id) {
     
     // 안전 장치: 요소가 없으면 에러를 띄우지 않고 함수를 종료합니다.
     if (!section) {
-        console.error("에러: '" + id + "'라는 ID를 가진 HTML 요소를 찾을 수 없습니다.");
+        console.error("error: '" + id + "'cannot find html with specific id.");
         return; 
     }
 
@@ -245,8 +245,8 @@ function renderPickaxeUI() {
         <div style="margin: 5px 0; padding: 10px; border: 1px solid #444; border-radius: 5px;">
             <strong>${pickaxes[id].name}</strong> 
             ${currentPickaxe === id ? 
-                '<span style="color: #2ecc71;">(장착중)</span>' : 
-                `<button onclick="equipPickaxe('${id}')">장착하기</button>`}
+                '<span style="color: #2ecc71;">(Equipped)</span>' : 
+                `<button onclick="equipPickaxe('${id}')">Equip</button>`}
         </div>
     `).join('');
 }
@@ -268,7 +268,7 @@ function craftPickaxe(id) {
     // 1. 재료 체크
     for (let mat in recipe.cost) {
         if ((inventory[mat] || 0) < recipe.cost[mat]) {
-            return alert("재료가 부족합니다!");
+            return alert("Materials are not enough!");
         }
     }
     
@@ -279,7 +279,7 @@ function craftPickaxe(id) {
     
     // 3. 해금 및 저장
     unlockedPickaxes.push(id);
-    alert(`${recipe.name} 제작 성공!`);
+    alert(`${recipe.name} Crafted a pickaxe successfully!`);
     
     // 4. UI 갱신
     renderForge();
@@ -297,15 +297,15 @@ function renderForge() {
         
         // 재료 문자열 생성
         const costText = Object.entries(recipe.cost)
-            .map(([mat, count]) => `${mat} ${count}개`)
+            .map(([mat, count]) => `${mat} ${count}'s`)
             .join(', ');
 
         return `
             <div style="margin-bottom: 10px; padding: 10px; border: 1px solid #333; border-radius: 5px;">
                 <strong>${recipe.name}</strong><br>
-                <small style="color: #888;">재료: ${costText}</small><br>
-                ${isUnlocked ? '<button disabled>제작 완료</button>' : 
-                `<button onclick="craftPickaxe('${id}')">제작하기</button>`}
+                <small style="color: #888;">Materials: ${costText}</small><br>
+                ${isUnlocked ? '<button disabled>Crafted</button>' : 
+                `<button onclick="craftPickaxe('${id}')">Craft</button>`}
             </div>
         `;
     }).join('');
@@ -313,17 +313,17 @@ function renderForge() {
 
 function equipPickaxe(id) {
     if (!unlockedPickaxes.includes(id)) {
-        return alert("아직 제작하지 않은 곡괭이입니다.");
+        return alert("Not crafted yet.");
     }
     currentPickaxe = id;
-    alert(`${pickaxes[id].name} 장착 완료!`);
+    alert(`${pickaxes[id].name} Equipped!`);
     renderPickaxeUI(); // 장착중 버튼 갱신
     saveGame();
 }
 
 
 function resetGame() {
-    if (!confirm("⚠️ 초기화하시겠습니까?")) return;
+    if (!confirm("⚠️ Are you sure you reset your data?")) return;
     localStorage.removeItem('mineSave');
     location.reload();
 }
