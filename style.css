@@ -33,8 +33,23 @@ button:disabled { background-color: #444; color: #888; cursor: not-allowed; }
 .badge-common { background-color: #7f8c8d; }
 .badge-uncommon { background-color: #27ae60; }
 .badge-rare { background-color: #e67e22; }
-.badge-epic { background-color: #b0b356; }
-.badge-midas { background-color: #f1c40f; color: #333; }
-.badge-mythic { background-color: #e74c3c; box-shadow: 0 0 8px rgba(231, 76, 60, 0.4); }
-.badge-unreal { background-color: #233d82; box-shadow: 0 0 10px rgba(35, 61, 130, 0.4); }
+.badge-epic { background-color: #b465cc; color: #ffffff;}
+.badge-midas { background-color: #f1c40f; color: #000000;}
+.badge-mythic { background-color: #e74c3c; }
+.badge-unreal { background-color: #233d82; color: #d3d3d3;}
+.badge-ephemeral { background-color: #9dfff7; color: #7c7c7c;}
+.badge-abstruse { background-color: #131c99ff; color: #818181;}
+.badge-creative { background-color: #fcff52; color: #424242; }
+.badge-meaninglessness { background-color: #e2ffed; color: #303030; }
 
+/* 글로우 애니메이션 정의 */
+@keyframes badgeGlow {
+    0% { box-shadow: 0 0 5px currentColor; opacity: 0.8; }
+    50% { box-shadow: 0 0 15px currentColor; opacity: 1; }
+    100% { box-shadow: 0 0 5px currentColor; opacity: 0.8; }
+}
+
+/* 애니메이션을 적용할 클래스 */
+.glow-effect {
+    animation: badgeGlow 1.5s infinite ease-in-out;
+}

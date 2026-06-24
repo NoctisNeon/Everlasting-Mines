@@ -15,13 +15,13 @@ const layers = [
     { name: "Slate Layer", ores: ['Slate', 'Iron', 'Ruby', 'Diamond', 'Enfinitricifite', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt', 'Gold', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', 'Braxichroxmin', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
 ];
 
 const rarityColors = {
     common: "#bdc3c7", uncommon: "#85ffa9ff", rare: "#f3db7a", 
-    epic: "#3da1c0ff", midas: "#ffd900ff", mythic: "#f15b5bff", ephemeral: "#9dfff7",unreal: "#9a1cccff",
+    epic: "#b465cc", midas: "#ffd900ff", mythic: "#f15b5bff", ephemeral: "#9dfff7",unreal: "#9a1cccff",
     abstruse: "#131c99ff", creative: "#fcff52", meaninglessness: "#e2ffed"
 };
 
@@ -29,6 +29,7 @@ const ores = [
     { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, color: 'rgb(75, 168, 230)' },
     { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', rarity: 'meaninglessness', chance: 41023000000, price: 920000000, color: 'rgb(99, 121, 89)' },
     { name: 'F L O W S C A P E', rarity: 'creative', chance: 1209000000, price: 924002000, color: 'rgb(175, 183, 255)' },
+    { name: 'Braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: 'rgb(0, 255, 170)' },
     { name: 'IXYSOPARDOX', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
     { name: 'Faked Reality', rarity: 'abstruse', chance: 392000000, price: 41002000, color: 'rgb(162, 175, 147)' },
     { name: 'Macorl Esperatio', rarity: 'unreal', chance: 132900000, price: 9302000, color: '#8A5FC9' },
@@ -77,6 +78,7 @@ const pickaxeRecipes = {
 let inventory = {}, foundCount = {}, currentPickaxe = 'basic', coins = 0, totalBlocksMined = 0, currentLayerIndex = 0;
 let unlockedPickaxes = ['basic'];
 let isBusy = false; // 게임이 바쁜지 확인하는 변수
+let notificationTimer; // 알림 타이머를 관리할 변수
 
 ores.forEach(ore => { inventory[ore.name] = 0; foundCount[ore.name] = 0; });
 
@@ -95,47 +97,59 @@ function rollOre(luck) {
 }
 
 function onMineButtonClick() {
-    // [추가] 만약 바쁜 상태라면 클릭 무시하고 즉시 종료
+    // [잠금 체크] 만약 바쁜 상태라면 클릭 무시하고 즉시 종료
     if (isBusy) return;
 
     const pick = pickaxes[currentPickaxe];
     let isSuper = Math.random() < pick.superChance;
     let iterations = isSuper ? pick.superCount : pick.power;
-    const rarityRank = { 'common': 0, 'uncommon': 1, 'rare': 2, 'epic': 3, 'midas': 4, 'mythic': 5, 'unreal': 6, 'abstruse': 7};
-    let highestRarity = 'common', lastOre = null;
+    
+    // 랭크 우선순위 (가장 낮은 것부터 높은 순서)
+    const rarityRank = { 'common': 0, 'uncommon': 1, 'rare': 2, 'epic': 3, 'midas': 4, 'mythic': 5, 'unreal': 6, 'abstruse': 7, 'creative': 8, 'meaninglessness': 9};
 
-    // [추가] 슈퍼 마이닝이면 바쁜 상태로 전환
-    if (isSuper) {
-        isBusy = true;
-        // 2초 뒤에 다시 클릭 가능하게 설정 (showNotification의 시간과 맞추는 것이 좋습니다)
-        setTimeout(() => { isBusy = false; }, 2000);
-    }
+    let rarestOre = null;
+    let highestRank = -1;
 
+    // 1. 채굴 로직 및 가장 귀한 광물 찾기
     for(let i = 0; i < iterations; i++) {
         let rolled = rollOre(pick.luck);
         inventory[rolled.name]++;
         foundCount[rolled.name]++;
-        lastOre = rolled;
-        if (rarityRank[rolled.rarity] > rarityRank[highestRarity]) highestRarity = rolled.rarity;
+        
+        let currentRank = rarityRank[rolled.rarity];
+        if (currentRank > highestRank) {
+            highestRank = currentRank;
+            rarestOre = rolled;
+        }
     }
 
-    // 결과 텍스트 변수 미리 선언 (이전 오류 방지)
-    const resultText = iterations === 1 ? 
-        `You got <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>!` : 
-        `You got ${iterations} items! (Last: <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>)`;
+    // 결과 텍스트 미리 만들기
+    const resultText = iterations === 1 
+        ? `You got <span style="color: ${rarestOre.color}; font-weight: bold;">${rarestOre.name}</span>!` 
+        : `You got ${iterations} items! (Rarest: <span style="color: ${rarestOre.color}; font-weight: bold;">${rarestOre.name}</span>)`;
 
-    // 소리 및 알림 처리
+    // 2. 슈퍼 마이닝 vs 일반 마이닝 로직
     if (isSuper) {
+        isBusy = true; // 슈퍼 마이닝 시작: 클릭 잠금
+        
         playSound(superSound);
-        showNotification("✨ Bulk Mining Activated!", false); 
+        ficationshowNoti("✨ Bulk Mining Activated!!", false); 
+        
+        // 1초 뒤에 결과 표시, 2초 뒤에 클릭 잠금 해제
         setTimeout(() => {
             document.getElementById('result').innerHTML = resultText;
         }, 1000);
+        
+        setTimeout(() => {
+            isBusy = false; // 다시 클릭 가능
+        }, 2000);
     } else {
-        playSound(raritySounds[highestRarity] || clickSound);
+        // 일반 마이닝
+        playSound(raritySounds[rarestOre.rarity] || clickSound);
         document.getElementById('result').innerHTML = resultText;
     }
 
+    // 3. UI 업데이트 및 저장
     totalBlocksMined += iterations;
     updateTotalMinedUI();
     renderInventory();
@@ -145,22 +159,24 @@ function onMineButtonClick() {
 
 
 function showNotification(message, playSound = false) {
-    const resultEl = document.getElementById('result');
+    const notifyEl = document.getElementById('notification-area');
+    if (!notifyEl) return;
+
+    // [핵심 수정] 이전 타이머가 있다면 즉시 취소!
+    clearTimeout(notificationTimer);
     
     // 1. 텍스트 설정
-    resultEl.innerText = message;
-    resultEl.style.color = "#f1c40f"; // 강조 색상
+    notifyEl.innerText = message;
     
-    // 2. 소리 재생 (playSound가 true일 때만)
+    // 2. 소리 재생 (필요 시)
     if (playSound) {
         abilitySound.currentTime = 0;
         abilitySound.play().catch(e => console.log("Failed to Load sound:", e));
     }
     
-    // 3. 2초 뒤에 텍스트 사라지게 하기
-    setTimeout(() => {
-        resultEl.innerText = "";
-        resultEl.style.color = "#ffffff";
+    // 3. 새로운 2초 타이머 시작 및 변수에 저장
+    notificationTimer = setTimeout(() => {
+        notifyEl.innerText = "";
     }, 2000);
 }
 
@@ -169,41 +185,84 @@ function playSound(audioObj) { if (!audioObj) return; const sound = audioObj.clo
 function renderInventory() {
     const el = document.getElementById('inventory');
     if (!el) return;
+
     const currentLayerOreNames = layers[currentLayerIndex].ores;
     const visibleOres = ores.filter(o => currentLayerOreNames.includes(o.name));
     
-    el.innerHTML = `<ul class="inventory-list" style="list-style: none; padding: 0;">` + visibleOres.map(o => `
-        <li style="margin-bottom: 8px;">
-            <span style="color: ${rarityColors[o.rarity]}; border: 1px solid ${rarityColors[o.rarity]}; padding: 1px 4px; border-radius: 3px; font-size: 10px; margin-right: 8px;">
-                ${o.rarity.toUpperCase()}
-            </span>
-            <span style="color: ${o.color}; font-weight: bold;">${o.name}</span>
-            <span style="font-size: 10px; color: #888; margin-left: 5px;">(1/${o.chance.toLocaleString()})</span>
-            : ${inventory[o.name]}'s
-        </li>
-    `).join('') + `</ul>`;
+    // 글로우 효과를 적용할 등급 목록 (원하는 등급을 추가하세요)
+    const glowRarities = ['unreal', 'ephemeral', 'abstruse', 'creative', 'meaninglessness'];
+
+    el.innerHTML = `<ul class="inventory-list">` + visibleOres.map(o => {
+        const count = inventory[o.name] || 0;
+        
+        // 해당 광물이 glowRarities 목록에 포함되어 있으면 'glow-effect' 클래스를 넣고, 아니면 빈 문자열
+        const glowClass = glowRarities.includes(o.rarity) ? 'glow-effect' : '';
+
+        return `
+            <li style="margin-bottom: 8px; display: flex; align-items: center;">
+                <span class="rarity-badge badge-${o.rarity} ${glowClass}" style="margin-right: 8px;">
+                    ${o.rarity.toUpperCase()}
+                </span>
+                <span style="color: ${o.color}; font-weight: bold; margin-right: 5px;">${o.name}</span>
+                <span style="font-size: 10px; color: #888;">(1/${o.chance.toLocaleString()})</span>
+                <span style="margin-left: 5px;">: ${count}'s</span>
+            </li>
+        `;
+    }).join('') + `</ul>`;
 }
 
 function renderEncyclopedia() {
     const el = document.getElementById('encyclopedia');
     if (!el) return;
-    el.innerHTML = `<h3>광물 도감</h3>` + ores.map(o => {
+
+    // 글로우 효과를 적용할 등급 목록
+    const glowRarities = ['unreal', 'ephemeral', 'abstruse', 'creative', 'meaninglessness'];
+
+    el.innerHTML = `<h3>Ore Encyclopedia</h3>` + ores.map(o => {
         const isFound = foundCount[o.name] > 0;
-        // 발견된 경우에만 확률 표시
-        const chanceDisplay = isFound ? `<span style="font-size: 10px; color: #888; margin-left: 5px;">(1/${o.chance.toLocaleString()})</span>` : '';
-        return `<div style="margin-bottom: 10px; opacity: ${isFound ? 1 : 0.6};">
-            <strong>${isFound ? o.name : "???"}</strong>${chanceDisplay} : ${foundCount[o.name]}'s
-        </div>`;
+        const count = foundCount[o.name] || 0;
+        
+        // 발견된 경우에만 등급별 glow-effect 적용
+        const glowClass = (isFound && glowRarities.includes(o.rarity)) ? 'glow-effect' : '';
+
+        if (isFound) {
+            // 발견된 경우: 등급 배지와 함께 정보 표시
+            return `
+            <div style="margin-bottom: 10px; display: flex; align-items: center;">
+                <span class="rarity-badge badge-${o.rarity} ${glowClass}" style="margin-right: 8px;">
+                    ${o.rarity.toUpperCase()}
+                </span>
+                <strong style="color: ${o.color}; margin-right: 5px;">${o.name}</strong>
+                <span style="font-size: 10px; color: #888;">(1/${o.chance.toLocaleString()})</span>
+                <span style="margin-left: 5px;">: ${count}'s founded</span>
+            </div>`;
+        } else {
+            // 아직 발견하지 못한 경우: ??? 표시
+            return `
+            <div style="margin-bottom: 10px; opacity: 0.6; display: flex; align-items: center;">
+                <span class="rarity-badge" style="background-color: #333; margin-right: 8px;">???</span>
+                <strong>???</strong>
+            </div>`;
+        }
     }).join('');
 }
 
 function moveLayer(direction) {
     const newIndex = currentLayerIndex + direction;
+    
+    // 레이어 범위 안에 있는지 확인
     if (newIndex >= 0 && newIndex < layers.length) {
         currentLayerIndex = newIndex;
-        alert(`층 이동: ${layers[currentLayerIndex].name}`);
+
+        // 1. 레이어 이름 텍스트 업데이트 (기존 UI 함수)
         updateLayerUI();
+
+        // 2. 팝업(alert) 대신 살짝 떠오르는 알림 사용
+        showNotification(`Moved to: ${layers[currentLayerIndex].name}`, false);
+
+        // 3. 관련 UI들 즉시 갱신
         renderInventory();
+        renderEncyclopedia(); // 도감도 변경된 레이어에 맞춰 갱신되면 좋겠죠?
         saveGame();
     }
 }
