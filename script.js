@@ -1,6 +1,7 @@
 // --- [1] 기본 설정 및 데이터 ---
 const superSound = new Audio('super_mining.mp3');
 const clickSound = new Audio('click.mp3'); clickSound.volume = 0.05;
+const abilitySound = new Audio('sounds/ability.mp3'); // 'sounds' 폴더에 파일이 있어야 합니다.
 
 const raritySounds = {
     epic: new Audio('rare.mp3'),
@@ -13,7 +14,7 @@ const layers = [
     { name: "Grass Layer", ores: ['Grass', 'Iron', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Slate Layer", ores: ['Slate', 'Iron', 'Ruby', 'Diamond', 'Enfinitricifite', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Gold', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt', 'Gold', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
 ];
@@ -42,6 +43,7 @@ const ores = [
     { name: 'Gold', rarity: 'rare', chance: 320, price: 500, color: '#f1c40f' },
     { name: 'Equatox', rarity: 'rare', chance: 120, price: 300, color: '#ffec9e' },
     { name: 'Zinc', rarity: 'uncommon', chance: 60, price: 40, color: '#2a4142' },
+    { name: 'Asphalt', rarity: 'uncommon', chance: 53, price: 36, color: 'rgb(218, 176, 176)' },
     { name: 'Iron', rarity: 'uncommon', chance: 50, price: 50, color: '#dff9fb' },
     { name: 'Grass', rarity: 'common', chance: 2, price: 10, color: '#5bff84' },
     { name: 'Ice', rarity: 'common', chance: 2, price: 10, color: '#46a8e6' },
@@ -57,6 +59,7 @@ const pickaxes = {
     steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 30 },
     godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.05, superCount: 100 },
     light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 2.2, superChance: 0.025, superCount: 500 },
+    bulk: { name: "Tier 4 / Bulk Pickaxe", power: 9, luck: 1.95, superChance: 0.005, superCount: 12000 },
     hackaxe: { name: "hack axe", power: 250, luck: 25.0, superChance: 0.1, superCount: 250000},
     luhackaxe: { name: "hack axe", power: 250000, luck: 250.0, superChance: 0, superCount: 250}
 };
@@ -65,6 +68,7 @@ const pickaxeRecipes = {
     'steel': { name: 'Tier 2 Steel Pickaxe', cost: { 'Iron': 10, 'Stone': 50 }, power: 2 },
     'godPickaxe': { name: 'Tier 3 God Pickaxe', cost: { 'Gold': 5, 'Iron': 50 }, power: 5 },
     'light': { name: 'Tier 4 / Lightning Pickaxe', cost: { 'Ruby': 2, 'Gold': 7 }, power: 7 },
+    'bulk': { name: 'Tier 4 / Bulk Pickaxe', cost: { 'Ruby': 2, 'Gold': 7 }, power: 7 },
     'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': 23231, 'Iron': 1 }, power: 250 },
     'luhackaxe': { name: 'luhacks', cost: { 'IXYSOPARDOX': 56555, 'Iron': 1 }, power: 2500000 }
 };
@@ -72,6 +76,7 @@ const pickaxeRecipes = {
 // --- [2] 전역 변수 ---
 let inventory = {}, foundCount = {}, currentPickaxe = 'basic', coins = 0, totalBlocksMined = 0, currentLayerIndex = 0;
 let unlockedPickaxes = ['basic'];
+let isBusy = false; // 게임이 바쁜지 확인하는 변수
 
 ores.forEach(ore => { inventory[ore.name] = 0; foundCount[ore.name] = 0; });
 
@@ -90,11 +95,21 @@ function rollOre(luck) {
 }
 
 function onMineButtonClick() {
+    // [추가] 만약 바쁜 상태라면 클릭 무시하고 즉시 종료
+    if (isBusy) return;
+
     const pick = pickaxes[currentPickaxe];
     let isSuper = Math.random() < pick.superChance;
     let iterations = isSuper ? pick.superCount : pick.power;
     const rarityRank = { 'common': 0, 'uncommon': 1, 'rare': 2, 'epic': 3, 'midas': 4, 'mythic': 5, 'unreal': 6, 'abstruse': 7};
     let highestRarity = 'common', lastOre = null;
+
+    // [추가] 슈퍼 마이닝이면 바쁜 상태로 전환
+    if (isSuper) {
+        isBusy = true;
+        // 2초 뒤에 다시 클릭 가능하게 설정 (showNotification의 시간과 맞추는 것이 좋습니다)
+        setTimeout(() => { isBusy = false; }, 2000);
+    }
 
     for(let i = 0; i < iterations; i++) {
         let rolled = rollOre(pick.luck);
@@ -104,15 +119,49 @@ function onMineButtonClick() {
         if (rarityRank[rolled.rarity] > rarityRank[highestRarity]) highestRarity = rolled.rarity;
     }
 
-    if (isSuper) { playSound(superSound); alert("✨ 슈퍼 마이닝 발동!"); }
-    else { playSound(raritySounds[highestRarity] || clickSound); }
+    // 결과 텍스트 변수 미리 선언 (이전 오류 방지)
+    const resultText = iterations === 1 ? 
+        `You got <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>!` : 
+        `You got ${iterations} items! (Last: <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>)`;
+
+    // 소리 및 알림 처리
+    if (isSuper) {
+        playSound(superSound);
+        showNotification("✨ 슈퍼 마이닝 발동!", false); 
+        setTimeout(() => {
+            document.getElementById('result').innerHTML = resultText;
+        }, 1000);
+    } else {
+        playSound(raritySounds[highestRarity] || clickSound);
+        document.getElementById('result').innerHTML = resultText;
+    }
 
     totalBlocksMined += iterations;
     updateTotalMinedUI();
-    document.getElementById('result').innerHTML = iterations === 1 ? `You got <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>!` : `You got ${iterations} items! (Last: <span style="color: ${lastOre.color}; font-weight: bold;">${lastOre.name}</span>)`;
     renderInventory();
     renderEncyclopedia();
     saveGame();
+}
+
+
+function showNotification(message, playSound = false) {
+    const resultEl = document.getElementById('result');
+    
+    // 1. 텍스트 설정
+    resultEl.innerText = message;
+    resultEl.style.color = "#f1c40f"; // 강조 색상
+    
+    // 2. 소리 재생 (playSound가 true일 때만)
+    if (playSound) {
+        abilitySound.currentTime = 0;
+        abilitySound.play().catch(e => console.log("사운드 재생 실패:", e));
+    }
+    
+    // 3. 2초 뒤에 텍스트 사라지게 하기
+    setTimeout(() => {
+        resultEl.innerText = "";
+        resultEl.style.color = "#ffffff";
+    }, 2000);
 }
 
 function playSound(audioObj) { if (!audioObj) return; const sound = audioObj.cloneNode(); sound.play().catch(e => console.log(e)); }
@@ -158,6 +207,7 @@ function moveLayer(direction) {
         saveGame();
     }
 }
+
 
 function updateLayerUI() { const el = document.getElementById('layer-display'); if (el) el.innerText = `현재 위치: ${layers[currentLayerIndex].name}`; }
 function updateTotalMinedUI() { const el = document.getElementById('total-mined-display'); if(el) el.innerText = `Total Mined: ${totalBlocksMined.toLocaleString()}`; }
