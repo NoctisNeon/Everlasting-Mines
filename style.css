@@ -1,0 +1,40 @@
+* { box-sizing: border-box; }
+body {
+    background-color: #121214;
+    color: #e0e0e0;
+    font-family: 'Pretendard', 'Arial', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.game-container { width: 100%; max-width: 500px; padding: 20px; }
+
+/* 탭 스타일 */
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+.tab-btn { flex: 1; padding: 12px; background: #1e1e24; color: #888; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.tab-btn.active { background: #2f80ed; color: white; }
+
+/* 섹션 스타일 */
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* 카드 및 기타 */
+.card { background: #1e1e24; border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+button { background-color: #2f80ed; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+button:hover { background-color: #1b60c4; transform: scale(1.02); }
+button:disabled { background-color: #444; color: #888; cursor: not-allowed; }
+
+/* 배지 및 리스트 */
+.inventory-list { list-style: none; padding: 0; }
+.inventory-list li { padding: 10px; border-bottom: 1px solid #222; display: flex; align-items: center; }
+.rarity-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 900; color: white; margin-right: 10px; }
+.badge-common { background-color: #7f8c8d; }
+.badge-uncommon { background-color: #27ae60; }
+.badge-rare { background-color: #e67e22; }
+.badge-epic { background-color: #b0b356; }
+.badge-midas { background-color: #f1c40f; color: #333; }
+.badge-mythic { background-color: #e74c3c; box-shadow: 0 0 8px rgba(231, 76, 60, 0.4); }
+.badge-unreal { background-color: #233d82; box-shadow: 0 0 10px rgba(35, 61, 130, 0.4); }
+

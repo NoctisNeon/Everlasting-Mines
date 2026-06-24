@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everlasting Mines</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 탭 전환을 위한 핵심 CSS */
+        .section { display: none; }
+        .section.active { display: block; }
+        .card { border: 1px solid #555; padding: 15px; margin-top: 10px; border-radius: 5px; background: #2a2a30; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        
+        <div class="tabs">
+            <button onclick="showSection('mine')">채굴</button>
+            <button onclick="showSection('shop')">상점</button>
+            <button onclick="showSection('encyclopedia')">도감</button>
+        </div>
+
+        <div id="mine" class="section active">
+            <h1>Everlasting Mines</h1>
+            <p id="total-mined-display" style="color: #aaa; font-size: 14px;">Total Mined: 0</p>
+            
+            <button onclick="onMineButtonClick()">Mine It!</button>
+            <button onclick="resetGame()">Reset</button>
+            <p id="result">Let Your Dream Come True.</p>
+            
+            <h2>Inventory</h2>
+            <div id="inventory"></div>
+            
+            <div id="layer-control" class="card">
+                <button onclick="moveLayer(-1)">위로</button>
+                <span id="layer-display">현재 위치: Surface (표면)</span>
+                <button onclick="moveLayer(1)">아래로</button>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0; font-size: 14px;">🛠️ Debug Tool</h3>
+                <input type="text" id="debug-input" placeholder="광물 이름">
+                <button onclick="forceMine()">Force</button>
+            </div>
+        </div>
+
+        <div id="shop" class="section">
+            <h2>Blacksmith & Shop</h2>
+            <div id="shop-box" class="card">
+                <p id="coin-display">Coins: 0</p>
+                <button onclick="sellAllOres()">Sell All Ores</button>
+            </div>
+            
+            <div id="blacksmith-panel" class="card">
+                <h3>Current Pickaxe</h3>
+                <div id="pickaxe-list"></div>
+            </div>
+            
+            <div id="forge-list-container" class="card">
+                <h3>Forge Recipes</h3>
+                <div id="recipe-list"></div>
+            </div>
+        </div>
+
+        <div id="encyclopedia" class="section">
+            <h2>광물 도감</h2>
+            </div>
+
+    </div>
+
+    <script src="debug.js"></script>
+    <script src="pickaxe.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
