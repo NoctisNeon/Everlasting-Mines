@@ -2,7 +2,13 @@
 an Incremental Mining Game inspired by REx: Reincaranated.
 
 
-## Known bug
+## to be added
 
-- sound bugs
+- more ores
+- more pickaxes
+- more potions
+
+- world system
+- more layers!!!
+- variants
 - etc
