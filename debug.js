@@ -1,6 +1,6 @@
 let debugResultTimer = null;
 
-function showDebugResult(text, duration = 2500) {
+function showDebugResult(text, duration = 5000) {
     const resultText = document.getElementById('result');
     if (!resultText) return;
 

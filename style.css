@@ -18,6 +18,9 @@ body {
     min-height: 600px; /* 게임 내용에 맞는 최소 높이를 설정하세요 */
     position: relative; /* 자식 요소들의 기준점 역할 */
 }
+#game-root.shake-screen {
+    animation: shakeVerticalEaseOut 0.6s cubic-bezier(.36,.07,.19,.97);
+}
 
 .section, .tab-content {
     opacity: 0;
@@ -27,6 +30,214 @@ body {
     position: absolute; 
     width: 100%;
     pointer-events: none;
+}
+
+.mine-btn {
+    padding: 18px 34px;
+
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    color: white;
+
+    border: none;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow: 0 0 18px rgba(46, 204, 113, 0.25);
+}
+.mine-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 28px rgba(46, 204, 113, 0.45);
+}
+
+.mine-btn:active {
+    transform: translateY(0px);
+}
+
+.reset-floating {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+.reset-btn {
+    padding: 10px 14px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+    opacity: 0.8;
+}
+
+.reset-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
+}
+
+.reset-btn:active {
+    transform: translateY(0px);
+}
+
+.control-panel {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: linear-gradient(145deg, #1a1a1a, #222);
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+
+
+.settings-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+    border: 1px solid #333;
+
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    color: #fff;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+    transition: 0.2s ease;
+}
+
+.settings-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+    box-shadow: 0 0 12px rgba(255,255,255,0.1);
+}
+
+.settings-btn:active {
+    transform: scale(0.95);
+}
+
+.settings-panel button {
+    width: 100%;
+    padding: 10px;
+
+    margin-top: 6px;
+
+    background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+    color: white;
+
+    border: 1px solid #444;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+
+.settings-panel label {
+    font-size: 12px;
+    color: #aaa;
+
+    display: block;
+    margin-top: 6px;
+    margin-bottom: 4px;
+
+    letter-spacing: 0.5px;
+}
+
+.settings-panel button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #3a3a3a, #4a4a4a);
+    box-shadow: 0 0 10px rgba(255,255,255,0.15);
+}
+
+.settings-panel button:active {
+    transform: translateY(0px);
+    box-shadow: none;
+}
+
+.settings-panel select {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 12px;
+
+    padding: 8px;
+
+    background: #111;
+    color: #fff;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.settings-panel select:hover {
+    border-color: #666;
+    box-shadow: 0 0 8px rgba(255,255,255,0.1);
+}
+
+.settings-panel {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+
+    width: 240px;
+    padding: 14px;
+
+    background: linear-gradient(145deg, #1a1a1a, #222);
+    border: 1px solid #333;
+    border-radius: 12px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+
+    transition: 0.25s ease;
+    color: #eee;
+}
+
+.settings-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .section.active, .tab-content.active {
@@ -244,6 +455,14 @@ body {
 button { cursor: pointer; transition: 0.2s; border: none; border-radius: 6px; font-weight: bold; }
 button:hover { filter: brightness(1.2); }
 
+
+.mine-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
 .action-bar { display: flex; gap: 10px; margin-bottom: 10px; }
 .main-btn { flex: 2; padding: 15px; background: #2f80ed; color: white; font-size: 16px; }
 .sub-btn { flex: 1; padding: 15px; background: #444; color: #eee; }
@@ -252,6 +471,111 @@ button:hover { filter: brightness(1.2); }
 .mining-btn.active { background: #27ae60; }
 
 /* 7. 결과 및 알림 영역 */
+
+.result-panel {
+    padding: 14px;
+    border: 1px solid #333;
+    border-radius: 12px;
+
+    background: linear-gradient(145deg, #151515, #1e1e1e);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+.result-header {
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    color: #aaa;
+
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.result-body {
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #fff;
+
+    min-height: 30px;
+
+    padding: 8px;
+
+    border-left: 3px solid #2ecc71;
+
+    background: rgba(255,255,255,0.02);
+
+    transition: 0.2s ease;
+}
+.result-footer {
+    margin-top: 8px;
+
+    font-size: 11px;
+    color: #888;
+
+    min-height: 16px;
+}
+
+.shake-screen {
+    animation: shakeVerticalEaseOut 0.6s cubic-bezier(.36,.07,.19,.97);
+    transform-origin: center;
+}
+
+@keyframes shakeVerticalEaseOut {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(-12px);
+    }
+
+    20% {
+        transform: translateY(12px);
+    }
+
+    30% {
+        transform: translateY(-10px);
+    }
+
+    40% {
+        transform: translateY(10px);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+
+    60% {
+        transform: translateY(7px);
+    }
+
+    70% {
+        transform: translateY(-4px);
+    }
+
+    80% {
+        transform: translateY(4px);
+    }
+
+    90% {
+        transform: translateY(-2px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.flash-screen {
+    animation: flash 0.25s ease-in-out;
+}
+
+@keyframes flash {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(2); }
+    100% { filter: brightness(1); }
+}
+
 .result-card { border-left: 5px solid #2f80ed; }
 #result { font-size: 1rem; margin-bottom: 5px; font-weight: 500; min-height: 20px; }
 #notification-area { color: #f1c40f; font-size: 0.9rem; font-weight: bold; min-height: 20px; }
@@ -481,7 +805,16 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
 /* 배지 및 리스트 */
 .inventory-list { list-style: none; padding: 0; }
 .inventory-list li { padding: 10px; border-bottom: 1px solid #222; display: flex; align-items: center; }
-.rarity-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 900; color: white; margin-right: 10px; }
+.rarity-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 900;
+    color: white;
+    margin-right: 1px;
+}
+.badge-basic { background-color: #363636; }
 .badge-unknown { background-color: #000000; }
 .badge-common { background-color: #7f8c8d; }
 .badge-uncommon { background-color: #27ae60; }
@@ -490,11 +823,12 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
 .badge-midas { background-color: #f1c40f; color: #000000;}
 .badge-mythic { background-color: #e74c3c; }
 .badge-unreal { background-color: #233d82; color: #d3d3d3;}
-.badge-ephemeral { background-color: #9dfff7; color: #7c7c7c;}
+.badge-ephemeral { background-color: #9dfff7; color: #aaaaaa;}
 .badge-abstruse { background-color: #131c99ff; color: #818181;}
 .badge-creative { background-color: #fcff52; color: #424242; }
 .badge-meaninglessness { background-color: #e2ffed; color: #303030; }
 .badge-illimitátus { background-color: #202020; color: #f8f8f8; }
+.badge-solitude { background-color: #2f5e5a; color: #ffffff; }
 
 /* 글로우 애니메이션 정의 */
 @keyframes badgeGlow {
@@ -572,7 +906,46 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     text-shadow: 0 0 10px #114721, 0 0 20px #19351a;
 }
 
+.glow-int1234 {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #180586, #7503d1, #765eff);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 
+    text-shadow: 0 0 10px #6200ff, 0 0 20px #2600ff;
+}
+
+.glow-inmen {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #1b4b4b, #42352c);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 10px #4e4e20, 0 0 20px #5a4a1d;
+}
+
+
+.glow-cand {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #7fd6b9, #67ccaa, #67dd43);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
 
 .glow-aby1 {
     /* 기존 코드 */
