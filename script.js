@@ -257,7 +257,7 @@ const pickaxeRecipes = {
     'bulk': { name: 'Tier 4.5 / Bulk Pickaxe', cost: { 'Diamond': 1, 'Zinc': 640, 'Slate': 4300 }, power: 9 },
     'frozen': {name: "Tier 5.5 / Frozen Pickaxe", cost: { 'Crkyotopis': 1, 'Bismuth': 5, 'Equatox': 100, 'Ice': 53000}, power: 7},
     'ultima': {name: "Tier 13 / Ultima Blastica", cost: { 'Braxichroxmin': 1, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
-    'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': -2e24, 'Iron': 0 }, power: 250 },
+    'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': 2e24, 'Iron': 0 }, power: 250 },
     'luhackaxe': { name: 'luhacks', cost: { 'IXYSOPARDOX': 2e20, 'Iron': 0 }, power: 2500000 }
 };
 const rarityRank = { 'basic': 0, 'common': 1, 'uncommon': 2, 'rare': 3, 'epic': 4, 'midas': 5, 'mythic': 6, 'ephemeral': 7, 'unreal': 8, 'abstruse': 9, 'creative': 10, 'meaninglessness': 11, 'illimitátus': 12, 'solitude': 12.5, 'unknown': 13};
