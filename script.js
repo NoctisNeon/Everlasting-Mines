@@ -5,6 +5,37 @@ const clickSound = new Audio('click.mp3');
 clickSound.volume = 0.05;
 const abilitySound = new Audio("./sounds/ability.mp3");
 
+const UIManager = {
+    needsFullInventoryRefresh: false,
+    requestInventoryUpdate: function() {
+        this.needsFullInventoryRefresh = true;
+    },
+    refresh: function() {
+        // 인벤토리 div 자체가 비어있으면 강제로 새로고침
+        const invEl = document.getElementById('inventory');
+        if (invEl && invEl.innerHTML === "") {
+            this.needsFullInventoryRefresh = true;
+        }
+
+        if (this.needsFullInventoryRefresh) {
+            renderInventory(true); // 여기서 실제 층(currentLayerIndex) 정보를 가져오는지 확인
+            renderEncyclopedia();
+            this.needsFullInventoryRefresh = false;
+        } else {
+            updateInventoryCountsOnly();
+        }
+        updateTotalMinedUI();
+    }
+};
+
+// 페이지 로드 시 타이머 시작
+setInterval(() => {
+    if (typeof UIManager !== 'undefined') {
+        UIManager.refresh();
+    }
+}, 50);
+
+
 const potions = [
     { 
         id: 'luck', 
@@ -16,22 +47,31 @@ const potions = [
         effectIcon: '🍀'
     },
     { 
-        id: 'huge_luck', 
+        id: 'luck2', 
         name: 'Potion of Luck II', 
         price: 750000, 
         duration: 600, // 초 단위
         lore: 'It gets more longer and bigger!', 
         stats: 'Makes you 4x more luckier!',
-        effectIcon: '🍀'
+        effectIcon: '🍀2'
     },
     { 
-        id: 'massive_luck', 
+        id: 'luck3', 
         name: 'Potion of Luck Max', 
         price: 4000000, 
         duration: 1200, // 초 단위
         lore: 'woah.. how did you get that?', 
         stats: 'Makes you 16x more luckier!',
-        effectIcon: '🍀'
+        effectIcon: '🍀3'
+    },
+        { 
+        id: 'luck4', 
+        name: 'Let\'s test your luck!', 
+        price: 40000000, 
+        duration: 5, // 초 단위
+        lore: 'becareful!', 
+        stats: 'Makes you INSANELY luckier!',
+        effectIcon: '🍀T'
     },
     { 
         id: 'speed', 
@@ -49,7 +89,7 @@ const potions = [
         duration: 300, 
         lore: 'oh no i\'m faster and faster', 
         stats: 'Makes you mine 4 times faster! (interval cooltime)',
-        effectIcon: '⚡'
+        effectIcon: '⚡2'
     },
     { 
         id: 'speed3', 
@@ -58,17 +98,26 @@ const potions = [
         duration: 600, 
         lore: 'What?! How?', 
         stats: 'Makes you mine 5.5 times faster! (interval cooltime)',
-        effectIcon: '⚡'
+        effectIcon: '⚡3'
     }
 ];
-// 현재 적용 중인 버프 상태 (종료 시간 저장)
-let activeBoosts = {
-    luck: 0,
-    speed: 0
+
+const effectNames = {
+    'luck': 'Potion of Luck',
+    'luck2': 'Potion of Luck II',
+    'luck3' : 'Potion of Luck Max',
+    'luck4' : 'Test Luck',
+    'speed' : 'Potion of Speed',
+    'speed2' : 'Potion of Fast Speed',
+    'speed3' : 'Potion of at Speed of Sound'
 };
+// 현재 적용 중인 버프 상태 (종료 시간 저장)
+
 
 let lastMineTime = Date.now();
 const miningSpeed = 100;
+let autoMineInterval = null;
+let autoMineRate = 1;
 let isAutoMining = false;
 let isBusy = false;
 let notificationTimer = null;
@@ -76,27 +125,42 @@ let resultTimer = null;
 let player = { luck: 1 };
 let inventory = {}, foundCount = {}, currentPickaxe = 'basic', coins = 0, totalBlocksMined = 0, currentLayerIndex = 0;
 let unlockedPickaxes = ['basic'];
-let lastMinedTime = localStorage.getItem('lastMinedTime') || Date.now();
+let lastOnlineTime = Date.now();
 const CLICK_COOLDOWN = 70; // 0.2초 (200ms) 동안은 클릭 무시
 let lastManualClickTime = 0; // 마지막 클릭 시간 기록용
 let lastRollDebug = { oreName: "없음", baseChance: 0, luck: 0, finalProbability: 0 };
+let lastEncyclopediaHash = "";
+let lastRenderedLayerIndex = -1;
 
+let foundOres = [];
+let activeBoosts = {};
+
+document.getElementById('potion-list').addEventListener('click', function(event) {
+    // 클릭된 요소가 .potion-card 내부의 버튼인지 확인
+    const btn = event.target.closest('.potion-btn'); 
+    
+    // 만약 버튼을 클릭했다면
+    if (btn) {
+        const potionId = btn.getAttribute('data-id');
+        buyPotion(potionId); // 실제 구매 로직 함수 실행
+    }
+});
 
 const raritySounds = {
     epic: new Audio('rare.mp3'),
     midas: new Audio('rare2.mp3'), mythic: new Audio('rare2.mp3'), ephemeral: new Audio('overrare.mp3'),
     unreal: new Audio('overrare.mp3'), abstruse: new Audio("ascendant.mp3"),
-    creative: new Audio('ascendant.mp3'), meaninglessness: new Audio("everything.mp3"), illimitátus: new Audio("otherworldly.mp3")
+    creative: new Audio('ascendant.mp3'), meaninglessness: new Audio("everything.mp3"), illimitátus: new Audio("otherworldly.mp3"), unknown: new Audio("reality.mp3")
 };
 
 const layers = [
     { name: "Grass Layer", ores: ['Grass', 'Iron', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Slate Layer", ores: ['Slate', 'Iron', 'Ruby', 'Diamond', 'Enfinitricifite', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt', 'Gold', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt', 'Gold', 'Malux', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', 'Braxichroxmin', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "?", ores: ['Matizium', 'Lava', 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎'] },
+    { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Bismuth', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "?", ores: ['TH3 M0L3VE413R', 'Matizium', 'Lava', 'Zinc', 'Bismuth', 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎'] },
     { name: "Frostbite", ores: ['Evening Snow', 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ']}
 ];
 
@@ -119,9 +183,9 @@ const rarityColors = {
 };
 
 const ores = [
-    { name: 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ', rarity: 'illimitátus', chance: 399999999999, price: 99999999999, color: 'rgb(0, 162, 255)', glowType: 'frost' },
-    { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎', rarity: 'illimitátus', chance: 120000000000, price: 5900000000, color: 'rgb(17, 129, 17)', glowType: 'legendary' },
-    { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, color: '#4ba8e6', glowType: 'aby1'},
+    { name: 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ', rarity: 'illimitátus', chance: 399999999999, price: 99999999999, glowType: 'frost' },
+    { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎', rarity: 'illimitátus', chance: 120000000000, price: 5900000000, glowType: 'legendary' },
+    { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, glowType: 'aby1'},
     { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', rarity: 'meaninglessness', chance: 41023000000, price: 920000000, color: 'rgb(99, 121, 89)' },
     { name: 'F L O W S C A P E', rarity: 'creative', chance: 1209000000, price: 924002000, color: 'rgb(175, 183, 255)' },
     { name: 'Braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: 'rgb(0, 255, 170)' },
@@ -131,10 +195,12 @@ const ores = [
     { name: 'Solavoltei', rarity: 'unreal', chance: 112000000, price: 6408000, color: '#a9bb91' },
     { name: 'Anvilar', rarity: 'unreal', chance: 101900000, price: 5302000, color: '#f83e3e' },
     { name: 'Enfinitricifite', rarity: 'ephemeral', chance: 53000000, price: 3200000, color: '#61738b' },
+    { name: 'Malux', rarity: 'mythic', chance: 23100000, price: 2100000, color: '#a2dac7' },
     { name: 'Infinitricifite', rarity: 'mythic', chance: 10000000, price: 2100000, color: '#2f80ed' },
     { name: 'Acrictopas', rarity: 'mythic', chance: 5940000, price: 360000, color: '#106954' },
     { name: 'Crkyotopis', rarity: 'midas', chance: 2390000, price: 250000, color: '#666252' },
     { name: 'Diamond', rarity: 'epic', chance: 50000, price: 5000, color: '#00f2fe' },
+    { name: 'Bismuth', rarity: 'epic', chance: 25500, price: 2500, glowType: 'rainbow'},
     { name: 'Ruby', rarity: 'rare', chance: 2500, price: 1000, color: '#e74c3c' },
     { name: 'Gold', rarity: 'rare', chance: 320, price: 500, color: '#f1c40f' },
     { name: 'Equatox', rarity: 'rare', chance: 120, price: 300, color: '#ffec9e' },
@@ -149,7 +215,8 @@ const ores = [
     { name: 'Slate', rarity: 'common', chance: 2, price: 10, color: '#a6c2d4' },
     { name: 'Stone', rarity: 'common', chance: 2, price: 10, color: '#bdc3c7' },
     { name: 'Evening Snow', rarity: 'common', chance: 2, price: 10, color: '#30678b' },
-    { name: 'Matizium', rarity: 'unknown', chance: 1000000000000, price: 293000000000, color: '#434e53', displayChance: "1/0" }
+    { name: 'Matizium', rarity: 'unknown', chance: 15000000000000, price: 293000000000, color: '#434e53', displayChance: "1/0" },
+    { name: 'TH3 M0L3VE413R', rarity: 'unknown', chance: 100000000000, price: 293000000001, color: '#0f1416', displayChance: "1/0" }
 ];
 
 const pickaxeLore = {
@@ -166,14 +233,14 @@ const pickaxeLore = {
 
 const pickaxes = {
     basic: { name: "Basic Pickaxe", power: 1, luck: 1.0, superChance: 0.0, superCount: 0 },
-    scrap: { name: "Tier 1 / Abandoned Pickaxe", power: 1, luck: 1.2, superChance: 0.01, superCount: 100 },
-    steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 230 },
-    godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.09, superCount: 450 },
-    light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 2.15, superChance: 0.025, superCount: 1750 },
-    bulk: { name: "Tier 4 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 3400 },
-    ultima: { name: "Tier 13 / Ultima Blastica", power: 102, luck: 3.75, superChance: 0.025, superCount: 62000 },
-    hackaxe: { name: "hack axe", power: 250, luck: 25.0, superChance: 0.1, superCount: 250000},
-    luhackaxe: { name: "luhack axe", power: 2500000, luck: 250.0, superChance: 0, superCount: 120000}
+    scrap: { name: "Tier 1 / Abandoned Pickaxe", power: 1, luck: 1.05, superChance: 0.01, superCount: 50 },
+    steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 100 },
+    godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.09, superCount: 250 },
+    light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 2.15, superChance: 0.025, superCount: 850 },
+    bulk: { name: "Tier 4 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 2000 },
+    ultima: { name: "Tier 13 / Ultima Blastica", power: 125, luck: 6.75, superChance: 0.025, superCount: 62000 },
+    hackaxe: { name: "hack axe", power: 250, luck: 25.0, superChance: 0.1, superCount: 2500},
+    luhackaxe: { name: "luhack axe", power: 1, luck: 25000000.0, superChance: 0, superCount: 120000}
 };
 
 const pickaxeRecipes = {
@@ -182,77 +249,125 @@ const pickaxeRecipes = {
     'godPickaxe': { name: 'Tier 3 / God Pickaxe', cost: { 'Gold': 15, 'Iron': 125 }, power: 5 },
     'light': { name: 'Tier 4 / Lightning Pickaxe', cost: { 'Ruby': 6, 'Gold': 8, 'Equatox': 12 }, power: 7 },
     'bulk': { name: 'Tier 4 / Bulk Pickaxe', cost: { 'Diamond': 1, 'Zinc': 640, 'Slate': 4300 }, power: 7 },
-    'ultima': {name: "Tier 13 / Ultima Blastica", cost: { 'Braxichroxmin': 1, 'Anvilar': 3, 'Diamond': 3200, 'Iron': 640000}, power: 73},
-    'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': 23231, 'Iron': 1 }, power: 250 },
-    'luhackaxe': { name: 'luhacks', cost: { 'IXYSOPARDOX': 23232322, 'Iron': 0 }, power: 2500000 }
+    'ultima': {name: "Tier 13 / Ultima Blastica", cost: { 'Braxichroxmin': 1, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
+    'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': 2e24, 'Iron': 0 }, power: 250 },
+    'luhackaxe': { name: 'luhacks', cost: { 'IXYSOPARDOX': 2e20, 'Iron': 0 }, power: 2500000 }
 };
 const rarityRank = { 'common': 0, 'uncommon': 1, 'rare': 2, 'epic': 3, 'midas': 4, 'mythic': 5, 'ephemeral': 6, 'unreal': 7, 'abstruse': 8, 'creative': 9, 'meaninglessness': 10, 'illimitátus': 11};
 
 
+
 ores.forEach(ore => { inventory[ore.name] = 0; foundCount[ore.name] = 0; });
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 여기에는 소리 파일이나 변수 선언은 빼고, 
-    // 페이지가 로드된 후 실행할 초기화 작업들만 남기세요.
-    loadGame();
-    updateUI();
-    autoMineLoop();
-    console.log("Game system successfully reset");
-});
-
+function formatNumber(num) {
+    if (num < 1000) return num.toFixed(0); // 1000 미만은 그대로 표시
+    
+    const units = ["", "k", "m", "b", "t", "q", "qi", "sx", "sp", "o", "n", "d"];
+    let unitIndex = 0;
+    
+    // 1000으로 나누면서 단위를 올림
+    while (num >= 1000 && unitIndex < units.length - 1) {
+        num /= 1000;
+        unitIndex++;
+    }
+    
+    // 소수점 2자리까지만 표시 (예: 1.23k)
+    return num.toFixed(2).replace(/\.00$/, "") + units[unitIndex];
+}
 
 function updateActiveEffectsUI() {
     const box = document.getElementById('active-effects-box');
     const list = document.getElementById('effects-list');
+    const now = Date.now();
+    const activeKeys = Object.keys(activeBoosts);
+    
     let html = '';
     let hasActive = false;
 
-    // 포션 종류별로 순회
-    for (const [effect, endTime] of Object.entries(activeBoosts)) {
-        const remaining = Math.ceil((endTime - Date.now()) / 1000);
+    for (const effect of activeKeys) {
+        const endTime = activeBoosts[effect];
         
-        if (remaining > 0) {
+        if (endTime > now) {
             hasActive = true;
-            // 효과별 이름/아이콘 설정
-            const name = (effect === 'luck') ? '🍀 Luck Boosts' : '⚡ Speed Boosts';
-            html += `<div style="margin-bottom: 5px;">${name}: <strong>${remaining}Seconds</strong> left</div>`;
+            const remaining = Math.ceil((endTime - now) / 1000);
+            const name = effectNames[effect] || effect;
+            html += `<div style="margin-bottom: 5px;">${name}: <strong>${remaining} Seconds</strong> left</div>`;
+        } else {
+            // 시간이 끝난 것은 제거
+            delete activeBoosts[effect];
         }
     }
 
+    // UI 반영
     if (hasActive) {
-        box.style.display = 'block'; // 버프가 있으면 표시
+        box.style.display = 'block';
         list.innerHTML = html;
     } else {
-        box.style.display = 'none'; // 버프가 없으면 숨김
+        box.style.display = 'none';
     }
 }
 
-setInterval(updateActiveEffectsUI, 1000);
+
+
+function loadOfflineProgress() {
+
+    const lastTime =
+        localStorage.getItem("lastTime");
+
+    if (!lastTime) return;
+
+    const elapsed =
+        Date.now() - Number(lastTime);
+
+    const seconds =
+        elapsed / 1000;
+
+    const mined =
+        Math.floor(seconds * miningSpeed);
+
+    for (let i = 0; i < mined; i++) {
+        addOreToInventory(
+            rollOre(currentLuck)
+        );
+    }
+
+    alert(
+        `While away, you mined ${mined} ores!`
+    );
+}
 
 function renderPotions() {
-    const container = document.getElementById('potion-list');
-    if (!container) return;
+    const potionListContainer = document.getElementById('potion-list');
+    
+    if (!potionListContainer) {
+        console.error("Element 'potion-list' not found.");
+        return;
+    }
 
-    container.innerHTML = potions.map(p => {
-        const isActive = Date.now() < activeBoosts[p.id];
+    potionListContainer.innerHTML = ''; 
+
+    potions.forEach(potion => {
+        const div = document.createElement('div');
+        div.className = 'potion-card';
         
-        return `
-            <div class="card" style="width: 100%; margin-bottom: 10px;">
-                <div style="font-weight: bold; font-size: 1.1em;">${p.name}</div>
-                <div style="font-size: 0.85em; color: #aaa; margin: 5px 0;">${p.lore}</div>
-                <div style="font-size: 0.9em; margin-bottom: 10px;">
-                    ${p.effectIcon} <strong>효과:</strong> ${p.stats} | ⏳ ${p.duration} Seconds
-                </div>
-                <button 
-                    onclick="buyPotion('${p.id}')" 
-                    ${isActive ? 'disabled' : ''} 
-                    style="width: 100%; padding: 8px; cursor: ${isActive ? 'default' : 'pointer'};">
-                    ${isActive ? 'on effect' : `${p.price} coins`}
-                </button>
+        // 가격 포맷팅
+        const formattedPrice = potion.price.toLocaleString();
+
+        div.innerHTML = `
+            <h4 style="margin: 0 0 8px 0;">${potion.effectIcon} ${potion.name}</h4>
+            <div class="potion-stats" style="font-size: 0.85rem; color: #aaa; margin-bottom: 8px;">
+                <p style="margin: 2px 0;">✨ ${potion.stats}</p>
+                <p style="margin: 2px 0;">⏱️ Duration: ${potion.duration}s</p>
             </div>
+            <p class="potion-lore" style="font-style: italic; font-size: 0.75rem; color: #777; margin-bottom: 12px;">
+                "${potion.lore}"
+            </p>
+            <button class="buy-btn" onclick="buyPotion('${potion.id}')">
+                Buy for ${formattedPrice} Coins
+            </button>
         `;
-    }).join('');
+        potionListContainer.appendChild(div);
+    });
 }
 
 function checkLuckDebug() {
@@ -261,55 +376,71 @@ function checkLuckDebug() {
     console.log("--------------------------");
 }
 
-function buyPotion(id) {
-    const potion = potions.find(p => p.id === id);
-    if (!potion) return;
-
-    // 코인 체크 (코인 변수명에 맞게 수정하세요)
-    if (coins < potion.price) {
-        alert("Get more money! :(");
-        return;
+function activatePotion(potion) {
+    // 1. 현재 시간 + 지속 시간(초)을 밀리초 단위로 계산하여 저장
+    // potion 객체에 duration 속성이 있다고 가정합니다 (예: 30초면 30)
+    const durationMs = potion.duration * 1000;
+    
+    // 2. 만약 이미 같은 버프가 있다면, 시간을 연장하거나 덮어쓰기
+    const now = Date.now();
+    const existingEndTime = activeBoosts[potion.id];
+    
+    if (existingEndTime && existingEndTime > now) {
+        // 이미 활성화 중이면 남은 시간에 추가 (혹은 갱신)
+        activeBoosts[potion.id] = existingEndTime + durationMs;
+    } else {
+        // 새로 적용
+        activeBoosts[potion.id] = now + durationMs;
     }
 
-    // 코인 차감 및 상태 저장
-    coins -= potion.price;
-    activeBoosts[id] = Date.now() + (potion.duration * 1000);
+    console.log(`Potion activated: ${potion.id}, New End Time: ${activeBoosts[potion.id]}`);
+}
 
-    // UI 갱신
-    renderPotions(); // 상점 UI 갱신
-    updateUI();      // 전체 UI 갱신 (코인 표시 등)
-    saveGame();      // 상태 저장
+function buyPotion(potionId) {
+    const potion = potions.find(p => p.id === potionId);
+    if (!potion) return;
+
+    if (coins >= potion.price) {
+        coins -= potion.price;
+        
+        // 포션 활성화 및 인벤토리/효과 리스트에 추가
+        activatePotion(potion);
+        
+        saveGame();
+        updateUI(); 
+        
+        // 사용자 피드백
+        alert(`${potion.name} purchased and activated!`);
+    } else {
+        alert("Not enough coins!");
+    }
 }
 
 function autoMineLoop() {
-    // 1. 오토마이닝이 꺼져 있을 때
     if (!isAutoMining) {
-        lastMinedTime = Date.now(); // 채굴 시간을 현재로 초기화 (밀림 방지)
         requestAnimationFrame(autoMineLoop);
         return;
     }
-
-    // 2. 오토마이닝이 켜져 있을 때만 로직 실행
     const currentTime = Date.now();
-    const timePassed = currentTime - lastMinedTime;
-
-    if (timePassed >= miningSpeed) {
-        const timesToMine = Math.floor(timePassed / miningSpeed);
-        for(let i = 0; i < timesToMine; i++) {
-            onMineButtonClick(); 
-        }
-        lastMinedTime += (timesToMine * miningSpeed);
+    if (currentTime - lastMineTime >= miningSpeed) {
+        onMineButtonClick();
+        lastMineTime = currentTime; 
     }
-
     requestAnimationFrame(autoMineLoop);
 }
+function updateShopUI() {
+    const coinEl = document.getElementById('coin-display');
+    
+    // 1. 요소 존재 확인 (오류 방지)
+    if (!coinEl) {
+        console.warn("updateShopUI: 'coin-display' 요소를 찾을 수 없습니다. HTML 구조를 확인하세요.");
+        return;
+    }
 
+    // 2. 값 업데이트
+    coinEl.innerText = `💰 Coins: ${formatNumber(coins)}`;
+}
 // 게임 시작 시 루프 실행 (window.onload 안에 넣거나, 가장 아래에 적으세요)
-autoMineLoop();
-
-// 시작
-autoMineLoop();
-
 function sellOre(oreName) {
     const ore = ores.find(o => o.name === oreName);
     if (!ore) return;
@@ -333,7 +464,7 @@ function sellOre(oreName) {
 }
 
 function saveTime() {
-    localStorage.setItem('lastMinedTime', lastMinedTime);
+    localStorage.setItem('lastMineTime', lastMineTime);
 }
 
 // 페이지가 로드될 때 또는 다시 활성화될 때 실행
@@ -343,44 +474,43 @@ window.addEventListener('focus', () => {
 });
 
 function renderShop() {
-    const shopEl = document.getElementById('shop-items'); // 상점 컨테이너 ID
-    
-    // 물약 목록 생성
-    const potionHtml = potions.map((p, index) => {
-        const isBoosted = Date.now() < activeBoosts[p.effect];
-        return `
-            <div class="card">
-                <h3>${p.name}</h3>
-                <p>가격: ${p.price} 코인</p>
-                <button onclick="buyPotion(${index})" ${isBoosted ? 'disabled' : ''}>
-                    ${isBoosted ? '사용 중...' : '구매하기'}
-                </button>
-            </div>
-        `;
-    }).join('');
-    renderPotions();
-    shopEl.innerHTML = `<h2>상점</h2>` + potionHtml;
+    // 1. 코인 표시 UI만 업데이트 (기존 HTML 살림)
+    updateShopUI(); 
+
+    // 2. 포션 리스트 컨테이너를 찾아서 내용물만 렌더링
+    const potionList = document.getElementById('potion-list');
+    if (potionList) {
+        // 기존 포션 리스트를 비우고 다시 그리기 (리스트만 비우는 것임)
+        potionList.innerHTML = ''; 
+        renderPotions(potionList); // renderPotions가 리스트를 인자로 받도록 수정
+    }
+
+    // 3. 곡괭이 리스트도 마찬가지
+    const pickaxeList = document.getElementById('pickaxe-ui-list');
+    if (pickaxeList) {
+        pickaxeList.innerHTML = '';
+        renderPickaxesUI(pickaxeList);
+    }
 }
 
-function switchShopTab(tabName) {
+function switchShopTab(tabName, event) {
     // 1. 모든 서브 섹션 숨기기
-    document.querySelectorAll('.sub-section').forEach(el => el.style.display = 'none');
-    
-    // 2. 모든 버튼의 'active' 클래스 제거
-    document.querySelectorAll('.sub-tab-btn').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-section').forEach(s => {
+        s.classList.remove('active');
+        s.style.display = 'none';
+    });
+    // 2. 버튼 활성화 상태 초기화
+    document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
 
-    // 3. 선택한 섹션 보여주기
-    document.getElementById(`${tabName}-section`).style.display = 'block';
-
-    // 4. 클릭한 버튼에 'active' 클래스 추가 (이벤트가 전달되지 않을 경우를 대비해 직접 선택)
-    const activeBtn = Array.from(document.querySelectorAll('.sub-tab-btn'))
-        .find(btn => btn.innerText.toLowerCase().includes(tabName));
-    if (activeBtn) activeBtn.classList.add('active');
-
-    // [핵심 추가] 탭을 열 때마다 포션 목록을 새로 그려줍니다!
-    if (tabName === 'alchemist') {
-        renderPotions();
+    // 3. 선택한 섹션 보이기
+    const target = document.getElementById(tabName + '-section');
+    if (target) {
+        target.classList.add('active');
+        target.style.display = 'block';
     }
+    
+    // 4. 클릭한 버튼에 active 추가
+    event.currentTarget.classList.add('active');
 }
 
 // Bulk Mining 로직을 별도 함수로 분리 (유지보수 용이)
@@ -417,88 +547,89 @@ function processBulkMining(pick) {
 function addOreToInventory(ore) {
     if (!inventory[ore.name]) inventory[ore.name] = 0;
     inventory[ore.name]++;
-    totalBlocksMined++; 
-    
+    totalBlocksMined++;
+
     const isNew = (foundCount[ore.name] || 0) === 0;
     foundCount[ore.name] = (foundCount[ore.name] || 0) + 1;
-    
+
     return isNew;
 }
 
-
-function showSection(sectionId, btnElement) {
-    // 1. 섹션 숨기기/보이기 로직 (이미 잘 되어 있음)
-    document.querySelectorAll('.section').forEach(s => { 
-        s.style.display = 'none'; 
-        s.classList.remove('active'); 
-    });
+function performMining() {
+    // 1. 광물을 얻는 로직 (기존 코드 사용)
+    const minedOre = getRandomOre(); // 광물 결정 로직
     
-    const target = document.getElementById(sectionId);
-    if (target) {
-        target.style.display = 'block';
-        target.classList.add('active');
+    // 2. 인벤토리/통계 갱신
+    inventory[minedOre.name] = (inventory[minedOre.name] || 0) + 1;
+    foundCount[minedOre.name] = (foundCount[minedOre.name] || 0) + 1;
+    
+    // 3. [핵심] 도감 자동 업데이트
+    if ((foundCount[minedOre.name] || 0) === 1) { // 처음 캤을 때만
+        console.log("새로운 광물 발견!");
+        renderEncyclopedia(); // 도감 즉시 갱신
     }
-
-    // 2. 버튼 상태 변경 로직
-    if (btnElement) {
-        // 모든 탭 버튼에서 active 제거
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        // 클릭한 버튼(btnElement)에만 active 추가
-        btnElement.classList.add('active');
-    }
+    
+    // 4. 화면 갱신 (전체 UI 업데이트)
+    updateUI(); 
+    saveGame();
 }
 
-function toggleAutoMine() {
+function toggleAutoMining() {
     isAutoMining = !isAutoMining;
     const btn = document.getElementById('autoMineBtn');
     if (isAutoMining) {
         btn.innerText = "Auto Mining ON";
-        btn.style.backgroundColor = "#27ae60"; // 초록색
-        lastMineTime = Date.now();
+        btn.style.backgroundColor = "#4caf50";
+        // 기존의 requestAnimationFrame과 setInterval이 혼재된 구조를 제거하고 하나로 통합
+        if (autoMineInterval) clearInterval(autoMineInterval);
+        autoMineInterval = setInterval(() => {
+            if (isAutoMining) performMining(); 
+        }, 1000 / autoMineRate);
     } else {
         btn.innerText = "Auto Mining OFF";
-        btn.style.backgroundColor = "#cc3333"; // 빨간색
+        btn.style.backgroundColor = "#ff4d4d";
+        clearInterval(autoMineInterval);
+        autoMineInterval = null;
     }
 }
 
 function rollOre(luck) {
     const currentLayerOres = layers[currentLayerIndex].ores;
-    const availableOres = ores.filter(o => currentLayerOres.includes(o.name));
+    const availableOres = ores.filter(o =>
+        currentLayerOres.includes(o.name)
+    );
 
-    const weights = availableOres.map(o => {
-        const rank = rarityRank[o.rarity] || 0; 
-        const baseWeight = 1 / o.chance;
-        
-        // 희귀도에 따른 운 보정 계산
-        const luckMultiplier = 1 + (luck * rank * 0.05); 
-        return baseWeight * luckMultiplier;
-    });
+    // 가장 희귀한 광물부터 검사
+    const sortedOres = [...availableOres]
+        .sort((a, b) => b.chance - a.chance);
 
-    const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-    let random = Math.random() * totalWeight;
-    
-    for (let i = 0; i < availableOres.length; i++) {
-        random -= weights[i];
-        if (random <= 0) {
-            const selectedOre = availableOres[i];
-            
-            // --- [디버깅 추가] ---
-            // 선택된 광물의 최종 확률 = (해당 광물의 가중치 / 전체 가중치 합계)
-            const finalProb = (weights[i] / totalWeight) * 100;
+    for (const ore of sortedOres) {
+
+        // Luck 적용
+        const effectiveChance = Math.max(
+            1,
+            ore.chance / luck
+        );
+
+        if (Math.random() < (1 / effectiveChance)) {
 
             lastRollDebug = {
-                oreName: selectedOre.name,
-                baseChance: (1 / selectedOre.chance).toFixed(4), // 원래 확률(가중치)
-                appliedLuck: luck.toFixed(2),                    // 현재 적용된 총 운 수치
-                finalProbability: finalProb.toFixed(2) + "%"     // 물약 적용 후 최종 확률
+                oreName: ore.name,
+                originalChance: `1/${ore.chance}`,
+                appliedLuck: luck.toFixed(2),
+                finalChance: `1/${Math.floor(effectiveChance)}`
             };
-            // --------------------
 
-            return selectedOre;
+            return ore;
         }
     }
-    
-    return availableOres[availableOres.length - 1];
+
+    // 아무것도 안 뜨면 가장 흔한 광물
+    return availableOres.reduce((commonest, ore) =>
+        ore.chance < commonest.chance
+            ? ore
+            : commonest
+    );
 }
 
 function showResult(text) {
@@ -513,61 +644,42 @@ function showResult(text) {
     resultTimer = setTimeout(() => { el.innerHTML = ""; }, 1500);
 }
 
+// 버프가 활성화되어 있는지 확인하는 공통 함수
+function isEffectActive(potionId) {
+    // activeBoosts 객체가 존재하는지, 그리고 해당 id의 종료 시간이 현재 시간보다 큰지 확인
+    if (typeof activeBoosts !== 'undefined' && activeBoosts[potionId]) {
+        return activeBoosts[potionId] > Date.now();
+    }
+    return false; // 데이터가 없거나 시간이 지났으면 false 반환
+}
 function onMineButtonClick() {
-    // 1. 상태 체크 (현재 버프 적용 여부)
-// 1. 상태 체크 (현재 버프 적용 여부)
-    const isSpeedBoosted = Date.now() < activeBoosts.speed;
-    const isSpeed2Boosted = Date.now() < activeBoosts.speed2;
-    const isSpeed3Boosted = Date.now() < activeBoosts.speed3;
-    
-    const isLuckBoosted = Date.now() < activeBoosts.luck;
-    const isLuck2Boosted = Date.now() < activeBoosts.luck2;
-    const isLuck3Boosted = Date.now() < activeBoosts.luck3;
+    const isSpeed3 = isEffectActive('speed3');
+    const isSpeed2 = isEffectActive('speed2');
+    const isSpeed = isEffectActive('speed');
+    const isLuck4 = isEffectActive('luck4');
+    const isLuck3 = isEffectActive('luck3');
+    const isLuck2 = isEffectActive('luck2');
+    const isLuck = isEffectActive('luck');
 
-    // 2. 쿨타임 배율 계산 (높은 단계가 우선 적용되도록)
-    let cooldownFactor = 1.0; 
-    if (isSpeed3Boosted) cooldownFactor = 0.15;
-    else if (isSpeed2Boosted) cooldownFactor = 0.25;
-    else if (isSpeedBoosted) cooldownFactor = 0.5;
+    const cooldownFactor = isSpeed3 ? 0.15 : (isSpeed2 ? 0.25 : (isSpeed ? 0.5 : 1.0));
+    const luckMultiplier = isLuck4 ? 2048 : (isLuck3 ? 16 : (isLuck2 ? 4 : (isLuck ? 2 : 1)));
 
-    const currentCooldown = CLICK_COOLDOWN * cooldownFactor; // 여기서만 선언
-
-
-    // 3. 행운 배율 계산 (높은 단계가 우선 적용되도록)
-    let luckMultiplier = 1; // 기본값
-    if (isLuck3Boosted) {
-        luckMultiplier = 16;
-    } else if (isLuck2Boosted) {
-        luckMultiplier = 4;
-    } else if (isLuckBoosted) {
-        luckMultiplier = 2;
-    }
-
-    // 4. 이제 계산된 currentCooldown과 luckMultiplier를 사용합니다.
     const currentTime = Date.now();
-    
-    if (currentTime - lastManualClickTime < currentCooldown) {
-        return; 
-    }
-    
-
-    if (isBusy) return; 
+    if (isBusy || (currentTime - lastManualClickTime < (CLICK_COOLDOWN * cooldownFactor))) return;
 
     lastManualClickTime = currentTime;
-    isBusy = true; 
-    
+    isBusy = true;
+
     const pick = pickaxes[currentPickaxe];
     let isSuper = Math.random() < pick.superChance;
     let iterations = isSuper ? pick.superCount : pick.power;
     
     let rarestOre = null;
     let highestRank = -1;
-    let foundNew = false; 
+    let foundNew = false;
 
     for(let i = 0; i < iterations; i++) {
-        // [수정2] rollOre에 행운 배율(luckMultiplier)을 곱해서 전달
-        let rolled = rollOre(pick.luck * luckMultiplier); 
-        
+        let rolled = rollOre(pick.luck * luckMultiplier);
         if (addOreToInventory(rolled)) foundNew = true;
 
         let currentRank = rarityRank[rolled.rarity];
@@ -577,32 +689,21 @@ function onMineButtonClick() {
         }
     }
 
-    // 결과 표시 및 처리
+    // 결과 표시
     if (rarestOre) {
-        let resultText = iterations === 1 
-            ? `You got <span style="color: ${rarestOre.color}; font-weight: bold;">${rarestOre.name}</span>!` 
-            : `You got ${iterations} items! (Rarest: <span style="color: ${rarestOre.color}; font-weight: bold;">${rarestOre.name}</span>)`;
-        
+        const glowClass = `glow-${rarestOre.glowType}`;
+        const oreDisplay = `<span class="${glowClass}" style="color: ${rarestOre.color}; font-weight: bold;">${rarestOre.name}</span>`;
+        let resultText = iterations === 1 ? `You got ${oreDisplay}!` : `You got ${iterations} items! (Rarest: ${oreDisplay})`;
         if (foundNew) resultText += ' <span style="color: #ffcc00; font-size: 14px; font-weight: bold;">(New ore discovered!)</span>';
 
-        if (isSuper) {
-            playSound(superSound);
-            showResult(`✨ <strong>Bulk Mining Activated!</strong><br>${resultText}`);
-            setTimeout(() => { isBusy = false; }, 1000); 
-        } else {
-            playSound(raritySounds[rarestOre.rarity] || clickSound);
-            showResult(resultText);
-            isBusy = false;
+        showResult(resultText);
+        playSound(isSuper ? superSound : (raritySounds[rarestOre.rarity] || clickSound));
+        
+if (foundNew) {
+            UIManager.requestInventoryUpdate();
         }
-    } else {
-        isBusy = false;
     }
-
-    updateTotalMinedUI();
-    renderInventory();
-    renderEncyclopedia();
-    saveGame();
-    updateUI(); // 이 함수 안에서 renderPotions()도 호출되므로 탭 이동 시 UI가 갱신됩니다.
+    isBusy = false;
 }
 
 // [시스템 알림 전용 출력 함수]
@@ -619,107 +720,149 @@ function showNotification(text) {
 }
 function playSound(audioObj) { if (!audioObj) return; const sound = audioObj.cloneNode(); sound.play().catch(e => console.log(e)); }
 
+
+
 function getGlowClass(o) {
     // glowType이 있다면 'glow-타입명'을 반환, 없으면 빈 문자열 반환
     return o.glowType ? `glow-${o.glowType}` : '';
 }
 
 function showSection(sectionId, clickedBtn) {
-    // 1. 모든 섹션 숨기기
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-        section.style.display = 'none'; // 안전장치
+    const allSections = document.querySelectorAll('.section');
+    const target = document.getElementById(sectionId);
+
+    // 1. 모든 섹션 클래스 제거 (CSS에 의해 즉시 visibility: hidden 됨)
+    allSections.forEach(s => {
+        s.classList.remove('active');
     });
 
-    // 2. 선택한 섹션만 보이기
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) {
-        targetSection.classList.add('active');
-        targetSection.style.display = 'block'; // 안전장치
+    // 2. 대상 섹션 클래스 추가 (CSS에 의해 visibility: visible 되고 opacity가 서서히 1이 됨)
+    if (target) {
+        requestAnimationFrame(() => {
+            target.classList.add('active');
+        });
+
+        if (sectionId === 'shop') renderShop();
+        if (sectionId === 'encyclopedia') renderEncyclopedia();
     }
 
-    // 3. 모든 탭 버튼에서 active 클래스 제거
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-
-    // 4. 클릭한 버튼에만 active 클래스 추가
-    clickedBtn.classList.add('active');
+    // 3. 버튼 활성화
+    if (clickedBtn) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        clickedBtn.classList.add('active');
+    }
 }
 
-function renderInventory() {
+function renderInventory(forceUpdate = false) {
     const el = document.getElementById('inventory');
     if (!el) return;
 
-    const currentLayerOreNames = layers[currentLayerIndex].ores;
-    const visibleOres = ores.filter(o => currentLayerOreNames.includes(o.name));
+    // 1. 레이어가 바뀌었거나 forceUpdate가 true일 때만 전체 렌더링
+    // lastRenderedLayerIndex와 currentLayerIndex를 비교하는 것이 핵심!
+    if (forceUpdate || el.innerHTML === "" || lastRenderedLayerIndex !== currentLayerIndex) {
+        
+        const currentLayerOreNames = layers[currentLayerIndex].ores;
+        const visibleOres = ores.filter(o => currentLayerOreNames.includes(o.name));
 
-    el.innerHTML = `<ul class="inventory-list" style="list-style: none; padding: 0;">` + visibleOres.map(o => {
-        const count = inventory[o.name] || 0;
-        const isFound = (foundCount[o.name] || 0) > 0;
-        const glowClass = isFound ? getGlowClass(o) : '';
-        const chanceDisplay = o.displayChance ? o.displayChance : `1/${o.chance.toLocaleString()}`;
-        const isDisabled = count === 0;
+        el.innerHTML = `<ul class="inventory-list" style="list-style: none; padding: 0;">` + visibleOres.map(o => {
+            // ... (기존 HTML 렌더링 코드 동일) ...
+            const count = inventory[o.name] || 0;
+            const isFound = (foundCount[o.name] || 0) > 0;
+            const glowClass = isFound ? getGlowClass(o) : '';
+            const chanceDisplay = o.displayChance ? o.displayChance : `1/${o.chance.toLocaleString()}`;
+            
+            return `
+                <li id="ore-item-${o.name}" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        ${isFound ? 
+                            `<span class="rarity-badge badge-${o.rarity}">${o.rarity.toUpperCase()}</span>
+                             <span class="${glowClass}" style="color: ${o.color}; font-weight: bold;">${o.name}</span>
+                             <span style="font-size: 10px; color: #888;">(${chanceDisplay})</span>
+                             <span id="count-text-${o.name}" style="margin-left: 5px;">: ${formatNumber(count)}</span>` 
+                            : 
+                            `<span class="rarity-badge badge-unknown" style="background-color: #333; margin-right: 8px;">???</span>
+                             <span style="color: #666; font-weight: bold;">???</span>`
+                        }
+                    </div>
+                    <div id="sell-btn-container-${o.name}">
+                        ${isFound ? 
+                            `<button onclick="sellOre('${o.name}')" id="sell-btn-${o.name}" class="small-sell-btn" 
+                                    style="padding: 2px 8px; font-size: 12px; cursor: ${count === 0 ? 'not-allowed' : 'pointer'};" 
+                                    ${count === 0 ? 'disabled' : ''}>Sell</button>` 
+                            : `<span></span>`
+                        }
+                    </div>
+                </li>
+            `;
+        }).join('') + `</ul>`;
 
-        // [핵심] li 구조는 동일하게 유지하고 내부 내용만 삼항연산자로 바꿉니다.
-        return `
-            <li style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                    ${isFound ? 
-                        `<span class="rarity-badge badge-${o.rarity}">${o.rarity.toUpperCase()}</span>
-                         <span class="${glowClass}" style="color: ${o.color}; font-weight: bold;">${o.name}</span>
-                         <span style="font-size: 10px; color: #888;">(${chanceDisplay})</span>
-                         <span style="margin-left: 5px;">: ${count}</span>` 
-                        : 
-                        `<span class="rarity-badge badge-unknown" style="background-color: #333; margin-right: 8px;">???</span>
-                         <span style="color: #666; font-weight: bold;">???</span>`
-                    }
-                </div>
-                
-                ${isFound ? 
-                    `<button 
-                        onclick="sellOre('${o.name}')" 
-                        ${isDisabled ? 'disabled' : ''} 
-                        class="small-sell-btn"
-                        style="padding: 2px 8px; font-size: 12px; cursor: ${isDisabled ? 'not-allowed' : 'pointer'};">
-                        Sell
-                    </button>` 
-                    : 
-                    `<span></span>` 
-                }
-            </li>
-        `;
-    }).join('') + `</ul>`;
+        // 현재 렌더링된 레이어 인덱스 업데이트
+        lastRenderedLayerIndex = currentLayerIndex;
+        
+    } else {
+        // 2. 레이어가 같다면 숫자만 업데이트
+        updateInventoryCountsOnly();
+    }
 }
 
 function renderEncyclopedia() {
-    const el = document.getElementById('encyclopedia');
-    if (!el) return;
+    let container = document.getElementById('encyclopedia-content');
+    
+    // 컨테이너 초기화 로직 (기존 유지)
+    if (!container) {
+        const parent = document.getElementById('encyclopedia');
+        if (parent) {
+            container = document.createElement('div');
+            container.id = 'encyclopedia-content';
+            parent.appendChild(container);
+        } else return;
+    }
+    container.innerHTML = '';
 
-    el.innerHTML = `<h3>Ore Encyclopedia</h3>` + ores.map(o => {
-        const isFound = foundCount[o.name] > 0;
-        const count = foundCount[o.name] || 0;
-        // 발견되었을 때만 getGlowClass를 호출
-        const glowClass = isFound ? getGlowClass(o) : '';
+    // 1. 희귀도별로 데이터 그룹화
+    const rarityOrder = ['unknown', 'illimitátus', 'meaninglessness', 'creative', 'abstruse', 'unreal', 'ephemeral', 'mythic', 'midas', 'epic', 'rare', 'uncommon', 'common']; // 원하는 정렬 순서
+    const groupedOres = ores.reduce((acc, ore) => {
+        const rarity = (ore.rarity || 'common').toLowerCase();
+        if (!acc[rarity]) acc[rarity] = [];
+        acc[rarity].push(ore);
+        return acc;
+    }, {});
 
-        if (isFound) {
-            return `
-            <div style="margin-bottom: 10px; display: flex; align-items: center;">
-                <span class="rarity-badge badge-${o.rarity}" style="margin-right: 8px;">
-                    ${o.rarity.toUpperCase()}
-                </span>
-                <strong class="${glowClass}" style="color: ${o.color}; margin-right: 5px;">${o.name}</strong>
-                <span style="font-size: 10px; color: #888;">(1/${o.chance.toLocaleString()})</span>
-                <span style="margin-left: 5px;">: ${count}'s founded</span>
-            </div>`;
-        } else {
-            return `
-            <div style="margin-bottom: 10px; opacity: 0.6; display: flex; align-items: center;">
-                <span class="rarity-badge" style="background-color: #333; margin-right: 8px;">???</span>
-                <strong>???</strong>
-            </div>`;
-        }
-    }).join('');
+    // 2. 그룹별로 렌더링
+    rarityOrder.forEach(rarity => {
+        if (!groupedOres[rarity]) return; // 해당 희귀도 광물이 없으면 패스
+
+        // 희귀도 헤더 생성
+        const groupTitle = document.createElement('h3');
+        groupTitle.textContent = rarity.toUpperCase();
+        groupTitle.className = 'rarity-group-title';
+        container.appendChild(groupTitle);
+
+        // 해당 그룹 광물들 생성
+        groupedOres[rarity].forEach(ore => {
+            const isFound = (foundCount[ore.name] || 0) > 0;
+            const oreCard = document.createElement('div');
+            oreCard.className = 'card encyclopedia-item';
+            
+            const badgeClass = `badge-${rarity}`;
+            const glowClass = (typeof getGlowClass === 'function') ? getGlowClass(ore) : (ore.glowType || '');
+
+            if (isFound) {
+                oreCard.innerHTML = `
+                    <span class="rarity-badge ${badgeClass}">${rarity.toUpperCase()}</span>
+                    <span class="${glowClass}" style="color: ${ore.color || '#fff'}; font-weight: bold;">
+                        ${ore.name}
+                    </span>
+                `;
+            } else {
+                oreCard.innerHTML = `
+                    <span class="rarity-badge badge-unknown">???</span>
+                    <span style="color: #666; font-weight: bold;">???</span>
+                `;
+            }
+            container.appendChild(oreCard);
+        });
+    });
 }
 
 function moveLayer(direction) {
@@ -736,16 +879,16 @@ function moveLayer(direction) {
         showNotification(`Moved to: ${layers[currentLayerIndex].name}`, false);
 
         // 3. 관련 UI들 즉시 갱신
-        renderInventory();
+        updateInventoryCountsOnly();
         renderEncyclopedia(); // 도감도 변경된 레이어에 맞춰 갱신되면 좋겠죠?
         saveGame();
+        UIManager.requestInventoryUpdate();
     }
 }
 
 
 function updateLayerUI() { const el = document.getElementById('layer-display'); if (el) el.innerText = `Current Layer: ${layers[currentLayerIndex].name}`; }
 function updateTotalMinedUI() { const el = document.getElementById('total-mined-display'); if(el) el.innerText = `Total Mined: ${totalBlocksMined.toLocaleString()}`; }
-function updateShopUI() { document.getElementById('coin-display').innerText = `Coins: ${coins.toLocaleString()}`; }
 function showSection(id) {
     const section = document.getElementById(id); // 요소를 먼저 찾습니다.
     
@@ -773,13 +916,9 @@ function sellAllOres() {
 }
 
 function renderPickaxesUI() {
-     const el = document.getElementById('pickaxe-ui-list');
+    const el = document.getElementById('pickaxe-ui-list');
+    if (!el) return; // 요소가 없으면 그냥 종료
     
-    // 에러 메시지를 콘솔에 출력하도록 수정
-    if (!el) {
-        console.error("oops! can't find id named 'pickaxe-ui-list'.");
-        return;
-    }
     // 1. 순서대로 정렬 (없으면 99로 처리하여 맨 뒤로)
     const sortedPickaxes = [...unlockedPickaxes].sort((a, b) => {
         return (pickaxeSortOrder[a] || 99) - (pickaxeSortOrder[b] || 99);
@@ -805,17 +944,50 @@ function renderPickaxesUI() {
     }).join('');
 }
 
-function saveGame() { localStorage.setItem('mineSave', JSON.stringify({ inventory, coins, currentPickaxe, unlockedPickaxes, totalBlocksMined, currentLayerIndex, foundCount })); }
+function saveGame() {
+    const data = {
+        inventory,
+        foundCount,
+        foundOres, // 이 줄이 있어야 저장됩니다!
+        coins,
+        currentPickaxe,
+        unlockedPickaxes,
+        totalBlocksMined,
+        currentLayerIndex
+    };
+    localStorage.setItem('mineSave', JSON.stringify(data));
+}
+
 function loadGame() {
     const data = JSON.parse(localStorage.getItem('mineSave'));
-    if(data) {
-        Object.assign(inventory, data.inventory);
-        Object.assign(foundCount, data.foundCount || {});
-        coins = data.coins; currentPickaxe = data.currentPickaxe; unlockedPickaxes = data.unlockedPickaxes;
-        totalBlocksMined = data.totalBlocksMined || 0; currentLayerIndex = data.currentLayerIndex || 0;
+    if (!data) {
+        // 데이터가 없을 때 기본값 설정
+        foundOres = []; 
+        return;
     }
 
+    inventory = data.inventory || {};
+    foundCount = data.foundCount || {};
+    // 여기에 foundOres를 추가하세요!
+    foundOres = data.foundOres || []; 
+    
+    coins = data.coins || 0;
+    currentPickaxe = data.currentPickaxe || 'basic';
+    unlockedPickaxes = data.unlockedPickaxes || ['basic'];
+    totalBlocksMined = data.totalBlocksMined || 0;
+    currentLayerIndex = data.currentLayerIndex || 0;
 }
+// 광물을 캤을 때 실행되는 함수 (예: mineBlock 등)
+function onOreMined(oreName) {
+    // 1. 이미 발견한 적 있는지 확인
+    if (!foundOres.includes(oreName)) {
+        foundOres.push(oreName); // 도감에 이름 추가!
+        saveGame();             // 저장!
+        renderEncyclopedia();   // 도감 즉시 갱신 (??? -> 이름으로 변경)
+        console.log("새로운 광물 발견: " + oreName);
+    }
+}
+
 function craftPickaxe(id) {
     const recipe = pickaxeRecipes[id];
     
@@ -902,20 +1074,6 @@ function resetGame() {
     location.reload();
 }
 
-// [1] HTML이 다 로딩된 후 게임 시작
-window.onload = () => {
-    loadGame();
-    renderInventory();
-    renderEncyclopedia();
-    renderPickaxesUI();
-    renderForge();
-    updateLayerUI();
-    updateTotalMinedUI();
-    updateShopUI();
-    autoMineLoop(); 
-    renderPotions();
-};
-
 
 // [2] 빠져있던 updateUI 함수 추가
 function updateUI() {
@@ -923,58 +1081,117 @@ function updateUI() {
     renderEncyclopedia();
     renderPickaxesUI();
     renderForge();
+    renderShop();
     updateLayerUI();
-    updateTotalMinedUI();
-    updateShopUI();
-    saveGame();
-    renderPotions();
-}
-// [3] addOreToInventory 수정 (총 채굴량 증가)
-function addOreToInventory(ore) {
-    if (!inventory[ore.name]) inventory[ore.name] = 0;
-    inventory[ore.name]++;
-    totalBlocksMined++;
-    const isNew = (foundCount[ore.name] || 0) === 0;
-    foundCount[ore.name] = (foundCount[ore.name] || 0) + 1;
-    return isNew;
 }
 
-window.onload = () => {
-    console.log("Game system reset start");
-    
-    // 데이터 불러오기 및 렌더링
-    loadGame();
-    updateUI();
-    
-    // 오토마이닝 버튼 이벤트
+function setupAutoMineButton() {
     const autoMineBtn = document.getElementById('autoMineBtn');
-    if (autoMineBtn) {
-        autoMineBtn.addEventListener('click', () => {
-            isAutoMining = !isAutoMining;
-            autoMineBtn.innerText = isAutoMining ? "Auto Mining ON" : "Auto Mining OFF";
-            autoMineBtn.style.backgroundColor = isAutoMining ? "#4caf50" : "#ff4d4d";
-        });
-    }
+    if (!autoMineBtn) return;
 
-    // 탭 버튼 이벤트 (HTML의 data-target을 이용)
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    autoMineBtn.addEventListener('click', () => {
+        isAutoMining = !isAutoMining;
+        autoMineBtn.innerText = isAutoMining ? "Auto Mining ON" : "Auto Mining OFF";
+        autoMineBtn.style.backgroundColor = isAutoMining ? "#4caf50" : "#ff4d4d";
+    });
+}
+function setupTabButtons() {
+    // 모든 .tab-btn 요소를 찾습니다
+    const buttons = document.querySelectorAll('.tab-btn');
+    
+    buttons.forEach(btn => {
         btn.addEventListener('click', (e) => {
+            // 버튼에 적힌 data-target 속성값을 가져옵니다 (예: 'encyclopedia')
             const targetId = e.target.getAttribute('data-target');
+            
+            // showSection 함수 호출
             showSection(targetId, e.target);
         });
     });
+}
 
-    // 게임 루프 시작
+
+function initUI() {
+    updateUI();
+    updateLayerUI();
+    updateTotalMinedUI();
+    
+    if (document.getElementById('coin-display')) updateShopUI();
+    if (document.getElementById('inventory')) renderInventory();
+    if (document.getElementById('pickaxe-ui-list')) renderPickaxesUI();
+    
+    // 이 줄을 추가하세요!
+    renderEncyclopedia(); 
+}
+
+function updateInventoryCountsOnly() {
+    const currentLayerOreNames = layers[currentLayerIndex].ores;
+    
+    currentLayerOreNames.forEach(oreName => {
+        const count = inventory[oreName] || 0;
+        const countEl = document.getElementById(`count-text-${oreName}`);
+        const sellBtn = document.getElementById(`sell-btn-${oreName}`);
+
+        // 1. 숫자 업데이트
+        if (countEl) {
+            countEl.textContent = `: ${formatNumber(count)}`;
+        }
+
+        // 2. 버튼 상태(disabled) 업데이트
+        if (sellBtn) {
+            sellBtn.disabled = (count === 0);
+            sellBtn.style.cursor = (count === 0 ? 'not-allowed' : 'pointer');
+        }
+    });
+}
+function updateBuyButtons() {
+    potions.forEach(potion => {
+        const btn = document.querySelector(`button[onclick="buyPotion('${potion.id}')"]`);
+        if (!btn) return;
+
+        // 1. activeBoosts가 객체인지 확인하고, 해당 ID의 값이 존재하는지 명확히 체크
+        // 2. 만약 activeBoosts가 undefined/null 이라면 빈 객체로 간주
+        const boosts = (typeof activeBoosts === 'object' && activeBoosts !== null) ? activeBoosts : {};
+        const endTime = boosts[potion.id];
+        
+        // 3. 현재 시간이 종료 시간보다 작은지 확인
+        const isEffectActive = (endTime && typeof endTime === 'number' && endTime > Date.now());
+
+        const canAfford = coins >= potion.price;
+        
+        // 버튼 상태 업데이트
+        btn.disabled = !canAfford || isEffectActive;
+        
+        if (isEffectActive) {
+            btn.textContent = "Already Active";
+        } else if (!canAfford) {
+            btn.textContent = "Not Enough Coins";
+        } else {
+            btn.textContent = `Buy for ${potion.price.toLocaleString()} Coins`;
+        }
+    });
+}
+window.onload = () => {
+    loadGame(); // 데이터 로드
+    setupAutoMineButton();
+    setupTabButtons();
+
     autoMineLoop();
-    console.log("Game system reset done");
+
+    // DOM이 완전히 준비된 직후 UI 초기화
+    requestAnimationFrame(() => {
+        initUI();
+    });
 };
 
 setInterval(() => {
-    // 1. 버프 지속시간 UI 갱신 (항상 실행)
+    // 1. 버프 지속시간 UI 갱신 (기존)
     updateActiveEffectsUI();
 
-    // 2. 상점 UI 갱신 (항상 실행 - 조건문 제거)
-    // 상점 탭이 열려있을 때만 새로고침 하려던 조건 때문에 
-    // 오히려 UI가 안 바뀌는 경우가 많습니다. 그냥 매초 그리게 해주세요.
-    renderPotions();
+    // 2. 포션 구매 버튼 상태만 갱신 (전체 UI를 새로 그리지 않음!)
+    updateBuyButtons();
 }, 1000);
+
+setInterval(() => {
+    saveGame();
+}, 5000);

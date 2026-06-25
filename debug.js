@@ -1,29 +1,86 @@
-// debug.js
+let debugResultTimer = null;
+
+function showDebugResult(text, duration = 2500) {
+    const resultText = document.getElementById('result');
+    if (!resultText) return;
+
+    // 기존 디버그 타이머 제거
+    if (debugResultTimer) {
+        clearTimeout(debugResultTimer);
+    }
+
+    resultText.innerHTML = text;
+
+    debugResultTimer = setTimeout(() => {
+        resultText.innerHTML = "Let Your Dream Come True.";
+        debugResultTimer = null;
+    }, duration);
+}
+
 function forceMine() {
     const inputName = document.getElementById('debug-input').value;
-    const resultText = document.getElementById('result');
-    const targetOre = ores.find(o => o.name.toLowerCase() === inputName.toLowerCase());
+    const targetOre = ores.find(
+        o => o.name.toLowerCase() === inputName.toLowerCase()
+    );
 
     if (!targetOre) {
-        alert("Please enter an ore's name correctly.");
+
+        showDebugResult(`
+            <span style="
+                color:#ff6666;
+                font-weight:bold;
+                text-shadow:0 0 8px rgba(255,100,100,0.6);
+            ">
+                ⚠ Please enter a correct ore name.
+            </span>
+        `);
+
         return;
     }
 
-    // 1. 실제 채굴 소리와 동일한 로직 호출
-    // script.js에 playRareSound 함수가 있다면 그걸 그대로 사용하세요.
-    // 만약 없다면 아래처럼 직접 재생합니다.
+    // 사운드 재생
     if (raritySounds[targetOre.rarity]) {
         const sound = raritySounds[targetOre.rarity];
         sound.currentTime = 0;
         sound.play().catch(e => console.log("Failed to play:", e));
     }
 
-    // 2. [DEBUG] 표시와 함께 결과 출력 (인벤토리 업데이트 로직은 아예 없음)
-    resultText.innerHTML = `
-        <span style="color: #ff0000; font-weight: bold;">[DEBUG]</span> 
-        You got <span style="color: ${targetOre.color}; font-weight: bold;">${targetOre.name}</span>!
-    `;
+    // glowType 우선 적용
+    const hasGlow =
+        typeof targetOre.glowType === "string" &&
+        targetOre.glowType.trim() !== "";
 
-    // 인벤토리에는 아무것도 더하지 않음 (상태 유지)
-    console.log(`Successfully spawned ${targetOre.name}! (DEBUG)`);
+    let oreDisplay;
+
+    if (hasGlow) {
+        oreDisplay = `
+            <span class="glow-${targetOre.glowType}"
+                  style="font-weight:bold;">
+                ${targetOre.name}
+            </span>
+        `;
+    } else {
+        oreDisplay = `
+            <span style="
+                color:${targetOre.color};
+                font-weight:bold;
+            ">
+                ${targetOre.name}
+            </span>
+        `;
+    }
+
+    showDebugResult(`
+        <span style="
+            color:#ff0000;
+            font-weight:bold;
+        ">
+            [DEBUG]
+        </span>
+        You got ${oreDisplay}!
+    `);
+
+    console.log(
+        `Successfully spawned ${targetOre.name}! (DEBUG)`
+    );
 }
