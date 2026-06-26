@@ -1,67 +1,137 @@
+// 포션 line 1097, 628
+
+
+
 const superSound = new Audio('./sounds/super_mining.mp3');
 const clickSound = new Audio('./sounds/click.mp3'); 
 clickSound.volume = 0.05;
 const abilitySound = new Audio("./sounds/ability.mp3");
 
-
-const layers = [
-    { name: "Stratosphere", ores: ['Nitrogen', 'Oxygen', 'Argon', 'everything.jpg'] },
-    { name: "Grass Layer", ores: ['Grass','Mored','Lunar', 'Bromine','Durtlie', 'Iron','GREENITCH', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Slate Layer", ores: ['Slate', 'Iron', 'Lapis', 'Ruby', 'Diamond', 'Enfinitricifite', 'Cannidilit','Kryxim', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt','Ckyslop', 'Gold', 'Bloody Bronze', 'Malux','Moldivium', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', 'Braxichroxmin', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Bismuth', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "?", ores: ['TH3 M0L3VE413R','Oidilz','Moldier','?print=(123456789)', 'Matizium', 'Lava','Majoritsim', 'Zinc', 'Bismuth', 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎','?print=(1234567890123)'] },
-    { name: "Frostbite", ores: ['Evening Snow', 'Kabris-lx', 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ']}
-];
-
 const ores = [
+
+// Solitude
+
     { name: '?print=(1234567890123)', rarity: 'solitude', chance: 1234567890123, price: 1491200820, glowType: 'int1234' },
     { name: 'everything.jpg', rarity: 'solitude', chance: 1131068649219, price: 1202000820, glowType: 'eve1' },
+
+// Illimitatus
+
     { name: 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ', rarity: 'illimitátus', chance: 399999999999, price: 923510000, glowType: 'frost' },
     { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎', rarity: 'illimitátus', chance: 120000000000, price: 5913000000, glowType: 'legendary' },
-    { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, glowType: 'aby1'},
+
+// Meaninglessness
+
+    { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, glowType: 'aby1' },
     { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', rarity: 'meaninglessness', chance: 41023000000, price: 920000000, color: 'rgb(99, 121, 89)' },
+
+// Creative
+
     { name: 'F L O W S C A P E', rarity: 'creative', chance: 1209000000, price: 924002000, color: 'rgb(175, 183, 255)' },
     { name: 'Cannidilit', rarity: 'creative', chance: 1023003050, price: 87002000, glowType: 'cand' },
     { name: 'Moldivium', rarity: 'creative', chance: 1011003200, price: 82000000, color: '#12471b' },
-    { name: 'Braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: 'rgb(0, 255, 170)' },
+    { name: 'Braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: '#a7b85b' },
+
+// Abstruse
+
     { name: 'IXYSOPARDOX', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
+    { name: 'Nitrogen Oxides', rarity: 'abstruse', chance: 419000000, price: 64123000, color: 'rgb(71, 109, 27)' },
     { name: 'Faked Reality', rarity: 'abstruse', chance: 392000000, price: 41002000, color: 'rgb(162, 175, 147)' },
+    { name: 'Ninumilium', rarity: 'abstruse', chance: 342000000, price: 41002000, color: 'rgb(128, 251, 255)' },
+
+// Unreal
+
+    { name: 'Milennis', rarity: 'unreal', chance: 292300000, price: 9302000, color: '#4b412e' },
     { name: 'Macorl Esperatio', rarity: 'unreal', chance: 153900000, price: 9302000, color: '#8A5FC9' },
     { name: 'Solavoltei', rarity: 'unreal', chance: 112000000, price: 6408000, color: '#a9bb91' },
     { name: 'Anvilar', rarity: 'unreal', chance: 101900000, price: 5302000, color: '#f83e3e' },
     { name: 'Kabris-lx', rarity: 'unreal', chance: 100200030, price: 4920000, color: '#aee0f3' },
+
+// Ephemeral
+
     { name: 'Enfinitricifite', rarity: 'ephemeral', chance: 94000200, price: 3250000, color: '#61738b' },
     { name: 'Ckyslop', rarity: 'ephemeral', chance: 83903900, price: 3170000, color: '#723a05' },
     { name: 'GREENITCH', rarity: 'ephemeral', chance: 81300000, price: 2900000, color: '#00ff22' },
     { name: 'Kryxim', rarity: 'ephemeral', chance: 74999931, price: 2742300, color: '#358162' },
     { name: 'Oidilz', rarity: 'ephemeral', chance: 72400000, price: 2630000, color: '#8b616a' },
+
+// Mythic
+
     { name: 'Malux', rarity: 'mythic', chance: 23100000, price: 2100000, color: '#a2dac7' },
     { name: 'Infinitricifite', rarity: 'mythic', chance: 10000000, price: 2100000, color: '#2f80ed' },
-    { name: 'Acrictopas', rarity: 'mythic', chance: 5940000, price: 360000, color: '#106954' },
-    { name: 'Crkyotopis', rarity: 'midas', chance: 2390000, price: 250000, color: '#666252' },
-    { name: 'Bloody Bronze', rarity: 'midas', chance: 950000, price: 92000, color: '#ff417a' },
-    { name: 'Majoritsim', rarity: 'midas', chance: 760341, price: 85300, color: '#5fa886' },
-    { name: 'Argon', rarity: 'epic', chance: 56000, price: 7200, glowType: 'rainbow'},
-    { name: 'Diamond', rarity: 'epic', chance: 50000, price: 5000, color: '#00f2fe' },
-    { name: 'Bismuth', rarity: 'epic', chance: 25500, price: 2500, glowType: 'rainbow'},
-    { name: 'Oxygen', rarity: 'rare', chance: 3702, price: 1230, color: '#acf9ff' },
-    { name: 'Ruby', rarity: 'rare', chance: 2500, price: 1000, color: '#e74c3c' },
-    { name: 'Gold', rarity: 'rare', chance: 320, price: 500, color: '#f1c40f' },
-    { name: 'Equatox', rarity: 'rare', chance: 120, price: 300, color: '#ffec9e' },
+    { name: 'Corridilyx', rarity: 'mythic', chance: 31300807, price: 231500, color: '#444444' },
+
+// Midas
+
+    { name: 'Acrictopas', rarity: 'midas', chance: 5940000, price: 360000, color: '#106954' },
+    { name: 'Crkyotopis', rarity: 'midas', chance: 3190000, price: 250000, color: '#666252' },
+    { name: 'Lunitem', rarity: 'midas', chance: 2999020, price: 250000, color: '#89af30' },
+    { name: 'Yiziun', rarity: 'midas', chance: 2720000, price: 250000, color: '#813dff' },
+
+// Interim
+
+    { name: 'Bloody Bronze', rarity: 'interim', chance: 950000, price: 92000, color: '#ff417a' },
+    { name: 'Majoritsim', rarity: 'interim', chance: 760341, price: 85300, color: '#5fa886' },
+    { name: 'Kanmolc', rarity: 'interim', chance: 530123, price: 85300, color: '#315544' },
+    { name: 'Oodixum', rarity: 'interim', chance: 527302, price: 62341, color: '#201212' },
+
+// Unique
+
+    { name: 'Iciliyx', rarity: 'unique', chance: 479302, price: 34020, color: '#98f0ff' },
+    { name: 'Nordex', rarity: 'unique', chance: 437291, price: 34020, color: '#bb9f7a' },
+    { name: 'Mapleix', rarity: 'unique', chance: 394203, price: 34020, color: '#cc8830' },
+    { name: 'Inlopext', rarity: 'unique', chance: 241031, price: 23300, color: '#a9e98f' },
+
+// Intrigue
+
+    { name: 'Argon', rarity: 'intrigue', chance: 56000, price: 7200, glowType: 'rainbow' },
+    { name: 'Diamond', rarity: 'intrigue', chance: 50000, price: 6231, color: '#00f2fe' },
+    { name: 'Grinyl', rarity: 'intrigue', chance: 43921, price: 3520, color: '#4e6b6d' },
+    { name: 'Topaz', rarity: 'intrigue', chance: 31239, price: 2630, color: '#ffdc43' },
+    { name: 'Jade', rarity: 'intrigue', chance: 25930, price: 2512, color: '#00be19' },
+    { name: 'Bismuth', rarity: 'intrigue', chance: 25500, price: 2500, glowType: 'rainbow' },
+
+// Epic
+
+    { name: 'Campallie', rarity: 'epic', chance: 5391, price: 1582, color: '#265d61' },
+    { name: 'Museliex', rarity: 'epic', chance: 4742, price: 1352, color: '#33a555' },
+    { name: 'Oxygen', rarity: 'epic', chance: 3702, price: 1230, color: '#acf9ff' },
+    { name: 'Ruby', rarity: 'epic', chance: 2391, price: 1100, color: '#e74c3c' },
+    { name: 'Sapphire', rarity: 'epic', chance: 2211, price: 1100, color: '#3c72e7' },
+    { name: 'Moluybix', rarity: 'epic', chance: 1350, price: 900, color: '#a4ffc3' },
+
+// Rare
+
+    { name: 'Gold', rarity: 'rare', chance: 325, price: 500, color: '#f1c40f' },
+    { name: 'Marlenx', rarity: 'rare', chance: 531, price: 829, color: '#acd3ff' },
+    { name: 'Mantadox', rarity: 'rare', chance: 439, price: 732, color: '#6d5856' },
+    { name: 'Rose', rarity: 'rare', chance: 312, price: 351, color: '#f35692' },
+    { name: 'Equatox', rarity: 'rare', chance: 210, price: 350, color: '#ffec9e' },
+    { name: 'Mandrex', rarity: 'rare', chance: 175, price: 300, color: '#82af4f' },
+
+// Uncommon
+
     { name: 'Lapis', rarity: 'uncommon', chance: 97, price: 210, color: '#416baa' },
     { name: 'Zinc', rarity: 'uncommon', chance: 60, price: 40, color: '#2a4142' },
     { name: 'Asphalt', rarity: 'uncommon', chance: 53, price: 36, color: 'rgb(218, 176, 176)' },
     { name: 'Iron', rarity: 'uncommon', chance: 50, price: 50, color: '#dff9fb' },
     { name: 'Bromine', rarity: 'uncommon', chance: 23, price: 35, color: 'rgb(131, 207, 131)' },
     { name: 'Nitrogen', rarity: 'uncommon', chance: 15, price: 25, color: '#147434' },
+    { name: 'Liyze', rarity: 'uncommon', chance: 13, price: 23, color: '#65799e' },
     { name: 'Solid Obsidian', rarity: 'uncommon', chance: 13, price: 22, color: '#281c3a' },
     { name: 'Durtlie', rarity: 'uncommon', chance: 12, price: 20, color: '#65a727' },
-    { name: 'Moldier', rarity: 'common', chance: 5, price: 5, color: '#281c3a' },
-    { name: 'Mored', rarity: 'common', chance: 3, price: 5, color: '#c4a27c' },
-    { name: 'Lunar', rarity: 'common', chance: 3, price: 5, color: '#bc6aff' },
+
+// Common
+
+    { name: 'Moldier', rarity: 'common', chance: 7, price: 5, color: '#281c3a' },
+    { name: 'Ash', rarity: 'common', chance: 6, price: 5, color: '#52503e' },
+    { name: 'Mored', rarity: 'common', chance: 6, price: 5, color: '#c4a27c' },
+    { name: 'Lunar', rarity: 'common', chance: 5, price: 5, color: '#bc6aff' },
+    { name: 'Magenta', rarity: 'common', chance: 4, price: 5, color: '#1a0e24' },
+    { name: 'Frosted Rock', rarity: 'common', chance: 3, price: 5, color: '#d2f8ff' },
+    { name: 'Shoutle Stone', rarity: 'common', chance: 3, price: 5, color: 'rgb(116, 116, 116)' },
+
+// Basic
+
     { name: 'Grass', rarity: 'basic', chance: 2, price: 1, color: '#5bff84' },
     { name: 'Ice', rarity: 'basic', chance: 2, price: 1, color: '#46a8e6' },
     { name: 'Basalt', rarity: 'basic', chance: 2, price: 1, color: '#8f9975' },
@@ -69,9 +139,174 @@ const ores = [
     { name: 'Slate', rarity: 'basic', chance: 2, price: 1, color: '#a6c2d4' },
     { name: 'Stone', rarity: 'basic', chance: 2, price: 1, color: '#bdc3c7' },
     { name: 'Evening Snow', rarity: 'basic', chance: 2, price: 1, color: '#30678b' },
+    { name: 'Air', rarity: 'basic', chance: 2, price: 1, color: '#ffffff' },
+    { name: 'eRRoR', rarity: 'basic', chance: 2, price: 1, color: '#000000' },
+
+// Unknown
+
     { name: 'Matizium', rarity: 'unknown', chance: 15000000000000, price: 293000000000, color: '#434e53', displayChance: "1/0" },
-    { name: 'TH3 M0L3VE413R', rarity: 'unknown', chance: 100000000000, price: 293000000001, color: '#0f1416', displayChance: "1/0" }
+    { name: 'TH3 M0L3VE413R', rarity: 'unknown', chance: 100000000000, price: 293000000001, color: '#0f1416', displayChance: "1/0" },
+    { name: 'C4NMVO! SDK!S', rarity: 'unknown', chance: 320000000000, price: 293000000023, glowType: 'cscs', displayChance: "1/0" }
 ];
+
+const layers = [
+    {
+        name: "Stratosphere",
+        ores: [
+            'Air',
+            'Nitrogen',
+            'Oxygen',
+            'Argon',
+            'Nitrogen Oxides',
+            'everything.jpg'
+        ]
+    },
+
+    {
+        name: "Grass Layer",
+        ores: [
+            'Air',
+            'Grass',
+            'Rose',
+            'Mored',
+            'Nordex',
+            'Inlopext',
+            'Lunar',
+            'Bromine',
+            'Durtlie',
+            'Iron',
+            'GREENITCH',
+            'Gold',
+            'Anvilar',
+            'F L O W S C A P E',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "Slate Layer",
+        ores: [
+            'Slate',
+            'Shoutle Stone',
+            'Iron',
+            'Mandrex',
+            'Liyze',
+            'Lapis',
+            'Ruby',
+            'Jade',
+            'Diamond',
+            'Enfinitricifite',
+            'Campallie',
+            'Cannidilit',
+            'Kryxim',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "Ice Layer",
+        ores: [
+            'Ice',
+            'Lunar',
+            'Iron',
+            'Oodixum',
+            'Iciliyx',
+            'Diamond',
+            'Jade',
+            'Crkyotopis',
+            'Acrictopas',
+            'Infinitricifite',
+            'Macorl Esperatio',
+            'IXYSOPARDOX',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "Basalt Layer",
+        ores: [
+            'Basalt',
+            'Marlenx',
+            'Grinyl',
+            'Asphalt',
+            'Yiziun',
+            'Iron',
+            'Kanmolc',
+            'Mapleix',
+            'Ckyslop',
+            'Gold',
+            'Bloody Bronze',
+            'Milennis',
+            'Malux',
+            'Moldivium',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "Stone Layer",
+        ores: [
+            'Stone',
+            'Iron',
+            'Lunitem',
+            'Sapphire',
+            'Topaz',
+            'Equatox',
+            'Faked Reality',
+            'Braxichroxmin',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "Lava Layer",
+        ores: [
+            'Lava',
+            'Ash',
+            'Museliex',
+            'Solid Obsidian',
+            'Zinc',
+            'Gold',
+            'Bismuth',
+            'Mantadox',
+            'Solavoltei',
+            '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞',
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+        ]
+    },
+
+    {
+        name: "?",
+        ores: [
+            'TH3 M0L3VE413R',
+            'Oidilz',
+            'Moldier',
+            'Matizium',
+            'eRRoR',
+            'Magenta',
+            'Majoritsim',
+            'Zinc',
+            'Bismuth',
+            'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎',
+            '?print=(1234567890123)'
+        ]
+    },
+
+    {
+        name: "Frostbite",
+        ores: [
+            'Evening Snow',
+            'Moluybix',
+            'Iciliyx',
+            'Frosted Rock',
+            'Kabris-lx',
+            'Ninumilium',
+            'C4NMVO! SDK!S',
+            'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ'
+        ]
+    }
+];
+
 
 
 const UIManager = {
@@ -109,7 +344,7 @@ const potions = [
     { 
         id: 'luck', 
         name: 'Potion of Luck', 
-        price: 25000, 
+        price: 250000, 
         duration: 300, // 초 단위
         lore: 'Hmm. Why don\'t ya taste it?', 
         stats: 'Makes you 2x more luckier!',
@@ -118,56 +353,56 @@ const potions = [
     { 
         id: 'luck2', 
         name: 'Potion of Luck II', 
-        price: 750000, 
-        duration: 600, // 초 단위
+        price: 75000000, 
+        duration: 350, // 초 단위
         lore: 'It gets more longer and bigger!', 
         stats: 'Makes you 4x more luckier!',
-        effectIcon: '🍀2'
+        effectIcon: '🍀'
     },
     { 
         id: 'luck3', 
         name: 'Potion of Luck Max', 
-        price: 4000000, 
-        duration: 1200, // 초 단위
+        price: 650000000, 
+        duration: 400, // 초 단위
         lore: 'woah.. how did you get that?', 
-        stats: 'Makes you 16x more luckier!',
-        effectIcon: '🍀3'
+        stats: 'Makes you 8x more luckier!',
+        effectIcon: '🍀'
     },
         { 
         id: 'luck4', 
-        name: 'Let\'s test your luck!', 
-        price: 40000000, 
-        duration: 5, // 초 단위
+        name: 'Potion of Huge Max Luck', 
+        price: 1500000000, 
+        duration: 650, // 초 단위
         lore: 'becareful!', 
-        stats: 'Makes you INSANELY luckier!',
-        effectIcon: '🍀T'
+        stats: 'Makes you 16x more luckier!',
+        effectIcon: '🍀'
     },
     { 
         id: 'speed', 
         name: 'Potion of Speed', 
-        price: 15000, 
+        price: 650000, 
         duration: 150, 
         lore: 'Gotta go fast-', 
-        stats: 'Makes you mine 2 times faster! (interval cooltime)',
+        stats: 'Makes you mine 1.5 times faster! (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
         id: 'speed2', 
         name: 'Potion of Fast Speed', 
-        price: 350000, 
+        price: 12500000, 
         duration: 300, 
         lore: 'oh no i\'m faster and faster', 
-        stats: 'Makes you mine 4 times faster! (interval cooltime)',
-        effectIcon: '⚡2'
+        stats: 'Makes you mine 2 times faster! (interval cooltime)',
+        effectIcon: '⚡'
     },
     { 
         id: 'speed3', 
         name: 'Potion of at Speed\'o Sound', 
-        price: 9000000, 
-        duration: 600, 
+        price: 650000000, 
+        duration: 450, 
         lore: 'What?! How?', 
-        stats: 'Makes you mine 5.5 times faster! (interval cooltime)',
-        effectIcon: '⚡3'
+        stats: 'Makes you mine 4 times faster! (interval cooltime)',
+        effectIcon: '⚡'
     }
 ];
 
@@ -200,7 +435,7 @@ document.getElementById('potion-list').addEventListener('click', function(event)
 });
 
 const raritySounds = {
-    epic: new Audio('./sounds/rare.mp3'),
+    epic: new Audio('./sounds/rare.mp3'),intrigue: new Audio('./sounds/rare.mp3') , interim: new Audio('./sounds/rare.mp3'), unique: new Audio('./sounds/rare.mp3'),
     midas: new Audio('./sounds/rare2.mp3'), mythic: new Audio('./sounds/rare2.mp3'), ephemeral: new Audio('./sounds/overrare.mp3'),
     unreal: new Audio('./sounds/overrare.mp3'), abstruse: new Audio("./sounds/ascendant.mp3"),
     creative: new Audio('./sounds/ascendant.mp3'), meaninglessness: new Audio("./sounds/everything.mp3"), illimitátus: new Audio("./sounds/otherworldly.mp3"), unknown: new Audio("./sounds/reality.mp3"),
@@ -221,9 +456,9 @@ const pickaxeSortOrder = {
 };
 
 const rarityColors = {
-    unknown: "#000000", 'basic': "#666666", common: "#bdc3c7", uncommon: "#85ffa9ff", rare: "#f3db7a", 
-    epic: "#b465cc", midas: "#ffd900ff", mythic: "#f15b5bff", ephemeral: "#9dfff7",unreal: "#9a1cccff",
-    abstruse: "#131c99ff", creative: "#fcff52", meaninglessness: "#e2ffed", illimitátus: "#0b1820", solitude: '#417570'
+    unknown: "#000000", 'basic': "#666666", common: "#bdc3c7", uncommon: "#85ffa9ff", rare: "#f3db7a", intrigue: "#3f6d5a",
+    epic: "#b465cc",interim:"#36db89", midas: "#ffd900ff", mythic: "#f15b5bff", ephemeral: "#9dfff7",unreal: "#9a1cccff",
+    abstruse: "#131c99ff", creative: "#fcff52", meaninglessness: "#e2ffed", illimitátus: "#0b1820", solitude: '#417570', exclusive: '#ff1ba8'
 };
 
 const pickaxeLore = {
@@ -233,6 +468,9 @@ const pickaxeLore = {
     'godPickaxe': "Maybe it's one of fake things exists in the planet earth?",
     'light': "Look! I'm at speed of light!",
     'frozen': "I don't know who made this.. but it'll be useful.",
+    'powerful': "After 200 years, I finally found it.",
+    'macicle': "Long Live Macicle!",
+    'irregul': "error 214: cannot find pickaxe_id 'irregular'. (js:203)",
     'bulk': "'Even through hard ways, I never give up mining.'",
     'ultima': "'Absolute! Plus! Ultra!'",
     'hackaxe': "What? You think You're going to get this? Fool.",
@@ -241,29 +479,37 @@ const pickaxeLore = {
 
 const pickaxes = {
     basic: { name: "Basic Pickaxe", power: 1, luck: 1.0, superChance: 0.0, superCount: 0 },
-    scrap: { name: "LowTier 1 / Abandoned Pickaxe", power: 1, luck: 1.05, superChance: 0.01, superCount: 50 },
+    scrap: { name: "Tier 1 / Abandoned Pickaxe", power: 1, luck: 1.05, superChance: 0.01, superCount: 50 },
     steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 100 },
     godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.09, superCount: 250 },
-    light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 2.15, superChance: 0.025, superCount: 850 },
+    light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 1.85, superChance: 0.025, superCount: 850 },
     bulk: { name: "Tier 4 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 2000 },
-    frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 3.35, superChance: 0.025, superCount: 2700 },
-    ultima: { name: "Tier 13 / Ultima Blastica", power: 125, luck: 6.75, superChance: 0.025, superCount: 62000 },
-    hackaxe: { name: "hack axe", power: 250, luck: 25.0, superChance: 1, superCount: 2500},
-    luhackaxe: { name: "luhack axe", power: 5, luck: 250000000.0, superChance: 0, superCount: 120000}
+    frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 2.95, superChance: 0.0125, superCount: 2700 },
+    macicle: { name: "Tier 5 / Sabre Macicle", power: 10, luck: 2.15, superChance: 0.02, superCount: 6350 },
+    powerful: { name: "Tier 5.5 / Malice Bumper", power: 13, luck: 2.95, superChance: 0.02, superCount: 6520 },
+    irregul: { name: "Tier 6 / Irregular Pickaxe", power: 35, luck: 2.5, superChance: 0.015, superCount: 10200 },
+    ultima: { name: "Tier 12 / Ultima Blastica", power: 75, luck: 3.55, superChance: 0.025, superCount: 31200 },
+    hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 250, luck: 25.0, superChance: 1, superCount: 2500},
+    luhackaxe: { name: "Developer Exclusive Axe", power: 5, luck: 250000000.0, superChance: 0, superCount: 120000}
 };
 
 const pickaxeRecipes = {
     'scrap': { name: 'Tier 1 / Abandoned Pickaxe', cost: { 'Zinc': 1, 'Stone': 12 }, power: 1 },
     'steel': { name: 'Tier 2 / Steel Pickaxe', cost: { 'Iron': 10, 'Stone': 50 }, power: 2 },
     'godPickaxe': { name: 'Tier 3 / God Pickaxe', cost: { 'Gold': 15, 'Iron': 125 }, power: 5 },
-    'light': { name: 'Tier 4 / Lightning Pickaxe', cost: { 'Ruby': 6, 'Gold': 8, 'Equatox': 12 }, power: 7 },
+    'light': { name: 'Tier 4 / Lightning Pickaxe', cost: { 'Ruby': 6, 'Gold': 8, 'Equatox': 25 }, power: 7 },
     'bulk': { name: 'Tier 4.5 / Bulk Pickaxe', cost: { 'Diamond': 1, 'Zinc': 640, 'Slate': 4300 }, power: 9 },
     'frozen': {name: "Tier 5.5 / Frozen Pickaxe", cost: { 'Crkyotopis': 1, 'Bismuth': 5, 'Equatox': 100, 'Ice': 53000}, power: 7},
-    'ultima': {name: "Tier 13 / Ultima Blastica", cost: { 'Braxichroxmin': 1, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
-    'hackaxe': { name: 'no u hack axe', cost: { 'IXYSOPARDOX': 2e24, 'Iron': 0 }, power: 250 },
-    'luhackaxe': { name: 'luhacks', cost: { 'IXYSOPARDOX': 2e20, 'Iron': 0 }, power: 2500000 }
+
+    'macicle': {name: "Tier 5 / Sabre Macicle", cost: { 'Acrictopas': 1, 'Majoritsim': 2, 'Jade': 2, 'Lapis': 260, 'Slate': 85000}, power: 7},
+    'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
+    'irregul': {name: "Tier 6 / Irregular Pickaxe", cost: { 'Anvilar': 1, 'Malux': 1, 'Infinitricifite': 2, 'Kanmolc': 73, 'Diamond': 192, 'Durtlie': 9300, 'Basalt': 320500}, power: 7},
+
+    'ultima': {name: "Tier 12 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
+    'hackaxe': { name: 'Developer Exclusive Axe But Weaker', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':1 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 23232, 'IXYSOPARDOX': 2e24, 'Iron': 0 }, power: 250 },
+    'luhackaxe': { name: 'Developer Exclusive Axe', cost: { 'IXYSOPARDOX': 2e20, 'Iron': 0 }, power: 2500000 }
 };
-const rarityRank = { 'basic': 0, 'common': 1, 'uncommon': 2, 'rare': 3, 'epic': 4, 'midas': 5, 'mythic': 6, 'ephemeral': 7, 'unreal': 8, 'abstruse': 9, 'creative': 10, 'meaninglessness': 11, 'illimitátus': 12, 'solitude': 12.5, 'unknown': 13};
+const rarityRank = { 'basic': 0, 'common': 1, 'uncommon': 2, 'rare': 3,'intrigue': 4, 'epic': 3.5, 'unique': 4.2, 'interim': 4.5, 'midas': 5, 'mythic': 6, 'ephemeral': 7, 'unreal': 8, 'abstruse': 9, 'creative': 10, 'meaninglessness': 11, 'illimitátus': 12, 'solitude': 12.5, 'unknown': 13, 'exclusive': 14};
 
 
 
@@ -287,6 +533,7 @@ let lastRenderedLayerIndex = -1;
 let mode = "online";
 let appliedLuck = pickaxes[currentPickaxe].luck;
 let flashTimer = null;
+let isResetting = false; // 추가: 리셋 중인지 확인하는 변수
 
 let soundRarityThreshold = rarityRank.rare; 
 // rare 이상만 소리 나게 (원하면 epic으로 변경)
@@ -297,6 +544,58 @@ ores.forEach(ore => { inventory[ore.name] = 0; foundCount[ore.name] = 0; });
 if (mode === "offline") {
     appliedLuck = 1; // 💥 오프라인은 무조건 기본
 }
+
+// [참고] 사용 중인 'layers' 배열이 전역에 있다고 가정합니다.
+function getLayerForOre(oreName) {
+    const layer = layers.find(l => l.ores.includes(oreName));
+    return layer ? layer.name : "Unknown";
+}
+function renderMaterialDropdown(materialsString) {
+    if (!materialsString) return '';
+
+    const items = materialsString.split(', ');
+
+    const listItems = items.map(item => {
+        const parts = item.trim().split(' ');
+        const qty = parts.pop();
+        const name = parts.join(' ');
+
+        // 🔥 FIX: multiple layers support
+        const foundLayers = layers.filter(l => l.ores.includes(name));
+
+        const layerDisplay = foundLayers.length > 0
+            ? foundLayers.map(l => `• ${l.name}`).join('<br>')
+            : "Unknown";
+
+        const oreData = ores.find(o => o.name === name) || { rarity: 'basic' };
+        const rarityClass = `badge-${(oreData.rarity || 'basic').toLowerCase().trim()}`;
+
+        return `
+            <li style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+                <span class="rarity-badge ${rarityClass}">
+                    ${oreData.rarity}
+                </span>
+                <span>
+                    <strong>${name}</strong> (${qty}) / <em>${layerDisplay}</em>
+                </span>
+            </li>
+        `;
+    }).join('');
+
+    return `
+        <details class="material-dropdown" style="margin-top: 10px; cursor: pointer;">
+            <summary style="font-weight: bold; color: #3498db; outline: none;">
+                Materials 
+            </summary>
+            <div class="material-details" style="padding: 5px; background: #222; border-radius: 4px; margin-top: 5px;">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    ${listItems}
+                </ul>
+            </div>
+        </details>
+    `;
+}
+
 
 function shouldPlaySpawnSound(ore) {
     const rank = rarityRank[ore.rarity] ?? 0;
@@ -358,8 +657,8 @@ function getTotalLuck() {
     const base = pickaxes[currentPickaxe].luck;
 
     const potionMultiplier =
-        isEffectActive('luck4') ? 2048 :
-        isEffectActive('luck3') ? 16 :
+        isEffectActive('luck4') ? 16 :
+        isEffectActive('luck3') ? 8 :
         isEffectActive('luck2') ? 4 :
         isEffectActive('luck') ? 2 : 1;
 
@@ -430,11 +729,6 @@ function renderPotions() {
             </div>
         `;
     }).join('');
-}
-function checkLuckDebug() {
-    console.log("--- 🍀 Luck Debug Info ---");
-    console.table(lastRollDebug);
-    console.log("--------------------------");
 }
 
 const potionTimers = {};
@@ -803,7 +1097,7 @@ function isEffectActive(potionId) {
 
 function applyScreenEffect(ore) {
     const rarity = ore.rarity?.toLowerCase();
-    const flashList = ["mythic", "ephemeral", "unreal", "abstruse", "creative", "meaninglessness", "illimitátus", "solitude"];
+    const flashList = ["mythic", "ephemeral", "unreal", "abstruse", "creative", "meaninglessness", "illimitátus", "solitude", "unknown"];
     const flashOverlay = document.getElementById("flash-overlay");
 
     if (flashList.includes(rarity) && flashOverlay) {
@@ -850,13 +1144,13 @@ function onMineButtonClick() {
 
     // 2. 배율 계산
     const cooldownFactor =
-        isSpeed3 ? 0.15 :
-        isSpeed2 ? 0.25 :
-        isSpeed ? 0.5 : 1.0;
+        isSpeed3 ? 0.25 :
+        isSpeed2 ? 0.5 :
+        isSpeed ? 0.75 : 1.0;
 
     const luckMultiplier =
-        isLuck4 ? 2048 :
-        isLuck3 ? 16 :
+        isLuck4 ? 16 :
+        isLuck3 ? 8 :
         isLuck2 ? 4 :
         isLuck ? 2 : 1;
 
@@ -1056,7 +1350,7 @@ function renderEncyclopedia() {
     }
     container.innerHTML = '';
 
-    const rarityOrder = ['solitude', 'illimitátus', 'meaninglessness', 'creative', 'abstruse', 'unreal', 'ephemeral', 'mythic', 'midas', 'epic', 'rare', 'uncommon', 'common', 'basic', 'unknown'];
+    const rarityOrder = ['solitude', 'illimitátus', 'meaninglessness', 'creative', 'abstruse', 'unreal', 'ephemeral', 'mythic', 'midas','interim', 'unique', 'intrigue','epic', 'rare', 'uncommon', 'common', 'basic', 'unknown', 'exclusive'];
     const groupedOres = ores.reduce((acc, ore) => {
         const rarity = (ore.rarity || 'common').toLowerCase();
         if (!acc[rarity]) acc[rarity] = [];
@@ -1166,28 +1460,64 @@ function sellAllOres() {
 
 function renderPickaxesUI() {
     const el = document.getElementById('pickaxe-ui-list');
-    if (!el) return; // 요소가 없으면 그냥 종료
-    
-    // 1. 순서대로 정렬 (없으면 99로 처리하여 맨 뒤로)
+    if (!el) return;
+
     const sortedPickaxes = [...unlockedPickaxes].sort((a, b) => {
         return (pickaxeSortOrder[a] || 99) - (pickaxeSortOrder[b] || 99);
     });
 
-    // 2. HTML 렌더링
     el.innerHTML = sortedPickaxes.map(id => {
         const p = pickaxes[id];
         const isEquipped = (currentPickaxe === id);
-        
+
+        const materialHtml = (p.materials) ? `
+            <details class="material-dropdown" style="margin-top: 8px; padding: 5px; background: #222; border-radius: 4px; border: 1px solid #444;">
+                <summary style="cursor: pointer; font-size: 0.9em; color: #3498db; list-style: none;">
+                    Materials <span style="font-size: 0.7em;">▼</span>
+                </summary>
+                <ul style="list-style: none; padding: 5px 0; margin: 5px 0; font-size: 0.85em; color: #ccc;">
+                    ${p.materials.split(', ').map(m => {
+                        const parts = m.trim().split(' ');
+                        const name = parts[0];
+                        const qty = parts.slice(1).join(' ');
+
+                        // 🔥 FIX: multiple layers support
+                        const foundLayers = layers.filter(l => l.ores.includes(name));
+                        const layer = foundLayers.length > 0
+                            ? foundLayers.map(l => l.name).join(', ')
+                            : "Unknown";
+
+                        const oreData = ores.find(o => o.name === name) || { rarity: 'basic' };
+
+                        return `
+                            <li style="display: flex; align-items: center; gap: 6px; margin: 3px 0;">
+                                <span class="rarity-badge badge-${(oreData.rarity || 'basic').toLowerCase().trim()}"
+                                    style="font-size: 10px; padding: 1px 4px; border-radius: 3px; background: #555;">
+                                    ${oreData.rarity}
+                                </span>
+                                <span><strong>${name}</strong> (${qty}) / <em>${layer}</em></span>
+                            </li>
+                        `;
+                    }).join('')}
+                </ul>
+            </details>
+        ` : '';
+
         return `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #444; transition: 0.2s;">
-                <span style="font-weight: ${isEquipped ? 'bold' : 'normal'}; color: ${isEquipped ? '#58D68D' : '#eee'};">
-                    ${p.name} ${isEquipped ? '<span style="font-size: 11px; margin-left: 5px;">(Equipped)</span>' : ''}
-                </span>
-                
-                ${isEquipped ? 
-                    `<button disabled style="width: 80px; padding: 5px; opacity: 0.5; cursor: not-allowed; border-radius: 4px; border: none;">Equipped</button>` : 
-                    `<button onclick="equipPickaxe('${id}')" style="width: 80px; padding: 5px; cursor: pointer; border-radius: 4px; border: 1px solid #555; background: #333; color: white;">Equip</button>`
-                }
+            <div style="padding: 10px; border-bottom: 1px solid #444; transition: 0.2s;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: ${isEquipped ? 'bold' : 'normal'}; color: ${isEquipped ? '#58D68D' : '#eee'};">
+                        ${p.name}
+                        ${isEquipped ? '<span style="font-size: 11px; margin-left: 5px;">(Equipped)</span>' : ''}
+                    </span>
+
+                    ${isEquipped ?
+                        `<button disabled style="width: 80px; padding: 5px; opacity: 0.5; cursor: not-allowed; border-radius: 4px; border: none;">Equipped</button>` :
+                        `<button onclick="equipPickaxe('${id}')" style="width: 80px; padding: 5px; cursor: pointer; border-radius: 4px; border: 1px solid #555; background: #333; color: white;">Equip</button>`
+                    }
+                </div>
+
+                ${materialHtml}
             </div>
         `;
     }).join('');
@@ -1342,11 +1672,41 @@ function renderForge() {
         const recipe = pickaxeRecipes[id];
         const stats = pickaxes[id];
         const isUnlocked = unlockedPickaxes.includes(id);
-        const lore = pickaxeLore[id] || "No description available."; 
-        
-        const costText = Object.entries(recipe.cost)
-            .map(([mat, count]) => `${mat} ${count}'s`)
-            .join(', ');
+        const lore = pickaxeLore[id] || "No description available.";
+
+        const materialDropdownHtml = `
+            <details class="material-dropdown">
+                <summary>
+                    Materials
+                </summary>
+                <div class="material-details">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        ${Object.entries(recipe.cost).map(([name, qty]) => {
+
+                            // 🔥 FIX: multiple layers support
+                            const foundLayers = layers.filter(l => l.ores.includes(name));
+                            const layer = foundLayers.length > 0
+                                ? foundLayers.map(l => l.name).join(', ')
+                                : "Unknown";
+
+                            const oreData = ores.find(o => o.name === name) || { rarity: 'basic' };
+                            const rarityClass = `badge-${(oreData.rarity || 'unknown').toLowerCase().trim()}`;
+
+                            return `
+                                <li style="display: flex; align-items: center; gap: 8px; margin: 5px 0;">
+                                    <span class="rarity-badge ${rarityClass}">
+                                        ${oreData.rarity}
+                                    </span>
+                                    <span>
+                                        <strong>${name}</strong> (${qty}) / <em>${layer}</em>
+                                    </span>
+                                </li>
+                            `;
+                        }).join('')}
+                    </ul>
+                </div>
+            </details>
+        `;
 
         const statsHtml = `
             <div style="font-size: 13px; color: #ddd; margin: 8px 0; padding: 5px; background: #333; border-radius: 4px;">
@@ -1354,14 +1714,11 @@ function renderForge() {
             </div>
         `;
 
-        // [수정 포인트]
-        // Crafted 버튼과 Craft 버튼 모두를 tooltip-container로 감싸서
-        // 어떤 상태든 마우스를 올리면 툴팁(lore)이 뜨게 만듭니다.
         const actionHtml = `
             <div class="tooltip-container">
-                ${isUnlocked ? 
-                    '<button disabled style="padding: 5px 15px; cursor: not-allowed;">Crafted</button>' : 
-                    `<button onclick="craftPickaxe('${id}')" style="padding: 5px 15px; cursor: pointer;">Craft</button>`
+                ${isUnlocked
+                    ? '<button disabled style="padding: 5px 15px; cursor: not-allowed;">Crafted</button>'
+                    : `<button onclick="craftPickaxe('${id}')" style="padding: 5px 15px; cursor: pointer;">Craft</button>`
                 }
                 <span class="tooltip-text">${lore}</span>
             </div>
@@ -1369,15 +1726,16 @@ function renderForge() {
 
         return `
             <div style="margin-bottom: 15px; padding: 12px; border: 1px solid #444; border-radius: 5px; background: #25252b;">
-                <div style="font-size: 16px; font-weight: bold;">${recipe.name}</div>
+                <div style="font-size: 16px; font-weight: bold;">
+                    ${recipe.name}
+                </div>
                 ${statsHtml}
-                <div style="font-size: 12px; color: #aaa; margin-bottom: 10px;">Materials: ${costText}</div>
+                ${materialDropdownHtml}
                 ${actionHtml}
             </div>
         `;
     }).join('');
 }
-
 function equipPickaxe(id) {
     if (!unlockedPickaxes.includes(id)) {
         return alert("Not crafted yet.");
@@ -1391,6 +1749,8 @@ function equipPickaxe(id) {
 
 function resetGame() {
     if (!confirm("⚠️ Are you sure you reset your data?")) return;
+    
+    isResetting = true; // 리셋 모드 활성화
     localStorage.removeItem('mineSave');
     location.reload();
 }
@@ -1529,10 +1889,8 @@ setInterval(() => {
 }, 1000);
 
 window.addEventListener('beforeunload', (event) => {
-    // 게임 데이터를 저장합니다.
-    saveGame();
-    
-    // 아래 두 줄은 브라우저에 따라 경고창을 띄우기 위한 설정입니다 (선택 사항)
-    // event.preventDefault();
-    // event.returnValue = ''; 
+    // 리셋 중이라면 저장을 건너뜁니다!
+    if (!isResetting) {
+        saveGame();
+    }
 });

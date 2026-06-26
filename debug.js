@@ -84,3 +84,66 @@ function forceMine() {
         `Successfully spawned ${targetOre.name}! (DEBUG)`
     );
 }
+
+function debugInventory() {
+    // 1. 전역 인벤토리 변수 확인 (일반적인 이름인 inventory 사용)
+    // 만약 변수명이 다르면 해당 변수명으로 수정하세요.
+    if (typeof inventory === 'undefined') {
+        console.error("인벤토리 데이터를 찾을 수 없습니다.");
+        return;
+    }
+
+    console.table(inventory);
+    console.log("현재 인벤토리 총 아이템 종류 수: " + Object.keys(inventory).length);
+}
+
+/**
+ * 특정 아이템의 수량을 강제로 변경하는 디버그 함수
+ * @param {string} itemName - 아이템 이름 (예: "Iron")
+ * @param {number} quantity - 변경할 수량
+ */
+function forceSetItemQuantity(itemName, quantity) {
+    if (inventory[itemName]) {
+        inventory[itemName] = quantity;
+        updateInventoryDisplay(); // 기존의 화면 업데이트 함수를 호출하여 UI 갱신
+        console.log(`${itemName}의 수량이 ${quantity}개로 변경되었습니다.`);
+    } else {
+        console.error(`${itemName} 아이템을 찾을 수 없습니다.`);
+    }
+}
+
+function checkLuckDebug() {
+    console.log("--- 🍀 Luck Debug Info ---");
+    console.table(lastRollDebug);
+    console.log("--------------------------");
+}
+
+/**
+ * 특정 레이어 이름으로 광물 목록을 출력하는 함수
+ * @param {string} layerName - 조회할 레이어 이름
+ */
+function debugLayerOresSorted(layerName) {
+    const foundLayer = layers.find(l => l.name === layerName);
+    if (!foundLayer) {
+        console.error(`"${layerName}" 레이어를 찾을 수 없습니다.`);
+        return;
+    }
+
+    // 1. 레이어의 각 광물 이름에 해당하는 상세 데이터(ores 객체)를 찾습니다.
+    const oreDetails = foundLayer.ores
+        .map(name => ores.find(o => o.name === name) || { name, rarity: 'basic', chance: 0 })
+        // 2. rarityRank를 기준으로 정렬합니다.
+        .sort((a, b) => {
+            const rankA = rarityRank[a.rarity] || 0;
+            const rankB = rarityRank[b.rarity] || 0;
+            return rankA - rankB; // 오름차순 (낮은 등급부터)
+        });
+
+    // 3. 결과 출력
+    console.log(`--- [${foundLayer.name}] 희귀도 정렬 목록 ---`);
+    console.table(oreDetails.map(o => ({
+        Name: o.name,
+        Rarity: o.rarity,
+        Rank: rarityRank[o.rarity]
+    })));
+}
