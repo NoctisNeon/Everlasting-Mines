@@ -10,12 +10,14 @@
 <body>
 
 
+    <div id="flash-overlay"></div> <div id="game-root">
+        </div>
 
 <div id="game-root">
 
 <div class="game-container">
     <div class="header">
-        <h1>Everlasting Mines v1.2</h1>
+        <h1>Everlasting Mines v1.5</h1>
         <p id="total-mined-display" class="stats">Total Mined: 0</p>
     </div>
 
@@ -101,10 +103,10 @@
             <button class="sub-tab-btn" onclick="switchShopTab('blacksmith', event)" style="flex: 1; padding: 10px;">⚒️ Blacksmith</button>
         </div>
 
-        <div id="alchemist-section" class="sub-section active">
-            <div id="potion-list" style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <div class="potion-card">...</div>
-            </div>
+  <div id="alchemist-section" class="sub-section active">
+    <div id="potion-list" style="display: flex; flex-direction: column; gap: 15px;">
+        </div>
+</div>
         </div>
 
         <div id="blacksmith-section" class="sub-section" style="display: none;">
@@ -153,6 +155,9 @@
         <option value="ephemeral">Ephemeral+</option>
         <option value="unreal">Unreal+</option>
         <option value="abstruse">Abstruse+</option>
+        <option value="creative">Creative+</option>
+        <option value="meaninglessness">Meaninglessness+</option>
+        <option value="solitude">i don't wanna hear but solitude</option>
     </select>
 
     <button onclick="applySoundSettings()" style="margin-top:10px; width:100%;">

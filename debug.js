@@ -1,19 +1,19 @@
-let debugResultTimer = null;
+window.resultTimer = null;
 
 function showDebugResult(text, duration = 5000) {
     const resultText = document.getElementById('result');
     if (!resultText) return;
 
-    // 기존 디버그 타이머 제거
-    if (debugResultTimer) {
-        clearTimeout(debugResultTimer);
+    // 공통 타이머 공유
+    if (window.resultTimer) {
+        clearTimeout(window.resultTimer);
     }
 
     resultText.innerHTML = text;
 
-    debugResultTimer = setTimeout(() => {
+    window.resultTimer = setTimeout(() => {
         resultText.innerHTML = "Let Your Dream Come True.";
-        debugResultTimer = null;
+        window.resultTimer = null;
     }, duration);
 }
 
@@ -77,7 +77,7 @@ function forceMine() {
         ">
             [DEBUG]
         </span>
-        You got ${oreDisplay}!
+        Spawned ${oreDisplay}!
     `);
 
     console.log(

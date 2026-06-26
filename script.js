@@ -7,11 +7,11 @@ const abilitySound = new Audio("./sounds/ability.mp3");
 
 
 const layers = [
-    { name: "Stratosphere", ores: ['Nitrogen', 'Oxygen', 'Argon'] },
-    { name: "Grass Layer", ores: ['Grass','Bromine','Durtlie', 'Iron','GREENITCH', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Slate Layer", ores: ['Slate', 'Iron', 'Lapis', 'Ruby', 'Diamond', 'Enfinitricifite', 'Cannidilit', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Stratosphere", ores: ['Nitrogen', 'Oxygen', 'Argon', 'everything.jpg'] },
+    { name: "Grass Layer", ores: ['Grass','Mored', 'Bromine','Durtlie', 'Iron','GREENITCH', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Slate Layer", ores: ['Slate', 'Iron', 'Lapis', 'Ruby', 'Diamond', 'Enfinitricifite', 'Cannidilit','Kryxim', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
-    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt','Ckyslop', 'Gold', 'Bloody Bronze', 'Malux', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt','Ckyslop', 'Gold', 'Bloody Bronze', 'Malux','Moldivium', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Stone Layer", ores: ['Stone', 'Iron', 'Equatox', 'Faked Reality', 'Braxichroxmin', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Lava Layer", ores: ['Lava', 'Solid Obsidian', 'Zinc', 'Gold', 'Bismuth', 'Solavoltei', '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "?", ores: ['TH3 M0L3VE413R','Oidilz','Moldier','?print=(123456789)', 'Matizium', 'Lava','Majoritsim', 'Zinc', 'Bismuth', 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎','?print=(1234567890123)'] },
@@ -19,13 +19,15 @@ const layers = [
 ];
 
 const ores = [
-    { name: '?print=(1234567890123)', rarity: 'solitude', chance: 1234567890123, price: 9302000, glowType: 'int1234' },
-    { name: 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ', rarity: 'illimitátus', chance: 399999999999, price: 99999999999, glowType: 'frost' },
-    { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎', rarity: 'illimitátus', chance: 120000000000, price: 5900000000, glowType: 'legendary' },
+    { name: '?print=(1234567890123)', rarity: 'solitude', chance: 1234567890123, price: 1491200820, glowType: 'int1234' },
+    { name: 'everything.jpg', rarity: 'solitude', chance: 1131068649219, price: 1202000820, glowType: 'eve1' },
+    { name: 'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ', rarity: 'illimitátus', chance: 399999999999, price: 923510000, glowType: 'frost' },
+    { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎', rarity: 'illimitátus', chance: 120000000000, price: 5913000000, glowType: 'legendary' },
     { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', rarity: 'meaninglessness', chance: 50909000000, price: 1293000000, glowType: 'aby1'},
     { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', rarity: 'meaninglessness', chance: 41023000000, price: 920000000, color: 'rgb(99, 121, 89)' },
     { name: 'F L O W S C A P E', rarity: 'creative', chance: 1209000000, price: 924002000, color: 'rgb(175, 183, 255)' },
     { name: 'Cannidilit', rarity: 'creative', chance: 1023003050, price: 87002000, glowType: 'cand' },
+    { name: 'Moldivium', rarity: 'creative', chance: 1011003200, price: 82000000, color: '#12471b' },
     { name: 'Braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: 'rgb(0, 255, 170)' },
     { name: 'IXYSOPARDOX', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
     { name: 'Faked Reality', rarity: 'abstruse', chance: 392000000, price: 41002000, color: 'rgb(162, 175, 147)' },
@@ -36,6 +38,7 @@ const ores = [
     { name: 'Enfinitricifite', rarity: 'ephemeral', chance: 94000200, price: 3250000, color: '#61738b' },
     { name: 'Ckyslop', rarity: 'ephemeral', chance: 83903900, price: 3170000, color: '#723a05' },
     { name: 'GREENITCH', rarity: 'ephemeral', chance: 81300000, price: 2900000, color: '#00ff22' },
+    { name: 'Kryxim', rarity: 'ephemeral', chance: 74999931, price: 2742300, color: '#358162' },
     { name: 'Oidilz', rarity: 'ephemeral', chance: 72400000, price: 2630000, color: '#8b616a' },
     { name: 'Malux', rarity: 'mythic', chance: 23100000, price: 2100000, color: '#a2dac7' },
     { name: 'Infinitricifite', rarity: 'mythic', chance: 10000000, price: 2100000, color: '#2f80ed' },
@@ -59,6 +62,7 @@ const ores = [
     { name: 'Solid Obsidian', rarity: 'uncommon', chance: 13, price: 22, color: '#281c3a' },
     { name: 'Durtlie', rarity: 'uncommon', chance: 12, price: 20, color: '#65a727' },
     { name: 'Moldier', rarity: 'common', chance: 5, price: 5, color: '#281c3a' },
+    { name: 'Mored', rarity: 'common', chance: 3, price: 5, color: '#c4a27c' },
     { name: 'Grass', rarity: 'basic', chance: 2, price: 1, color: '#5bff84' },
     { name: 'Ice', rarity: 'basic', chance: 2, price: 1, color: '#46a8e6' },
     { name: 'Basalt', rarity: 'basic', chance: 2, price: 1, color: '#8f9975' },
@@ -246,7 +250,7 @@ const pickaxes = {
     frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 3.35, superChance: 0.025, superCount: 2700 },
     ultima: { name: "Tier 13 / Ultima Blastica", power: 125, luck: 6.75, superChance: 0.025, superCount: 62000 },
     hackaxe: { name: "hack axe", power: 250, luck: 25.0, superChance: 1, superCount: 2500},
-    luhackaxe: { name: "luhack axe", power: 1, luck: 25000000.0, superChance: 0, superCount: 120000}
+    luhackaxe: { name: "luhack axe", power: 5, luck: 250000000.0, superChance: 0, superCount: 120000}
 };
 
 const pickaxeRecipes = {
@@ -283,6 +287,7 @@ let lastEncyclopediaHash = "";
 let lastRenderedLayerIndex = -1;
 let mode = "online";
 let appliedLuck = pickaxes[currentPickaxe].luck;
+let flashTimer = null;
 
 let soundRarityThreshold = rarityRank.rare; 
 // rare 이상만 소리 나게 (원하면 epic으로 변경)
@@ -337,7 +342,7 @@ function loadSettings() {
 function formatNumber(num) {
     if (num < 1000) return num.toFixed(0); // 1000 미만은 그대로 표시
     
-    const units = ["", "k", "m", "b", "t", "q", "qi", "sx", "sp", "o", "n", "d"];
+    const units = ["", "k", "m", "b", "t", "qd", "qn", "sx", "sp", "oc", "no", "de"];
     let unitIndex = 0;
     
     // 1000으로 나누면서 단위를 올림
@@ -396,62 +401,76 @@ function updateActiveEffectsUI() {
 
 function renderPotions() {
     const potionListContainer = document.getElementById('potion-list');
-    
-    if (!potionListContainer) {
-        console.error("Element 'potion-list' not found.");
-        return;
-    }
+    if (!potionListContainer) return;
 
-    potionListContainer.innerHTML = ''; 
-
-    potions.forEach(potion => {
-        const div = document.createElement('div');
-        div.className = 'potion-card';
-        
-        // 가격 포맷팅
+    potionListContainer.innerHTML = potions.map(potion => {
+        // 기존 로직 유지: 활성화 상태 체크 및 가격 포맷팅
+        const isActive = isEffectActive(potion.id);
         const formattedPrice = potion.price.toLocaleString();
 
-        div.innerHTML = `
-            <h4 style="margin: 0 0 8px 0;">${potion.effectIcon} ${potion.name}</h4>
-            <div class="potion-stats" style="font-size: 0.85rem; color: #aaa; margin-bottom: 8px;">
-                <p style="margin: 2px 0;">✨ ${potion.stats}</p>
-                <p style="margin: 2px 0;">⏱️ Duration: ${potion.duration}s</p>
+        // 곡괭이 UI와 동일한 구조로 구성
+        return `
+            <div class="card" style="border: 1px solid #333; padding: 15px; border-radius: 4px; margin-bottom: 15px; background: #25262a;">
+                <h4 style="margin: 0 0 10px 0; color: #eee;">${potion.effectIcon} ${potion.name}</h4>
+                
+                <div style="background: #1a1a1a; padding: 10px; margin-bottom: 10px; border-radius: 4px; font-size: 0.9em; border: 1px solid #444; color: #ddd;">
+                    <p style="margin: 2px 0;"><strong>Effect /</strong> ${potion.stats}</p>
+                    <p style="margin: 2px 0;"><strong>Duration /</strong> ${potion.duration}s</p>
+                </div>
+                
+                <p style="font-style: italic; font-size: 0.85em; color: #888; margin-bottom: 15px;">
+                    "${potion.lore}"
+                </p>
+                
+                <button 
+                    onclick="buyPotion('${potion.id}')" 
+                    style="width: 100%; padding: 10px; cursor: ${isActive ? 'not-allowed' : 'pointer'}; background: ${isActive ? '#27ae60' : '#333'}; color: white; border: 1px solid #555; border-radius: 4px; font-weight: bold;"
+                    ${isActive ? 'disabled' : ''}>
+                    ${isActive ? 'Already Active' : 'Buy for ' + formattedPrice + ' Coins'}
+                </button>
             </div>
-            <p class="potion-lore" style="font-style: italic; font-size: 0.75rem; color: #777; margin-bottom: 12px;">
-                "${potion.lore}"
-            </p>
-            <button class="buy-btn" onclick="buyPotion('${potion.id}')">
-                Buy for ${formattedPrice} Coins
-            </button>
         `;
-        potionListContainer.appendChild(div);
-    });
+    }).join('');
 }
-
 function checkLuckDebug() {
     console.log("--- 🍀 Luck Debug Info ---");
     console.table(lastRollDebug);
     console.log("--------------------------");
 }
 
+const potionTimers = {};
+
 function activatePotion(potion) {
-    // 1. 현재 시간 + 지속 시간(초)을 밀리초 단위로 계산하여 저장
-    // potion 객체에 duration 속성이 있다고 가정합니다 (예: 30초면 30)
     const durationMs = potion.duration * 1000;
-    
-    // 2. 만약 이미 같은 버프가 있다면, 시간을 연장하거나 덮어쓰기
     const now = Date.now();
     const existingEndTime = activeBoosts[potion.id];
     
+    // 1. 시간 갱신
     if (existingEndTime && existingEndTime > now) {
-        // 이미 활성화 중이면 남은 시간에 추가 (혹은 갱신)
         activeBoosts[potion.id] = existingEndTime + durationMs;
+        
+        // 기존 타이머가 있다면 취소하고 다시 설정 (연장된 시간만큼 다시 기다림)
+        clearTimeout(potionTimers[potion.id]);
     } else {
-        // 새로 적용
         activeBoosts[potion.id] = now + durationMs;
     }
+    
+    // 2. 시간이 다 되면 효과를 종료시키는 타이머 설정
+    potionTimers[potion.id] = setTimeout(() => {
+        // 효과 종료 로직 (activeBoosts에서 제거 등)
+        delete activeBoosts[potion.id];
+        
+        // 🔥 여기가 핵심: 효과가 끝났으니 UI를 강제로 다시 그림
+        renderPotions();
+        updateUI(); 
+        
+        console.log(`Potion expired: ${potion.id}`);
+    }, activeBoosts[potion.id] - Date.now()); // 현재 시간부터 종료 시간까지의 차이만큼 대기
 
     console.log(`Potion activated: ${potion.id}, New End Time: ${activeBoosts[potion.id]}`);
+    
+    // 구매 직후 UI 갱신
+    renderPotions();
 }
 
 function buyPotion(potionId) {
@@ -578,51 +597,41 @@ function processBulkMining(pick) {
     let rarestOre = null;
     let foundNew = false;
 
+    // 1. 현재 적용 중인 모든 보너스를 포함한 최종 운 수치를 가져옵니다.
+    const effectiveLuck = getTotalLuck();
 
     for (let i = 0; i < pick.superCount; i++) {
-        const ore = rollOre(pick.luck);
+        // 2. 계산된 최종 운(effectiveLuck)을 전달합니다.
+        const ore = rollOre(effectiveLuck); 
 
         if (addOreToInventory(ore)) {
             foundNew = true;
         }
 
-        // 가장 희귀한 광물 선택
         if (!rarestOre || ore.chance > rarestOre.chance) {
             rarestOre = ore;
         }
     }
 
     if (rarestOre) {
-
-        // 화면 효과
         applyScreenEffect(rarestOre);
 
-        // 결과 표시
-showResult("", {
-    item: rarestOre.name,
-    color: rarestOre.color,
-    rarity: rarestOre.rarity,
-    quantity: pick.superCount,
-    luck: pick.luck,
-    new: foundNew,
-    glowType: rarestOre.glowType,
-    bulk: true
-});
+        showResult("", {
+            item: rarestOre.name,
+            color: rarestOre.color,
+            rarity: rarestOre.rarity,
+            quantity: pick.superCount,
+            luck: effectiveLuck, // 보정된 최종 수치를 UI에 반영
+            new: foundNew,
+            glowType: rarestOre.glowType,
+            bulk: true
+        });
 
-        // 희귀 광물 사운드
-        const raritySound =
-            raritySounds[rarestOre.rarity?.toLowerCase()];
-
-if (shouldPlaySpawnSound(rarestOre)) {
-
-    if (raritySound) {
-        playSound(raritySound);
-    } else {
-        playSound(superSound);
-    }
-
-}
-        // 인벤토리 갱신
+        if (shouldPlaySpawnSound(rarestOre)) {
+            const raritySound = raritySounds[rarestOre.rarity?.toLowerCase()];
+            playSound(raritySound || superSound);
+        }
+        
         if (foundNew) {
             UIManager.requestInventoryUpdate();
         }
@@ -791,35 +800,45 @@ function isEffectActive(potionId) {
     }
     return false; // 데이터가 없거나 시간이 지났으면 false 반환
 }
+
+
 function applyScreenEffect(ore) {
     const rarity = ore.rarity?.toLowerCase();
+    const flashList = ["mythic", "ephemeral", "unreal", "abstruse", "creative", "meaninglessness", "illimitátus", "solitude"];
+    const flashOverlay = document.getElementById("flash-overlay");
 
-    const shakeList = ["epic", "midas", "mythic"];
-    const flashList = ["midas", "mythic"];
+    if (flashList.includes(rarity) && flashOverlay) {
+        // 1. 이전 타이머 취소
+        if (flashTimer) clearTimeout(flashTimer);
 
-    const gameRoot = document.getElementById("game-root");
+        // 2. 가상 요소로 해당 클래스의 색상값 가져오기
+        const tempDiv = document.createElement("div");
+        tempDiv.className = `badge-${rarity}`;
+        tempDiv.style.display = "none";
+        document.body.appendChild(tempDiv);
+        
+        const bgColor = window.getComputedStyle(tempDiv).backgroundColor;
+        document.body.removeChild(tempDiv); // 사용 후 제거
 
-    if (shakeList.includes(rarity) && gameRoot) {
-        gameRoot.classList.remove("shake-screen");
-        void gameRoot.offsetWidth; // 애니메이션 재시작용
+        // 3. 플래시 애니메이션 적용
+        flashOverlay.style.backgroundColor = bgColor;
+        flashOverlay.classList.remove("flash-active");
+        void flashOverlay.offsetWidth; 
+        flashOverlay.classList.add("flash-active");
 
-        gameRoot.classList.add("shake-screen");
-
-        setTimeout(() => {
-            gameRoot.classList.remove("shake-screen");
+        flashTimer = setTimeout(() => {
+            flashOverlay.classList.remove("flash-active");
+            flashTimer = null;
         }, 350);
-    }
-
-    if (flashList.includes(rarity)) {
-        document.body.classList.add("flash-screen");
-
-        setTimeout(() => {
-            document.body.classList.remove("flash-screen");
-        }, 250);
     }
 }
 
 function onMineButtonClick() {
+
+    if (window.resultTimer) {
+        clearTimeout(window.resultTimer);
+        window.resultTimer = null;
+    }
     // 1. 버프 상태 체크
     const isSpeed3 = isEffectActive('speed3');
     const isSpeed2 = isEffectActive('speed2');
@@ -886,6 +905,8 @@ if (isSuper) {
 
         // 🎬 화면 이펙트 (rarity 기반)
         applyScreenEffect(rarestOre);
+        const resultDiv = document.getElementById('result');
+        if (resultDiv) resultDiv.style.opacity = '1'; // 혹시 모를 투명도 초기화
 
         // 🔥 UI 출력
 showResult("", {
@@ -1066,19 +1087,29 @@ function renderEncyclopedia() {
             const badgeClass = `badge-${rarity}`;
             const glowClass = (typeof getGlowClass === 'function') ? getGlowClass(ore) : (ore.glowType || '');
 
-            if (isFound) {
-                oreCard.innerHTML = `
-                    <span class="rarity-badge ${badgeClass}">${rarity.toUpperCase()}</span>
-                    <span class="${glowClass}" style="color: ${ore.color || '#fff'}; font-weight: bold;">
-                        ${ore.name}
-                    </span>
-                `;
-            } else {
-                oreCard.innerHTML = `
-                    <span class="rarity-badge badge-unknown">???</span>
-                    <span style="color: #666; font-weight: bold;">???</span>
-                `;
-            }
+if (isFound) {
+    // 텍스트 없이 숫자만 1/n 형태로 표시
+    const formattedChance = ore.chance 
+        ? `1/${ore.chance.toLocaleString()}` 
+        : '';
+        
+    const chanceDisplay = formattedChance 
+        ? `<div style="font-size: 0.85em; color: #aaa; margin-top: 4px;">${formattedChance}</div>` 
+        : '';
+    
+    oreCard.innerHTML = `
+        <span class="rarity-badge ${badgeClass}">${rarity.toUpperCase()}</span>
+        <div class="${glowClass}" style="color: ${ore.color || '#fff'}; font-weight: bold;">
+            ${ore.name}
+        </div>
+        ${chanceDisplay}
+    `;
+} else {
+    oreCard.innerHTML = `
+        <span class="rarity-badge badge-unknown">???</span>
+        <div style="color: #666; font-weight: bold;">???</div>
+    `;
+}
             container.appendChild(oreCard);
         });
     });
@@ -1443,7 +1474,7 @@ window.onload = () => {
     loadGame();
     loadSettings();
 
-    loadOfflineProgress(); // 🔥 여기
+    loadOfflineProgress(); 
 
     setupAutoMineButton();
     setupTabButtons();
@@ -1453,6 +1484,14 @@ window.onload = () => {
     requestAnimationFrame(() => {
         initUI();
     });
+
+    // 🔥 추가: 새로고침 시 브라우저의 스크롤 복원 기능을 비활성화
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    // 혹시 모를 상황을 대비해 즉시 최상단으로 이동
+    window.scrollTo(0, 0);
 };
 
 setInterval(() => {
