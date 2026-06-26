@@ -1,5 +1,5 @@
-const superSound = new Audio('super_mining.mp3');
-const clickSound = new Audio('click.mp3'); 
+const superSound = new Audio('./sounds/super_mining.mp3');
+const clickSound = new Audio('./sounds/click.mp3'); 
 clickSound.volume = 0.05;
 const abilitySound = new Audio("./sounds/ability.mp3");
 
@@ -200,11 +200,11 @@ document.getElementById('potion-list').addEventListener('click', function(event)
 });
 
 const raritySounds = {
-    epic: new Audio('rare.mp3'),
-    midas: new Audio('rare2.mp3'), mythic: new Audio('rare2.mp3'), ephemeral: new Audio('overrare.mp3'),
-    unreal: new Audio('overrare.mp3'), abstruse: new Audio("ascendant.mp3"),
-    creative: new Audio('ascendant.mp3'), meaninglessness: new Audio("everything.mp3"), illimitátus: new Audio("otherworldly.mp3"), unknown: new Audio("reality.mp3"),
-    solitude: new Audio('solitude.mp3')
+    epic: new Audio('./sounds/rare.mp3'),
+    midas: new Audio('./sounds/rare2.mp3'), mythic: new Audio('./sounds/rare2.mp3'), ephemeral: new Audio('./sounds/overrare.mp3'),
+    unreal: new Audio('./sounds/overrare.mp3'), abstruse: new Audio("./sounds/ascendant.mp3"),
+    creative: new Audio('./sounds/ascendant.mp3'), meaninglessness: new Audio("./sounds/everything.mp3"), illimitátus: new Audio("./sounds/otherworldly.mp3"), unknown: new Audio("./sounds/reality.mp3"),
+    solitude: new Audio('./sounds/solitude.mp3')
 };
 
 const pickaxeSortOrder = {
@@ -1216,6 +1216,60 @@ function rollOreOffline() {
     );
 }
 
+
+function saveGame() {
+    const data = {
+        inventory,
+        foundCount,
+        foundOres, // 추가된 부분
+        coins,
+        currentPickaxe,
+        unlockedPickaxes,
+        totalBlocksMined,
+        currentLayerIndex,
+        lastSaveTime: Date.now()
+    };
+
+    localStorage.setItem('mineSave', JSON.stringify(data));
+}
+function loadGame() {
+    const rawData = localStorage.getItem('mineSave');
+    
+    // 1. 데이터 자체가 아예 없는 경우 (첫 실행 등)
+    if (!rawData) {
+        inventory = {};
+        foundCount = {};
+        foundOres = [];
+        coins = 0;
+        currentPickaxe = 'basic';
+        unlockedPickaxes = ['basic'];
+        totalBlocksMined = 0;
+        currentLayerIndex = 0;
+        return;
+    }
+
+    try {
+        // 2. 데이터가 있을 경우 JSON 파싱
+        const data = JSON.parse(rawData);
+
+        // 3. 기존 로직 유지 + 데이터 안정성 확보 (?? 연산자 활용)
+        // ?? 연산자는 값이 null 또는 undefined일 때만 오른쪽 값을 사용합니다.
+        inventory = data.inventory ?? {};
+        foundCount = data.foundCount ?? {};
+        foundOres = data.foundOres ?? []; // 요청하신 foundOres 추가
+        coins = data.coins ?? 0;
+        currentPickaxe = data.currentPickaxe ?? 'basic';
+        unlockedPickaxes = data.unlockedPickaxes ?? ['basic'];
+        totalBlocksMined = data.totalBlocksMined ?? 0;
+        currentLayerIndex = data.currentLayerIndex ?? 0;
+        
+    } catch (e) {
+        // 4. 세이브 파일이 손상되었을 경우의 예외 처리
+        console.error("세이브 파일 로드 오류: ", e);
+        // 여기서 초기화하거나, 필요하다면 백업본을 불러오는 로직 추가 가능
+    }
+}
+
 function loadOfflineProgress() {
     const data = JSON.parse(localStorage.getItem('mineSave'));
     if (!data || !data.lastSaveTime) return;
@@ -1244,40 +1298,6 @@ function loadOfflineProgress() {
     console.log("Offline loot sample:", offlineLoot.slice(0, 10));
 }
 
-function saveGame() {
-    const data = {
-        inventory,
-        foundCount,
-        foundOres,
-        coins,
-        currentPickaxe,
-        unlockedPickaxes,
-        totalBlocksMined,
-        currentLayerIndex,
-        lastSaveTime: Date.now() // 🔥 추가
-    };
-
-    localStorage.setItem('mineSave', JSON.stringify(data));
-}
-function loadGame() {
-    const data = JSON.parse(localStorage.getItem('mineSave'));
-    if (!data) {
-        // 데이터가 없을 때 기본값 설정
-        foundOres = []; 
-        return;
-    }
-
-    inventory = data.inventory || {};
-    foundCount = data.foundCount || {};
-    // 여기에 foundOres를 추가하세요!
-    foundOres = data.foundOres || []; 
-    
-    coins = data.coins || 0;
-    currentPickaxe = data.currentPickaxe || 'basic';
-    unlockedPickaxes = data.unlockedPickaxes || ['basic'];
-    totalBlocksMined = data.totalBlocksMined || 0;
-    currentLayerIndex = data.currentLayerIndex || 0;
-}
 // 광물을 캤을 때 실행되는 함수 (예: mineBlock 등)
 function onOreMined(oreName) {
     // 1. 이미 발견한 적 있는지 확인
@@ -1508,6 +1528,11 @@ setInterval(() => {
     updateBuyButtons();
 }, 1000);
 
-setInterval(() => {
+window.addEventListener('beforeunload', (event) => {
+    // 게임 데이터를 저장합니다.
     saveGame();
-}, 1000);
+    
+    // 아래 두 줄은 브라우저에 따라 경고창을 띄우기 위한 설정입니다 (선택 사항)
+    // event.preventDefault();
+    // event.returnValue = ''; 
+});
