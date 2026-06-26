@@ -37,19 +37,17 @@ body {
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
-    min-height: 600px; /* 게임 내용에 맞는 최소 높이를 설정하세요 */
     position: relative; /* 자식 요소들의 기준점 역할 */
 }
 
 
 .section, .tab-content {
     opacity: 0;
-    /* 나타날 때는 0.3s 동안 부드럽게, 사라질 때는 즉시(0s) 사라짐 */
-    transition: opacity 0.3s ease, visibility 0s 0.3s;
-    visibility: hidden; 
-    position: absolute; 
+    transform: translateY(10px); /* 추가: 아래에서 위로 올라오는 효과 */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+    visibility: hidden;
+    position: absolute;
     width: 100%;
-    pointer-events: none;
 }
 
 .mine-btn {
@@ -262,11 +260,10 @@ body {
 
 .section.active, .tab-content.active {
     opacity: 1;
-    visibility: visible;
-    /* 활성화될 때는 즉시 visible로 바꾸고 opacity만 부드럽게 적용 */
-    transition: opacity 0.3s ease, visibility 0s 0s;
+    transform: translateY(0); /* 원래 위치로 */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0s;
     position: relative;
-    pointer-events: auto;
+    visibility: visible;
 }
 
 .encyclopedia-card-text {
@@ -434,9 +431,12 @@ body {
 
 /* 2. 메인 컨테이너 */
 .tab-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+display: flex;
+    background: #1c1c21; /* 어두운 배경 */
+    border-radius: 12px;
+    padding: 4px;
+    width: fit-content;
+    gap: 4px;
 }
 
 .recipe-card {
@@ -458,15 +458,41 @@ body {
     font-weight: bold;
 }
 /* 3. 헤더 및 통계 */
-.header { text-align: center; margin-bottom: 20px; }
-.header h1 { font-size: 1.5rem; color: #fff; margin-bottom: 5px; }
+.header {
+    text-align: center;
+    margin-bottom: 5px; /* 20px에서 5px로 대폭 축소 */
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 2px; /* 추가 미세 조정 */
+}
+
+/* 탭 영역의 마진 조정 */
+.tabs {
+    margin-bottom: 10px; /* 기존에 탭 하단에 마진이 있다면 여기서 조절 가능 */
+}
 .stats { color: #888; font-size: 0.9rem; }
 
 /* 4. 탭 메뉴 */
 .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #26262e; padding: 5px; border-radius: 10px; }
-.tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #888; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.3s; }
-.tab-btn.active { background: #2f80ed; color: white; }
-
+.tab-btn {
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    color: #a0a0a0;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease; /* 부드러운 전환 */
+}
+.tab-btn.active {
+    color: #ffffff;
+    background: #2b7afc; /* 파란색 활성화 배경 */
+    box-shadow: 0 4px 12px rgba(43, 122, 252, 0.3);
+}
 /* 5. 카드 스타일 (모든 박스 공통) */
 .card {
     background: #2a2a30;
@@ -558,12 +584,10 @@ h2 { font-size: 1.2rem; margin-bottom: 10px; }
 h3 { font-size: 1rem; margin-bottom: 8px; }
 
 #encyclopedia-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* 화면 너비에 맞춰 자동 정렬 */
-    gap: 15px;
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 20px;
 }
-
 .rarity-group-title {
     grid-column: 1 / -1; /* 헤더는 한 줄을 다 차지하도록 */
     margin: 20px 0 10px 0;
@@ -575,14 +599,14 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
 }
 
 .encyclopedia-item {
-    margin-bottom: 0 !important;
+    padding: 15px;
+    height: 100px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 6px;
 }
-
 /* 섹션 전환 애니메이션 */
 .section.active {
     display: block !important;
@@ -724,13 +748,15 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     transition: all 0.3s ease;
 }
 
-.sub-tab-btn:hover {
-    background: #3d3d45;
+.tab-btn:hover {
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .sub-tab-btn.active {
-    background: #2f80ed;
-    box-shadow: 0 0 10px rgba(47, 128, 237, 0.3);
+color: #fff;
+    background-color: #007bff; /* 파란색 배경 (이미지 참고) */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* 은은한 그림자 추가 */
 }
 
 .sub-tab-btn.active {
@@ -790,6 +816,19 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     opacity: 1;
 }
 
+.rarity-section {
+    width: 100%;
+    margin-bottom: 30px;
+    display: block; /* 세로로 쌓이게 함 */
+}
+
+.ore-grid {
+    display: grid;
+    /* 카드가 최소 200px 이상일 때 가로로 나열, 자리가 없으면 다음 줄로 */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
 
 /* 배지 및 리스트 */
 .inventory-list { list-style: none; padding: 0; }

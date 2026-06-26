@@ -8,7 +8,7 @@ const abilitySound = new Audio("./sounds/ability.mp3");
 
 const layers = [
     { name: "Stratosphere", ores: ['Nitrogen', 'Oxygen', 'Argon', 'everything.jpg'] },
-    { name: "Grass Layer", ores: ['Grass','Mored', 'Bromine','Durtlie', 'Iron','GREENITCH', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
+    { name: "Grass Layer", ores: ['Grass','Mored','Lunar', 'Bromine','Durtlie', 'Iron','GREENITCH', 'Gold', 'Anvilar', 'F L O W S C A P E', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Slate Layer", ores: ['Slate', 'Iron', 'Lapis', 'Ruby', 'Diamond', 'Enfinitricifite', 'Cannidilit','Kryxim', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Ice Layer", ores: ['Ice', 'Diamond', 'Crkyotopis', 'Acrictopas', 'Infinitricifite', 'Macorl Esperatio', 'IXYSOPARDOX', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
     { name: "Basalt Layer", ores: ['Basalt', 'Iron', 'Asphalt','Ckyslop', 'Gold', 'Bloody Bronze', 'Malux','Moldivium', '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'] },
@@ -63,6 +63,7 @@ const ores = [
     { name: 'Durtlie', rarity: 'uncommon', chance: 12, price: 20, color: '#65a727' },
     { name: 'Moldier', rarity: 'common', chance: 5, price: 5, color: '#281c3a' },
     { name: 'Mored', rarity: 'common', chance: 3, price: 5, color: '#c4a27c' },
+    { name: 'Lunar', rarity: 'common', chance: 3, price: 5, color: '#bc6aff' },
     { name: 'Grass', rarity: 'basic', chance: 2, price: 1, color: '#5bff84' },
     { name: 'Ice', rarity: 'basic', chance: 2, price: 1, color: '#46a8e6' },
     { name: 'Basalt', rarity: 'basic', chance: 2, price: 1, color: '#8f9975' },
@@ -1047,8 +1048,6 @@ function renderInventory(forceUpdate = false) {
 
 function renderEncyclopedia() {
     let container = document.getElementById('encyclopedia-content');
-    
-    // 컨테이너 초기화 로직 (기존 유지)
     if (!container) {
         const parent = document.getElementById('encyclopedia');
         if (parent) {
@@ -1059,8 +1058,7 @@ function renderEncyclopedia() {
     }
     container.innerHTML = '';
 
-    // 1. 희귀도별로 데이터 그룹화
-    const rarityOrder = ['solitude', 'illimitátus', 'meaninglessness', 'creative', 'abstruse', 'unreal', 'ephemeral', 'mythic', 'midas', 'epic', 'rare', 'uncommon', 'common', 'basic', 'unknown']; // 원하는 정렬 순서
+    const rarityOrder = ['solitude', 'illimitátus', 'meaninglessness', 'creative', 'abstruse', 'unreal', 'ephemeral', 'mythic', 'midas', 'epic', 'rare', 'uncommon', 'common', 'basic', 'unknown'];
     const groupedOres = ores.reduce((acc, ore) => {
         const rarity = (ore.rarity || 'common').toLowerCase();
         if (!acc[rarity]) acc[rarity] = [];
@@ -1068,17 +1066,26 @@ function renderEncyclopedia() {
         return acc;
     }, {});
 
-    // 2. 그룹별로 렌더링
     rarityOrder.forEach(rarity => {
-        if (!groupedOres[rarity]) return; // 해당 희귀도 광물이 없으면 패스
+        if (!groupedOres[rarity]) return;
 
-        // 희귀도 헤더 생성
+        // 섹션 생성
+        const section = document.createElement('div');
+        section.className = 'rarity-section';
+
+        // 희귀도 제목 (첫 글자만 대문자)
+        const formattedTitle = rarity.charAt(0).toUpperCase() + rarity.slice(1);
         const groupTitle = document.createElement('h3');
-        groupTitle.textContent = rarity.toUpperCase();
+        groupTitle.textContent = formattedTitle;
         groupTitle.className = 'rarity-group-title';
-        container.appendChild(groupTitle);
+        section.appendChild(groupTitle);
 
-        // 해당 그룹 광물들 생성
+        // 광물 Grid 컨테이너 생성
+        const grid = document.createElement('div');
+        grid.className = 'ore-grid';
+        section.appendChild(grid);
+
+        // 카드 추가
         groupedOres[rarity].forEach(ore => {
             const isFound = (foundCount[ore.name] || 0) > 0;
             const oreCard = document.createElement('div');
@@ -1087,31 +1094,25 @@ function renderEncyclopedia() {
             const badgeClass = `badge-${rarity}`;
             const glowClass = (typeof getGlowClass === 'function') ? getGlowClass(ore) : (ore.glowType || '');
 
-if (isFound) {
-    // 텍스트 없이 숫자만 1/n 형태로 표시
-    const formattedChance = ore.chance 
-        ? `1/${ore.chance.toLocaleString()}` 
-        : '';
-        
-    const chanceDisplay = formattedChance 
-        ? `<div style="font-size: 0.85em; color: #aaa; margin-top: 4px;">${formattedChance}</div>` 
-        : '';
-    
-    oreCard.innerHTML = `
-        <span class="rarity-badge ${badgeClass}">${rarity.toUpperCase()}</span>
-        <div class="${glowClass}" style="color: ${ore.color || '#fff'}; font-weight: bold;">
-            ${ore.name}
-        </div>
-        ${chanceDisplay}
-    `;
-} else {
-    oreCard.innerHTML = `
-        <span class="rarity-badge badge-unknown">???</span>
-        <div style="color: #666; font-weight: bold;">???</div>
-    `;
-}
-            container.appendChild(oreCard);
+            if (isFound) {
+                const formattedChance = ore.chance ? `1/${ore.chance.toLocaleString()}` : '';
+                oreCard.innerHTML = `
+                    <span class="rarity-badge ${badgeClass}">${rarity.toUpperCase()}</span>
+                    <div class="${glowClass}" style="color: ${ore.color || '#fff'}; font-weight: bold;">
+                        ${ore.name}
+                    </div>
+                    <div style="font-size: 0.85em; color: #aaa; margin-top: 4px;">${formattedChance}</div>
+                `;
+            } else {
+                oreCard.innerHTML = `
+                    <span class="rarity-badge badge-unknown">???</span>
+                    <div style="color: #666; font-weight: bold;">???</div>
+                `;
+            }
+            grid.appendChild(oreCard);
         });
+
+        container.appendChild(section);
     });
 }
 
@@ -1398,16 +1399,23 @@ function setupAutoMineButton() {
     });
 }
 function setupTabButtons() {
-    // 모든 .tab-btn 요소를 찾습니다
     const buttons = document.querySelectorAll('.tab-btn');
     
     buttons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // 버튼에 적힌 data-target 속성값을 가져옵니다 (예: 'encyclopedia')
-            const targetId = e.target.getAttribute('data-target');
+            // 버튼 내부의 요소를 클릭해도 버튼 자신을 찾도록 설정
+            const clickedBtn = e.target.closest('.tab-btn');
             
-            // showSection 함수 호출
-            showSection(targetId, e.target);
+            if (!clickedBtn) return; // 버튼이 아니면 무시
+
+            // 1. 모든 버튼에서 active 제거
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            // 2. 클릭한 버튼에 active 추가
+            clickedBtn.classList.add('active');
+            
+            const targetId = clickedBtn.getAttribute('data-target');
+            showSection(targetId, clickedBtn);
         });
     });
 }
