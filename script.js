@@ -1,5 +1,3 @@
-// [1] 전역 변수 설정
-
 const superSound = new Audio('super_mining.mp3');
 const clickSound = new Audio('click.mp3'); 
 clickSound.volume = 0.05;
