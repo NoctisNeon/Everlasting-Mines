@@ -619,7 +619,6 @@ display: flex;
     background: #2a2a30;
     border: 1px solid #3d3d45;
     padding: 15px;
-    margin-bottom: 15px;
     border-radius: 12px; /* 모서리를 더 둥글게 */
     box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* 살짝 떠 있는 느낌 추가 */
     transition: transform 0.2s; /* 호버 효과 준비 */
@@ -721,7 +720,7 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
 
 .encyclopedia-item{
     padding:15px;
-    min-height:150px;
+    min-height:120px;
 
     display:flex;
     flex-direction:column;
@@ -733,24 +732,15 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
 }
 
 .encyclopedia-item .ore-name {
-
-    width: 100%;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-
-    overflow: hidden;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-
-    line-height: 1.2em;
-    max-height: 2.4em;
-
-    text-align: center;
-
-    font-weight: bold;
+  font-weight: bold;
+  line-height: 1.2em;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-height: 2.4em;
 }
 
 /* 섹션 전환 애니메이션 */
@@ -964,16 +954,15 @@ color: #fff;
 
 .rarity-section {
     width: 100%;
-    margin-bottom: 30px;
     display: block; /* 세로로 쌓이게 함 */
 }
 
 .ore-info {
     display: flex;
     align-items: center;
+    flex-wrap: wrap; /* 추가: 이름이 길면 다음 줄로 넘어감 */
     gap: 6px;
-    min-width: 0;
-    overflow: hidden;
+    min-width: 0;   /* 기존 유지: flex 자식 요소의 오버플로우 방지 */
 }
 
 .ore-icon {
@@ -988,26 +977,16 @@ color: #fff;
     text-align: center;
 }
 
-.ore-name{
-
-    width:100%;
-
-    font-weight:bold;
-
-    line-height:1.2;
-
-    margin:0;
-
-    text-align:center;
-
-    overflow:hidden;
-
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-
-    overflow-wrap:anywhere;
-    word-break:break-word;
+.ore-name {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  text-align: center;
+  /* Remove overflow hidden to allow glow */
+  overflow: visible; 
+  word-break: break-word; /* 너무 긴 단어일 경우 강제 줄바꿈 */
+  display: inline-block; /* helps gradient text render properly */
+  /* If you want to keep line clamp, wrap in another container instead */
 }
 .ore-count {
     flex-shrink: 0;
@@ -1022,7 +1001,7 @@ color: #fff;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .mine-layout-wrapper {
@@ -1122,6 +1101,7 @@ color: #fff;
 .badge-meaninglessness { background-color: #e2ffed; color: #303030; }
 .badge-illimitátus { background-color: #202020; color: #f8f8f8; }
 .badge-solitude { background-color: #2f5e5a; color: #ffffff; }
+.badge-paradoxical { background-color: #00a85a; color: #fffd6c; }
 .badge-exclusive { background-color: #ff0095; color: #ffffff; }
 
 /* 글로우 애니메이션 정의 */
@@ -1268,10 +1248,10 @@ color: #fff;
     font-weight: bold;
 
     /* 글리치 애니메이션 적용 */
-    animation: glitch 1.5s infinite linear alternate-reverse;
+    animation: glitch1 1.5s infinite linear alternate-reverse;
 }
 
-@keyframes glitch {
+@keyframes glitch1 {
     0% {
         text-shadow: 2px 0 5px #4e4e20, -2px 0 5px #5a4a1d;
     }
@@ -1327,3 +1307,80 @@ color: #fff;
     font-weight: bold;
 }
 
+.glow-zet {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #79ff79, #00ff2a, #008533);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.glow-yotta {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #205035, #188558, #30d488);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 10px #1a645e, 0 0 20px #35a768;
+}
+
+
+.glow-noctil {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #0a3b52, #265968, #386377);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 5px #273d3b, 0 0 10px #bdf7ff;
+}
+
+.glow-64lim {
+    background: linear-gradient(90deg, #ffffff, #81ff87, #07c500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    display: inline-block; /* 애니메이션을 위해 필요 */
+    animation: glitch64lim 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch64lim {
+    0% {
+        text-shadow: 2px 0 5px #00ffaa, -2px 0 5px #00ff0d;
+        transform: skew(0deg);
+    }
+    20% {
+        text-shadow: -2px 0 5px #00ff73, 2px 0 5px #00e031;
+        transform: skew(5deg); /* 살짝 비틀기 */
+    }
+    40% {
+        text-shadow: 2px 0 5px #00ffaa, -2px 0 5px #00ff0d;
+        transform: skew(-5deg);
+    }
+    60% {
+        text-shadow: -2px 0 5px #00ff73, 2px 0 5px #00e031;
+        transform: translate(-2px, 1px); /* 살짝 위치 이동 */
+    }
+    80% {
+        text-shadow: 2px 0 5px #00ffaa, -2px 0 5px #00ff0d;
+        transform: translate(2px, -1px);
+    }
+    100% {
+        text-shadow: 0 0 10px #008321, 0 0 20px #005307;
+        transform: skew(0deg);
+    }
+}
