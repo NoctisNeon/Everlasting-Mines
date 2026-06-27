@@ -330,6 +330,71 @@ body {
     white-space: pre-line;
 }
 
+.encyclopedia-ore-icon{
+    width:32px;
+    height:32px;
+
+    object-fit:contain;
+
+    margin:8px 0;
+
+    flex-shrink:0;
+}
+.encyclopedia-ore-info .ore-icon{
+
+    width:24px;
+    height:24px;
+
+    flex-shrink:0;
+
+    object-fit:contain;
+}
+.encyclopedia-ore-info{
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    width:100%;
+    max-width:100%;
+
+    margin:8px 0;
+
+    overflow:hidden;
+}
+
+.encyclopedia-ore-info .ore-name{
+
+    flex:1;
+
+    min-width:0;
+
+    text-align:left;
+
+    font-weight:bold;
+
+    line-height:1.2;
+
+    overflow:hidden;
+
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+.encyclopedia-chance{
+
+    margin-top:auto;
+
+    color:#aaa;
+    font-size:.85em;
+}
 #encyclopedia {
     min-height: 300px;
     padding: 20px;
@@ -354,6 +419,7 @@ background: #c0392b;
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
+    flex-shrink: 0;
 }
 
 /* =========================
@@ -653,15 +719,40 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     letter-spacing: 2px;
 }
 
-.encyclopedia-item {
-    padding: 15px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.encyclopedia-item{
+    padding:15px;
+    min-height:150px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-align:center;
+
+    overflow:hidden;
 }
+
+.encyclopedia-item .ore-name {
+
+    width: 100%;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    line-height: 1.2em;
+    max-height: 2.4em;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
 /* 섹션 전환 애니메이션 */
 .section.active {
     display: block !important;
@@ -877,9 +968,58 @@ color: #fff;
     display: block; /* 세로로 쌓이게 함 */
 }
 
+.ore-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.ore-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.ore-info .rarity-badge {
+    flex-shrink: 0;        /* 선택 사항: 뱃지 폭 고정 */
+    text-align: center;
+}
+
+.ore-name{
+
+    width:100%;
+
+    font-weight:bold;
+
+    line-height:1.2;
+
+    margin:0;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+.ore-count {
+    flex-shrink: 0;
+    margin-left: 5px;
+}
+
+.ore-info > span:last-child {
+    flex-shrink: 0;
+}
+
 .ore-grid {
     display: grid;
-    /* 카드가 최소 200px 이상일 때 가로로 나열, 자리가 없으면 다음 줄로 */
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     margin-top: 10px;
@@ -939,22 +1079,33 @@ color: #fff;
     transition: background 0.2s;
 }
 
+.sparkle-active {
+    animation: sparklePulse 0.9s ease-in-out;
+}
+
+@keyframes sparklePulse {
+    0%   { opacity: 0; filter: brightness(1); }
+    50%  { opacity: 0.6; filter: brightness(1.8); }
+    100% { opacity: 0; filter: brightness(1); }
+}
+
 .inventory-list li:hover {
     background: #222;
 }
 .rarity-badge {
     display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 3px 6px;
+    border-radius: 5px;
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 850;
     color: #fff;
     text-transform: uppercase;
-    min-width: 30px; /* 뱃지 크기 통일 */
+    min-width: 15px; /* 뱃지 크기 통일 */
     text-align: center;
+    flex-shrink: 0;
 }
 .badge-basic { background-color: #363636; }
-.badge-unknown { background-color: #222222; }
+.badge-nil { background-color: #1a1a1a; color: #505050;}
 .badge-common { background-color: #7f8c8d; }
 .badge-uncommon { background-color: #27ae60; }
 .badge-rare { background-color: #e69822; }
@@ -1021,6 +1172,8 @@ color: #fff;
     
     -webkit-text-fill-color: transparent;
     font-weight: bold;
+
+    text-shadow: 0 0 10px #36814d, 0 0 20px #185245;
 }
 
 .glow-rainbow {
@@ -1091,6 +1244,20 @@ color: #fff;
     text-shadow: 0 0 10px #4e4e20, 0 0 20px #5a4a1d;
 }
 
+.glow-paux {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #ff950a, #e9ff21, #6cffbb);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 10px #b88d19, 0 0 20px #5e4019;
+}
+
 
 .glow-cscs {
     /* 기존 스타일 */
@@ -1148,3 +1315,15 @@ color: #fff;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
+.glow-pinv {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #00ffd5, #06423a, #071824);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+

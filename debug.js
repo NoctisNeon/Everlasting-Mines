@@ -69,6 +69,10 @@ function forceMine() {
             </span>
         `;
     }
+    // screen effect debug trigger
+if (window.DEBUG_SCREEN_EFFECT) {
+    debugScreenEffect(targetOre);
+}
 
     showDebugResult(`
         <span style="
@@ -146,4 +150,53 @@ function debugLayerOresSorted(layerName) {
         Rarity: o.rarity,
         Rank: rarityRank[o.rarity]
     })));
+}
+
+// ===============================
+// 🌈 SCREEN EFFECT DEBUG TOOL
+// ===============================
+
+window.DEBUG_SCREEN_EFFECT = true;
+
+/**
+ * rarity 기반 화면 플래시 강제 실행
+
+*/
+
+function getBadgeColorFromCSS(rarity) {
+    const temp = document.createElement("div");
+    temp.className = `badge-${rarity}`;
+    temp.style.display = "none";
+
+    document.body.appendChild(temp);
+
+    const color = window.getComputedStyle(temp).backgroundColor;
+
+    document.body.removeChild(temp);
+
+    return color;
+}
+
+function debugScreenEffect(ore) {
+    const flashOverlay = document.getElementById("flash-overlay");
+    if (!flashOverlay) return;
+
+    const rarity = ore.rarity?.toLowerCase();
+
+    const color = getBadgeColorFromCSS(rarity);
+
+    if (window.flashTimer) {
+        clearTimeout(window.flashTimer);
+    }
+
+    flashOverlay.style.backgroundColor = color;
+
+    flashOverlay.classList.remove("flash-active");
+    void flashOverlay.offsetWidth;
+    flashOverlay.classList.add("flash-active");
+
+    window.flashTimer = setTimeout(() => {
+        flashOverlay.classList.remove("flash-active");
+        window.flashTimer = null;
+    }, 350);
 }
