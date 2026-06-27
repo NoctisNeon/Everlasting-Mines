@@ -504,16 +504,16 @@ const potions = [
         price: 250000, 
         duration: 300, // 초 단위
         lore: 'Hmm. Why don\'t ya taste it?', 
-        stats: 'Makes you 2x more luckier!',
+        stats: 'Makes you 2x more luckier! / 250,000 Coins',
         effectIcon: '🍀'
     },
     { 
         id: 'luck2', 
         name: 'Potion of Luck II', 
-        price: 75000000, 
+        price: 5500000, 
         duration: 350, // 초 단위
         lore: 'It gets more longer and bigger!', 
-        stats: 'Makes you 4x more luckier!',
+        stats: 'Makes you 4x more luckier! / 55,000,000 Coins',
         effectIcon: '🍀'
     },
     { 
@@ -522,16 +522,16 @@ const potions = [
         price: 650000000, 
         duration: 400, // 초 단위
         lore: 'woah.. how did you get that?', 
-        stats: 'Makes you 8x more luckier!',
+        stats: 'Makes you 8x more luckier! / 650,000,000 Coins',
         effectIcon: '🍀'
     },
         { 
         id: 'luck4', 
         name: 'Potion of Huge Max Luck', 
-        price: 1500000000, 
+        price: 4500000000, 
         duration: 650, // 초 단위
         lore: 'becareful!', 
-        stats: 'Makes you 16x more luckier!',
+        stats: 'Makes you 16x more luckier! / 4,500,000,000 Coins',
         effectIcon: '🍀'
     },
     { 
@@ -540,7 +540,7 @@ const potions = [
         price: 650000, 
         duration: 150, 
         lore: 'Gotta go fast-', 
-        stats: 'Makes you mine 1.5 times faster! (interval cooltime)',
+        stats: 'Makes you mine 1.5 times faster! / 650,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
@@ -549,7 +549,7 @@ const potions = [
         price: 12500000, 
         duration: 300, 
         lore: 'oh no i\'m faster and faster', 
-        stats: 'Makes you mine 2 times faster! (interval cooltime)',
+        stats: 'Makes you mine 2 times faster! / 12,500,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
@@ -558,7 +558,7 @@ const potions = [
         price: 650000000, 
         duration: 450, 
         lore: 'What?! How?', 
-        stats: 'Makes you mine 4 times faster! (interval cooltime)',
+        stats: 'Makes you mine 4 times faster! / 650,000,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     }
 ];
@@ -607,9 +607,12 @@ const pickaxeSortOrder = {
     'light': 4,
     'bulk': 5,
     'frozen': 5.1,
+    'macicle': 5.15,
+    'powerful': 5.17,
+    'luhackaxe': 5.2,
+    'irregul': 5.4,
     'ultima' : 5.5,
     'hackaxe': 6,
-    'luhackaxe': 7
 };
 
 const rarityColors = {
@@ -631,7 +634,7 @@ const pickaxeLore = {
     'bulk': "'Even through hard ways, I never give up mining.'",
     'ultima': "'Absolute! Plus! Ultra!'",
     'hackaxe': "What? You think You're going to get this? Fool.",
-    'luhackaxe': "Don't mind this hmm"
+    'luhackaxe': "A pickaxe made by some hacker wandering..."
 };
 
 const pickaxes = {
@@ -640,14 +643,14 @@ const pickaxes = {
     steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 100 },
     godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.09, superCount: 250 },
     light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 1.85, superChance: 0.025, superCount: 850 },
-    bulk: { name: "Tier 4 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 2000 },
+    bulk: { name: "Tier 4.5 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 2000 },
     frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 2.95, superChance: 0.0125, superCount: 2700 },
     macicle: { name: "Tier 5 / Sabre Macicle", power: 10, luck: 2.15, superChance: 0.02, superCount: 6350 },
     powerful: { name: "Tier 5.5 / Malice Bumper", power: 13, luck: 2.95, superChance: 0.02, superCount: 6520 },
-    irregul: { name: "Tier 6 / Irregular Pickaxe", power: 35, luck: 2.5, superChance: 0.015, superCount: 10200 },
-    ultima: { name: "Tier 12 / Ultima Blastica", power: 75, luck: 3.55, superChance: 0.025, superCount: 31200 },
+    irregul: { name: "Tier 6 / Irregular Pickaxe", power: 35, luck: 2.5, superChance: 0.015, superCount: 11500 },
+    luhackaxe: { name: "Tier 6.5 / Lumina-Hackaxe", power: 32, luck: 3.8, superChance: 0.02, superCount: 10000},
+    ultima: { name: "Tier 9 / Ultima Blastica", power: 75, luck: 3.55, superChance: 0.025, superCount: 31200 },
     hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 250, luck: 25.0, superChance: 1, superCount: 2500},
-    luhackaxe: { name: "Developer Exclusive Axe", power: 5, luck: 250000000.0, superChance: 0, superCount: 120000}
 };
 
 const pickaxeRecipes = {
@@ -659,12 +662,12 @@ const pickaxeRecipes = {
     'frozen': {name: "Tier 5 / Frozen Pickaxe", cost: { 'Crkyotopis': 1, 'Bismuth': 5, 'Equatox': 100, 'Ice': 53000}, power: 7},
 
     'macicle': {name: "Tier 5 / Sabre Macicle", cost: { 'Acrictopas': 1, 'Majoritsim': 2, 'Jade': 2, 'Lapis': 260, 'Slate': 85000}, power: 7},
-    'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
+    'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Corridilyx': 1,'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
     'irregul': {name: "Tier 6 / Irregular Pickaxe", cost: { 'Anvilar': 1, 'Malux': 1, 'Infinitricifite': 2, 'Kanmolc': 73, 'Diamond': 192, 'Durtlie': 9300, 'Basalt': 320500}, power: 7},
+    'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'Ninumilium': 1, 'Faked Reality': 2, 'GREENITCH': 5, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 2500000 },
 
-    'ultima': {name: "Tier 12 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
+    'ultima': {name: "Tier 9 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
     'hackaxe': { name: 'Developer Exclusive Axe But Weaker', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':1 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 23232, 'IXYSOPARDOX': 2e24, 'Iron': 0 }, power: 250 },
-    'luhackaxe': { name: 'Developer Exclusive Axe', cost: { 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 2500000 }
 };
 const rarityRank = { 'basic': 0, 'common': 1, 'uncommon': 2, 'rare': 3,'intrigue': 4, 'epic': 3.5, 'unique': 4.2, 'interim': 4.5, 'midas': 5, 'mythic': 6, 'ephemeral': 7, 'unreal': 8, 'abstruse': 9, 'creative': 10, 'meaninglessness': 11, 'illimitátus': 12, 'solitude': 12.5, 'nil': 12.2, 'exclusive': 14};
 
