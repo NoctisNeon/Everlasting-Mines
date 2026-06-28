@@ -1,3 +1,12 @@
+setInterval(() => {
+    const start = Date.now();
+    debugger;
+    if (Date.now() - start > 100) {
+        console.warn("[DEBUG DETECTED]");
+    }
+}, 1000);
+
+
 // 포션 line 1097, 628
 
 
@@ -1276,7 +1285,7 @@ function applyScreenEffect(ore) {
     window.flashTimer = setTimeout(() => {
         flashOverlay.classList.remove("flash-active");
         window.flashTimer = null;
-    }, 350);
+    }, 500);
 }
 
 function onMineButtonClick() {
@@ -1969,7 +1978,7 @@ function renderForge() {
             <details class="material-dropdown">
                 <summary>Materials</summary>
                 <div class="material-details">
-                    <ul style="list-style:none;padding:0;margin:0;">
+                    <ul style="list-style:none;padding:0;margin-bottom:0">
                         ${Object.entries(recipe.cost).map(([name, qty]) => {
                             const foundLayers = layers.filter(l => l.ores.includes(name));
                             const layer = foundLayers.length > 0
@@ -2004,16 +2013,63 @@ function renderForge() {
             </div>
         `;
 
-        const actionHtml = isUnlocked
-            ? `<div style="font-size:12px;color:#aaa;margin-top:5px;">✔ Crafted</div>`
-            : `
-                <div class="tooltip-container">
-                    <button onclick="craftPickaxe('${id}')" style="padding:5px 15px;cursor:pointer;">
-                        Craft
-                    </button>
-                    <span class="tooltip-text">${lore}</span>
-                </div>
-            `;
+const actionHtml = isUnlocked
+    ? `
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-top:8px;
+            padding:6px 10px;
+            background:#1a1a1f;
+            border:1px solid #2f2f35;
+            border-radius:6px;
+            font-size:12px;
+            color:#aaa;
+        ">
+            <span>✔ Crafted</span>
+            <span style="opacity:0.7;">Already unlocked</span>
+        </div>
+    `
+    : `
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+            margin-top:8px;
+            padding:8px 10px;
+            background:linear-gradient(145deg,#1f1f24,#17171b);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:6px;
+        ">
+            <!-- Lore (왼쪽) -->
+            <span style="
+                font-size:15px;
+                color:#bbb;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                max-width:65%;
+            ">
+                ${lore}
+            </span>
+
+            <!-- Button (오른쪽 강조) -->
+            <button onclick="craftPickaxe('${id}')" style="
+                padding:6px 14px;
+                cursor:pointer;
+                font-weight:700;
+                border-radius:5px;
+                border:1px solid rgba(255,255,255,0.1);
+                background:#2a2a32;
+                color:#fff;
+                transition:0.15s;
+            " onmouseover="this.style.background='#3a3a45'" onmouseout="this.style.background='#2a2a32'">
+                Craft
+            </button>
+        </div>
+    `;
 
         const loreHtml = `
             <div style="

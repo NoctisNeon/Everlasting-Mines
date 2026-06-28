@@ -806,11 +806,11 @@ button:hover { filter: brightness(1.2); }
 
     width: 100%;
 }
-.action-bar { display: flex; gap: 10px; margin-bottom: 10px; }
+.action-bar { display: flex; gap: 10px; }
 .main-btn { flex: 2; padding: 15px; background: #2f80ed; color: white; font-size: 16px; }
 .sub-btn { flex: 1; padding: 15px; background: #444; color: #eee; }
 
-.mining-btn { width: 100%; padding: 12px; background: #cc3333; color: white; font-size: 14px; margin-bottom: 15px; }
+.mining-btn { width: 100%; padding: 12px; background: #cc3333; color: white; font-size: 14px; }
 .mining-btn.active { background: #27ae60; }
 
 /* 7. 결과 및 알림 영역 */
@@ -870,7 +870,7 @@ button:hover { filter: brightness(1.2); }
 .layer-card button { padding: 8px 16px; background: #444; color: white; }
 
 /* 9. 기타 요소들 */
-h2 { font-size: 1.2rem; margin-bottom: 10px; }
+h2 { font-size: 1.2rem; }
 h3 { font-size: 1rem; margin-bottom: 8px; }
 
 #encyclopedia-content {
