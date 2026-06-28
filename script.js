@@ -1,11 +1,10 @@
 setInterval(() => {
-    const start = Date.now();
-    debugger;
-    if (Date.now() - start > 100) {
-        console.warn("[DEBUG DETECTED]");
-    }
-}, 1000);
-
+   const start = Date.now();
+   debugger;
+   if (Date.now() - start > 100) {
+    console.warn("[DEBUG DETECTED]");
+   } 
+}, 100);
 
 // 포션 line 1097, 628
 
@@ -44,6 +43,12 @@ const oreIcons = {
     pivnicurxicle: "assets/ores/meaninglessness/pinvc1.png",
     fabricalobidium: "assets/ores/meaninglessness/fabri1.png",
     zetabyte: "assets/ores/meaninglessness/zetabyte1.png",
+
+    flowscape: "assets/ores/creative/flowscape1.png",
+    braxichroxmin: "assets/ores/creative/braxi1.png",
+    cannidilit: "assets/ores/creative/canni1.png",
+    moldivium: "assets/ores/creative/moldivium1.png"
+
 };
 
 const ores = [
@@ -238,6 +243,14 @@ const ores = [
 ];
 
 const layers = [
+
+ {
+        name: "invaild_id:layer_s",
+        ores: [
+            'Air',
+        ]
+    },
+
     {
         name: "Stratosphere",
         ores: [
@@ -253,7 +266,6 @@ const layers = [
         ]
     },
 
-    
     {
         name: "Surface",
         ores: [
@@ -1811,10 +1823,12 @@ function rollOreOffline() {
 
 
 function saveGame() {
+    if (isBooting || isResetting) return;
+
     const data = {
         inventory,
         foundCount,
-        foundOres, // 추가된 부분
+        foundOres,
         coins,
         currentPickaxe,
         unlockedPickaxes,
@@ -1824,8 +1838,13 @@ function saveGame() {
         lastSaveTime: Date.now()
     };
 
-    localStorage.setItem('mineSave', JSON.stringify(data));
+    try {
+        localStorage.setItem('mineSave', JSON.stringify(data));
+    } catch (e) {
+        console.error("save failed:", e);
+    }
 }
+
 function loadGame() {
     const rawData = localStorage.getItem('mineSave');
     
@@ -2239,26 +2258,70 @@ function updateBuyButtons() {
         }
     });
 }
-window.onload = () => {
+
+let isBooting = true;
+let loadSuccess = false;
+let isReady = false; 
+
+function nextFrame() {
+    return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
+function saveBackup() {
+    const raw = localStorage.getItem('mineSave');
+    if (raw) {
+        localStorage.setItem('mineSave_backup', raw);
+    }
+}
+function rollbackSave() {
+    const backup = localStorage.getItem('mineSave_backup');
+
+    if (backup) {
+        localStorage.setItem('mineSave', backup);
+        console.warn("⚠ rollback activated");
+    }
+}
+
+
+window.onload = async () => {
+    isBooting = true;
+    loadSuccess = false;
+
+
+    try {
+        await bootGame();
+
+        loadSuccess = true;
+        saveBackup(); // ✔ 성공 시만 백업
+    } catch (e) {
+        console.error("boot failed:", e);
+        rollbackSave(); // ❌ 실패 복구
+    } finally {
+        isBooting = false;
+        isReady = true;
+    }
+};
+
+async function bootGame() {
+
+    // 🧠 1단계: 세이브 복구
     loadGame();
+
+    await nextFrame(); // 렌더링 숨 틈
+
+    // ⚙️ 2단계: 설정/보조 데이터
     loadSettings();
+    loadOfflineProgress();
 
-    loadOfflineProgress(); 
+    await nextFrame();
 
+    // 🎛 3단계: UI 기본 구성
     setupTabButtons();
 
-    requestAnimationFrame(() => {
-        initUI();
-    });
+    initUI();
 
-    // 🔥 추가: 새로고침 시 브라우저의 스크롤 복원 기능을 비활성화
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    
-    // 혹시 모를 상황을 대비해 즉시 최상단으로 이동
-    window.scrollTo(0, 0);
-};
+    // ✔ 완료
+}
 
 setInterval(() => {
     // 1. 버프 지속시간 UI 갱신 (기존)
@@ -2268,11 +2331,9 @@ setInterval(() => {
     updateBuyButtons();
 }, 1000);
 
-window.addEventListener('beforeunload', (event) => {
-    // 리셋 중이라면 저장을 건너뜁니다!
-    if (!isResetting) {
-        saveGame();
-    }
+window.addEventListener('beforeunload', () => {
+    if (isBooting || !isReady || isResetting) return;
+    saveGame();
 });
 
 window.toggleCrafted = function () {
