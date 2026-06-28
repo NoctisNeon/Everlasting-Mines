@@ -185,7 +185,7 @@ body {
    OPEN STATE (details[open] 대응)
 ========================= */
 .section-box[open] .section-content {
-    max-height: 2000px;
+    max-height: 15000px;
     opacity: 1;
     transform: translateY(0);
 }
