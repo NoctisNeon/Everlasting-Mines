@@ -2336,6 +2336,20 @@ window.addEventListener('beforeunload', () => {
     saveGame();
 });
 
+window.addEventListener('load', () => {
+    // 브라우저 자동 스크롤 복원 차단
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    // 즉시 + 다음 프레임 보정
+    window.scrollTo(0, 0);
+
+    requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+    });
+});
+
 window.toggleCrafted = function () {
     const el = document.getElementById('crafted-content');
     if (!el) return;
