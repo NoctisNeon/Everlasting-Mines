@@ -24,7 +24,7 @@
     <div id="game-root">
         <div class="game-container">
             <div class="header">
-                <h1>Everlasting Mines (Beta v1.8.2)</h1>
+                <h1>Everlasting Mines (Beta v1.8.3)</h1>
                 <p id="total-mined-display" class="stats">Total Mined: 0</p>
             </div>
 
@@ -44,7 +44,9 @@
                 </div>
             </div>
             
-            <button id="autoMineBtn" class="mining-btn">Auto Mining OFF</button>
+<button id="autoMineBtn" class="mining-btn">
+    Auto Mining OFF
+</button>
 
             <div class="card result-card result-panel">
                 <div class="result-header">⛏ MINING REPORT</div>
@@ -88,7 +90,39 @@
                 <div class="card">
                     <p id="coin-display">💰 Coins: 0</p>
                     <button class="btn-danger" onclick="sellAllOres()" style="width: 100%; padding: 10px;">SELL ALL ORES</button>
+                    
+                    
+                    <select id="sellProtectionSelect" onchange="changeSellProtection()">
+        
+        
+        <option value="-1">OFF</option>
+        <option value="11.5">Nil+</option>
+        <option value="0">Basic+</option>
+        <option value="1">Common+</option>
+        <option value="2">Uncommon+</option>
+        <option value="3">Rare+</option>
+        <option value="3.5">Epic+</option>
+        <option value="4">Intrigue+</option>
+        <option value="4.2">Unique+</option>
+        <option value="4.5">Interim+</option>
+        <option value="5">Midas+</option>
+        <option value="6">Mythic+</option>
+        <option value="7">Ephemeral+</option>
+        <option value="8">Unreal+</option>
+        <option value="9">Abstruse+</option>
+        <option value="10">Creative+</option>
+        <option value="11">Meaninglessness+</option>
+        <option value="12">Illimitátus+</option>
+        <option value="12.5">Solitude+</option>
+        <option value="13">Paradoxical+</option>
+        <option value="14">Exclusive+</option>
+    </select>
+
+    <p id="sellProtectionText">
+        Currently Protecting: OFF
+    </p>
                 </div>
+                
                 
                 <div class="sub-tabs" style="display: flex; gap: 5px; margin-bottom: 15px;">
                     <button class="sub-tab-btn active" onclick="switchShopTab('alchemist', event)" style="flex: 1; padding: 10px;">🧪 Alchemist</button>

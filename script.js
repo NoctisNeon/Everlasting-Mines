@@ -5,7 +5,6 @@
 const superSound = new Audio('./sounds/super_mining.mp3');
 const clickSound = new Audio('./sounds/click.mp3'); 
 clickSound.volume = 0.05;
-const abilitySound = new Audio("./sounds/ability.mp3");
 
 const oreIcons = {
     grass: "assets/ores/basic/gra1.png",
@@ -83,7 +82,6 @@ const ores = [
      ABSTRUSE
   ========================= */
   { name: 'IXYSOPARDOX', iconKey: 'ixysopardox', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
-  { name: 'Nitrogen Oxides', iconKey: 'nitrogen_oxides', rarity: 'abstruse', chance: 419000000, price: 64123000, color: 'rgb(71, 109, 27)' },
   { name: 'Faked Reality', iconKey: 'faked_reality', rarity: 'abstruse', chance: 392000000, price: 41002000, color: 'rgb(162, 175, 147)' },
   { name: 'Ninumilium', iconKey: 'ninumilium', rarity: 'abstruse', chance: 342000000, price: 41002000, color: 'rgb(128, 251, 255)' },
   { name: 'Petabyte', iconKey: 'petabyte', rarity: 'abstruse', chance: 723300000, price: 74203000, color: 'rgb(0, 189, 25)' },
@@ -104,6 +102,7 @@ const ores = [
   { name: 'Ckyslop', iconKey: 'ckyslop', rarity: 'ephemeral', chance: 83903900, price: 3170000, color: '#723a05' },
   { name: 'GREENITCH', iconKey: 'greenitch', rarity: 'ephemeral', chance: 81300000, price: 2900000, color: '#00ff22' },
   { name: 'Kryxim', iconKey: 'kryxim', rarity: 'ephemeral', chance: 74999931, price: 2742300, color: '#358162' },
+  { name: 'Nitrogen Oxides', iconKey: 'nitrogen_oxides', rarity: 'ephemeral', chance: 61200000, price: 2430000, color: 'rgb(71, 109, 27)' },
   { name: 'Oidilz', iconKey: 'oidilz', rarity: 'ephemeral', chance: 72400000, price: 2630000, color: '#8b616a' },
   { name: 'Gigabyte', iconKey: 'gigabyte', rarity: 'ephemeral', chance: 63867000, price: 2320000, color: '#2dff2d' },
 
@@ -119,7 +118,7 @@ const ores = [
      MIDAS
   ========================= */
   { name: 'Acrictopas', iconKey: 'acrictopas', rarity: 'midas', chance: 5940000, price: 360000, color: '#106954' },
-  { name: 'Crkyotopis', iconKey: 'crkyotopis', rarity: 'midas', chance: 3190000, price: 250000, color: '#666252' },
+  { name: 'Crkyotopis', iconKey: 'crkyotopis', rarity: 'midas', chance: 1890000, price: 250000, color: '#666252' },
   { name: 'Lunitem', iconKey: 'lunitem', rarity: 'midas', chance: 2999020, price: 250000, color: '#89af30' },
   { name: 'Yiziun', iconKey: 'yiziun', rarity: 'midas', chance: 2720000, price: 250000, color: '#813dff' },
   { name: 'Megabyte', iconKey: 'megabyte', rarity: 'midas', chance: 1924800, price: 200000, color: '#5bff7e' },
@@ -469,55 +468,64 @@ const potions = [
     { 
         id: 'luck2', 
         name: 'Potion of Luck II', 
-        price: 5500000, 
+        price: 5000000, 
         duration: 350, // 초 단위
         lore: 'It gets more longer and bigger!', 
-        stats: 'Makes you 4x more luckier! / 55,000,000 Coins',
+        stats: 'Makes you 4x more luckier! / 5,000,000 Coins',
+        effectIcon: '🍀'
+    },
+        { 
+        id: 'luck2b', 
+        name: 'Potion of Luck 2x3', 
+        price: 65250000, 
+        duration: 420, // 초 단위
+        lore: 'Take a bite, Get luckier, Get more.', 
+        stats: 'Makes you 6x more luckier! / 65,250,000 Coins',
         effectIcon: '🍀'
     },
     { 
         id: 'luck3', 
         name: 'Potion of Luck Max', 
-        price: 650000000, 
-        duration: 400, // 초 단위
+        price: 325000000, 
+        duration: 480, // 초 단위
         lore: 'woah.. how did you get that?', 
-        stats: 'Makes you 8x more luckier! / 650,000,000 Coins',
+        stats: 'Makes you 8x more luckier! / 325,000,000 Coins',
         effectIcon: '🍀'
     },
         { 
         id: 'luck4', 
         name: 'Potion of Huge Max Luck', 
-        price: 4500000000, 
-        duration: 650, // 초 단위
+        price: 2250000000, 
+        duration: 600, // 초 단위
         lore: 'becareful!', 
-        stats: 'Makes you 16x more luckier! / 4,500,000,000 Coins',
+        stats: 'Makes you 16x more luckier! / 2,250,000,000 Coins',
         effectIcon: '🍀'
     },
     { 
         id: 'speed', 
         name: 'Potion of Speed', 
-        price: 650000, 
+        price: 2650000, 
         duration: 150, 
         lore: 'Gotta go fast-', 
-        stats: 'Makes you mine 1.5 times faster! / 650,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 1.5 times faster! / 2,650,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
         id: 'speed2', 
         name: 'Potion of Fast Speed', 
-        price: 12500000, 
+        price: 255500000, 
         duration: 300, 
         lore: 'oh no i\'m faster and faster', 
-        stats: 'Makes you mine 2 times faster! / 12,500,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 2 times faster! / 255,500,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
         id: 'speed3', 
-        name: 'Potion of at Speed\'o Sound', 
-        price: 650000000, 
+        name: 'Potion of at Speed o\' Sound', 
+        price: 2650000000, 
         duration: 450, 
         lore: 'What?! How?', 
-        stats: 'Makes you mine 4 times faster! / 650,000,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 4 times faster! / 2,650,000,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     }
 ];
@@ -525,16 +533,15 @@ const potions = [
 const effectNames = {
     'luck': 'Potion of Luck',
     'luck2': 'Potion of Luck II',
+    'luck2b': 'Potion of Luck 2x3',
     'luck3' : 'Potion of Luck Max',
-    'luck4' : 'Test Luck',
+    'luck4' : 'Potion of Huge Max Luck',
     'speed' : 'Potion of Speed',
     'speed2' : 'Potion of Fast Speed',
-    'speed3' : 'Potion of at Speed of Sound'
+    'speed3' : "Potion of at Speed o' Sound"
 };
 // 현재 적용 중인 버프 상태 (종료 시간 저장)
 
-
-const maxOfflineHours = 8;
 
 let foundOres = [];
 let activeBoosts = {};
@@ -611,9 +618,9 @@ const pickaxeRecipes = {
     'frozen': {name: "Tier 5 / Frozen Pickaxe", cost: { 'Crkyotopis': 1, 'Bismuth': 5, 'Equatox': 100, 'Ice': 53000}, power: 7},
 
     'macicle': {name: "Tier 5 / Sabre Macicle", cost: { 'Acrictopas': 1, 'Majoritsim': 2, 'Jade': 2, 'Lapis': 260, 'Slate': 85000}, power: 7},
-    'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Corridilyx': 1,'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
+    'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Malux': 1,'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
     'irregul': {name: "Tier 6 / Irregular Pickaxe", cost: { 'Anvilar': 1, 'Malux': 1, 'Infinitricifite': 2, 'Kanmolc': 73, 'Diamond': 192, 'Durtlie': 9300, 'Basalt': 320500}, power: 7},
-    'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'Ninumilium': 1, 'Faked Reality': 2, 'GREENITCH': 5, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 32 },
+    'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'GREENITCH': 1, 'Kryxim': 1, 'Faked Corridilyx': 2, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 32 },
     'magstaff': { name: "Tier 7 / Magnetical Staff", cost: { 'Nitrogen Oxides': 1, 'Milennis': 2, 'Kabris-lx': 4, 'Oidilz': 8, 'Inlopext': 60, 'Marlenx': 923, 'Bromine': 4200, 'Stone': 856000}, power: 2500000 },
     'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 2, 'Enfinitricifite': 10, 'Ckyslop': 9, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
 
@@ -647,24 +654,23 @@ const rarityRank = { 'basic': 0, 'common': 1, 'uncommon': 2, 'rare': 3,'intrigue
 let lastMineTime = Date.now();
 const miningSpeed = 5;
 let autoMineInterval = null;
-let autoMineRate = 1;
+let autoMineRate = 500;
 let isAutoMining = false;
 let isBusy = false;
 let notificationTimer = null;
 let resultTimer = null;
-let player = { luck: 1 };
 let inventory = {}, foundCount = {}, currentPickaxe = 'basic', coins = 0, totalBlocksMined = 0, currentLayerIndex = 0;
 let unlockedPickaxes = ['basic'];
-let lastOnlineTime = Date.now();
 const CLICK_COOLDOWN = 70; // 0.2초 (200ms) 동안은 클릭 무시
 let lastManualClickTime = 0; // 마지막 클릭 시간 기록용
 let lastRollDebug = { oreName: "없음", baseChance: 0, luck: 0, finalProbability: 0 };
-let lastEncyclopediaHash = "";
 let lastRenderedLayerIndex = -1;
 let mode = "online";
 let appliedLuck = pickaxes[currentPickaxe].luck;
 let flashTimer = null;
 let isResetting = false; // 추가: 리셋 중인지 확인하는 변수
+
+let sellProtectionRank = -1;
 
 let soundRarityThreshold = rarityRank.rare; 
 // rare 이상만 소리 나게 (원하면 epic으로 변경)
@@ -676,11 +682,6 @@ if (mode === "offline") {
     appliedLuck = 1; // 💥 오프라인은 무조건 기본
 }
 
-// [참고] 사용 중인 'layers' 배열이 전역에 있다고 가정합니다.
-function getLayerForOre(oreName) {
-    const layer = layers.find(l => l.ores.includes(oreName));
-    return layer ? layer.name : "Unknown";
-}
 function renderMaterialDropdown(materialsString) {
     if (!materialsString) return '';
 
@@ -784,12 +785,20 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/\.00$/, "") + units[unitIndex];
 }
 
+function getCooldownFactor() {
+    return isEffectActive('speed3') ? 0.25 :
+           isEffectActive('speed2') ? 0.5 :
+           isEffectActive('speed')  ? 0.75 :
+           1.0;
+}
+
 function getTotalLuck() {
     const base = pickaxes[currentPickaxe].luck;
 
     const potionMultiplier =
         isEffectActive('luck4') ? 16 :
         isEffectActive('luck3') ? 8 :
+        isEffectActive('luck2b') ? 6 :
         isEffectActive('luck2') ? 4 :
         isEffectActive('luck') ? 2 : 1;
 
@@ -917,18 +926,6 @@ function buyPotion(potionId) {
     }
 }
 
-function autoMineLoop() {
-    if (!isAutoMining) {
-        requestAnimationFrame(autoMineLoop);
-        return;
-    }
-    const currentTime = Date.now();
-    if (currentTime - lastMineTime >= miningSpeed) {
-        onMineButtonClick();
-        lastMineTime = currentTime; 
-    }
-    requestAnimationFrame(autoMineLoop);
-}
 function updateShopUI() {
     const coinEl = document.getElementById('coin-display');
     
@@ -968,11 +965,6 @@ function saveTime() {
     localStorage.setItem('lastMineTime', lastMineTime);
 }
 
-// 페이지가 로드될 때 또는 다시 활성화될 때 실행
-window.addEventListener('focus', () => {
-    // 탭으로 다시 돌아왔을 때, 안 돌았던 시간만큼 밀린 작업 수행
-    autoMineLoop(); 
-});
 
 function renderShop() {
     // 1. 코인 표시 UI만 업데이트 (기존 HTML 살림)
@@ -1078,39 +1070,45 @@ function addOreToInventory(ore) {
     return isNew;
 }
 
-function performMining() {
-    // 1. 광물을 얻는 로직 (기존 코드 사용)
-    const minedOre = getRandomOre(); // 광물 결정 로직
-    
-    // 2. 인벤토리/통계 갱신
-    inventory[minedOre.name] = (inventory[minedOre.name] || 0) + 1;
-    foundCount[minedOre.name] = (foundCount[minedOre.name] || 0) + 1;
-    
-    // 3. [핵심] 도감 자동 업데이트
-    if ((foundCount[minedOre.name] || 0) === 1) { // 처음 캤을 때만
-        console.log("새로운 광물 발견!");
-        renderEncyclopedia(); // 도감 즉시 갱신
+document.addEventListener("DOMContentLoaded", () => {
+    const autoBtn = document.getElementById("autoMineBtn");
+
+    if (autoBtn) {
+        autoBtn.addEventListener("click", toggleAutoMining);
     }
-    
-    // 4. 화면 갱신 (전체 UI 업데이트)
-    updateUI(); 
-    saveGame();
-}
+});
 
 function toggleAutoMining() {
+    console.log("AutoMining Click");
+
+    const btn = document.getElementById("autoMineBtn");
+    if (!btn) return;
+
+    // ★ 이 줄이 반드시 있어야 함
     isAutoMining = !isAutoMining;
-    const btn = document.getElementById('autoMineBtn');
+
+    console.log(isAutoMining);
+    console.log(autoMineRate);
+
     if (isAutoMining) {
         btn.innerText = "Auto Mining ON";
         btn.style.backgroundColor = "#4caf50";
-        // 기존의 requestAnimationFrame과 setInterval이 혼재된 구조를 제거하고 하나로 통합
-        if (autoMineInterval) clearInterval(autoMineInterval);
+
+        if (autoMineInterval) {
+            clearInterval(autoMineInterval);
+        }
+
+        const interval = Math.max(1, 1000 / Math.max(1, autoMineRate));
+
         autoMineInterval = setInterval(() => {
-            if (isAutoMining) performMining(); 
-        }, 1000 / autoMineRate);
+            if (!isAutoMining) return;
+            onMineButtonClick();
+        }, interval);
+
     } else {
         btn.innerText = "Auto Mining OFF";
         btn.style.backgroundColor = "#ff4d4d";
+
         clearInterval(autoMineInterval);
         autoMineInterval = null;
     }
@@ -1287,28 +1285,11 @@ function onMineButtonClick() {
         clearTimeout(window.resultTimer);
         window.resultTimer = null;
     }
-    // 1. 버프 상태 체크
-    const isSpeed3 = isEffectActive('speed3');
-    const isSpeed2 = isEffectActive('speed2');
-    const isSpeed = isEffectActive('speed');
 
-    const isLuck4 = isEffectActive('luck4');
-    const isLuck3 = isEffectActive('luck3');
-    const isLuck2 = isEffectActive('luck2');
-    const isLuck = isEffectActive('luck');
 
+    const cooldownFactor = getCooldownFactor();
+    const effectiveLuck = getTotalLuck();
     // 2. 배율 계산
-    const cooldownFactor =
-        isSpeed3 ? 0.25 :
-        isSpeed2 ? 0.5 :
-        isSpeed ? 0.75 : 1.0;
-
-    const luckMultiplier =
-        isLuck4 ? 16 :
-        isLuck3 ? 8 :
-        isLuck2 ? 4 :
-        isLuck ? 2 : 1;
-
     // 3. 쿨타임 체크
     const currentTime = Date.now();
     if (
@@ -1335,7 +1316,7 @@ if (isSuper) {
 
     // 5. 채굴 루프
     for (let i = 0; i < iterations; i++) {
-        const rolled = rollOre(pick.luck * luckMultiplier);
+        const rolled = rollOre(effectiveLuck);
 
         if (addOreToInventory(rolled)) {
             foundNew = true;
@@ -1362,7 +1343,7 @@ showResult("", {
     color: rarestOre.color,
     rarity: rarestOre.rarity,
     quantity: pick.power,
-    luck: pick.luck * luckMultiplier,
+    luck: effectiveLuck,
     new: foundNew,
     glowType: rarestOre.glowType,
     bulk: isSuper
@@ -1680,17 +1661,55 @@ function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     section.classList.add('active');
 }
+
+
+function changeSellProtection() {
+
+    const select = document.getElementById("sellProtectionSelect");
+
+    sellProtectionRank = Number(select.value);
+
+    const text = document.getElementById("sellProtectionText");
+
+    if (sellProtectionRank === -1) {
+        text.innerText = "Currently Protecting: OFF";
+    } else {
+        text.innerText =
+            "Currently Protecting: " +
+            Object.keys(rarityRank).find(
+                key => rarityRank[key] === sellProtectionRank
+            ) +
+            "+";
+    }
+
+    saveGame();
+}
+
 function sellAllOres() {
     let earned = 0;
+
     ores.forEach(ore => {
-        earned += (inventory[ore.name] || 0) * ore.price;
+
+        if (
+            sellProtectionRank !== -1 &&
+            rarityRank[ore.rarity] >= sellProtectionRank
+        ) {
+            return;
+        }
+
+        const amount = inventory[ore.name] || 0;
+
+        earned += amount * ore.price;
         inventory[ore.name] = 0;
     });
+
     coins += earned;
+
     updateShopUI();
     renderInventory();
     saveGame();
-    alert(`판매 완료! +${earned.toLocaleString()} Coins`);
+
+    alert(`Sold all ores! +${earned.toLocaleString()} Coins`);
 }
 
 function renderPickaxesUI() {
@@ -1748,7 +1767,7 @@ function renderPickaxesUI() {
 
                     ${isEquipped ?
                         `<button disabled style="width: 80px; padding: 5px; opacity: 0.5; cursor: not-allowed; border-radius: 4px; border: none;">Equipped</button>` :
-                        `<button onclick="equipPickaxe('${id}')" style="width: 80px; padding: 5px; cursor: pointer; border-radius: 4px; border: 1px solid #555; background: #333; color: white;">Equip</button>`
+                        `<button onclick="equipPickaxes('${id}')" style="width: 80px; padding: 5px; cursor: pointer; border-radius: 4px; border: 1px solid #555; background: #333; color: white;">Equip</button>`
                     }
                 </div>
 
@@ -1791,6 +1810,7 @@ function saveGame() {
         currentPickaxe,
         unlockedPickaxes,
         totalBlocksMined,
+        sellProtectionRank,
         currentLayerIndex,
         lastSaveTime: Date.now()
     };
@@ -1800,7 +1820,6 @@ function saveGame() {
 function loadGame() {
     const rawData = localStorage.getItem('mineSave');
     
-    // 1. 데이터 자체가 아예 없는 경우 (첫 실행 등)
     if (!rawData) {
         inventory = {};
         foundCount = {};
@@ -1810,28 +1829,28 @@ function loadGame() {
         unlockedPickaxes = ['basic'];
         totalBlocksMined = 0;
         currentLayerIndex = 0;
+
+        sellProtectionRank = -1; // ⭐ 추가
         return;
     }
 
     try {
-        // 2. 데이터가 있을 경우 JSON 파싱
         const data = JSON.parse(rawData);
 
-        // 3. 기존 로직 유지 + 데이터 안정성 확보 (?? 연산자 활용)
-        // ?? 연산자는 값이 null 또는 undefined일 때만 오른쪽 값을 사용합니다.
         inventory = data.inventory ?? {};
         foundCount = data.foundCount ?? {};
-        foundOres = data.foundOres ?? []; // 요청하신 foundOres 추가
+        foundOres = data.foundOres ?? [];
         coins = data.coins ?? 0;
         currentPickaxe = data.currentPickaxe ?? 'basic';
         unlockedPickaxes = data.unlockedPickaxes ?? ['basic'];
         totalBlocksMined = data.totalBlocksMined ?? 0;
         currentLayerIndex = data.currentLayerIndex ?? 0;
-        
+
+        // ⭐ 판매 보호 추가 (핵심)
+        sellProtectionRank = data.sellProtectionRank ?? -1;
+
     } catch (e) {
-        // 4. 세이브 파일이 손상되었을 경우의 예외 처리
         console.error("세이브 파일 로드 오류: ", e);
-        // 여기서 초기화하거나, 필요하다면 백업본을 불러오는 로직 추가 가능
     }
 }
 
@@ -1899,26 +1918,59 @@ function craftPickaxe(id) {
     renderInventory();
     saveGame();
 }
+
+function toggleCrafted() {
+    const el = document.getElementById('crafted-content');
+    if (!el) return;
+
+    const willOpen = !el.classList.contains('open');
+
+    el.classList.toggle('open');
+
+    // 🔥 열릴 때만 stagger 재생
+    if (willOpen) {
+        requestAnimationFrame(() => {
+            const cards = el.querySelectorAll('.pickaxe-card');
+
+            cards.forEach((card, i) => {
+                card.style.animation = 'none';
+
+                requestAnimationFrame(() => {
+                    card.style.animation = '';
+                    card.style.animationDelay = `${i * 70}ms`;
+                });
+            });
+        });
+    }
+}
+
 function renderForge() {
     const el = document.getElementById('recipe-list');
     if (!el) return;
 
-    el.innerHTML = Object.keys(pickaxeRecipes).map(id => {
+    const craftedList = [];
+    const uncraftedList = [];
+
+    Object.keys(pickaxeRecipes).forEach(id => {
+        if (unlockedPickaxes.includes(id)) {
+            craftedList.push(id);
+        } else {
+            uncraftedList.push(id);
+        }
+    });
+
+    const renderCard = (id) => {
         const recipe = pickaxeRecipes[id];
         const stats = pickaxes[id];
-        const isUnlocked = unlockedPickaxes.includes(id);
         const lore = pickaxeLore[id] || "No description available.";
+        const isUnlocked = unlockedPickaxes.includes(id);
 
         const materialDropdownHtml = `
             <details class="material-dropdown">
-                <summary>
-                    Materials
-                </summary>
+                <summary>Materials</summary>
                 <div class="material-details">
-                    <ul style="list-style: none; padding: 0; margin: 0;">
+                    <ul style="list-style:none;padding:0;margin:0;">
                         ${Object.entries(recipe.cost).map(([name, qty]) => {
-
-                            // 🔥 FIX: multiple layers support
                             const foundLayers = layers.filter(l => l.ores.includes(name));
                             const layer = foundLayers.length > 0
                                 ? foundLayers.map(l => l.name).join(', ')
@@ -1928,7 +1980,7 @@ function renderForge() {
                             const rarityClass = `badge-${(oreData.rarity || 'unknown').toLowerCase().trim()}`;
 
                             return `
-                                <li style="display: flex; align-items: center; gap: 8px; margin: 5px 0;">
+                                <li style="display:flex;align-items:center;gap:8px;margin:5px 0;">
                                     <span class="rarity-badge ${rarityClass}">
                                         ${oreData.rarity}
                                     </span>
@@ -1944,41 +1996,95 @@ function renderForge() {
         `;
 
         const statsHtml = `
-            <div style="font-size: 13px; color: #ddd; margin: 8px 0; padding: 5px; background: #333; border-radius: 4px;">
-                ⚡ Power: <b>${stats.power}</b> | 🍀 Luck: <b>x${stats.luck.toFixed(1)}</b> | ✨ Bulk: <b>${(stats.superChance * 100).toFixed(1)}%</b> (Mines ${stats.superCount})
+            <div style="font-size:13px;color:#ddd;margin:8px 0;padding:5px;background:#333;border-radius:4px;">
+                ⚡ Power: <b>${stats.power}</b> |
+                🍀 Luck: <b>x${stats.luck.toFixed(1)}</b> |
+                ✨ Bulk: <b>${(stats.superChance * 100).toFixed(1)}%</b>
+                (Mines ${stats.superCount})
             </div>
         `;
 
-        const actionHtml = `
-            <div class="tooltip-container">
-                ${isUnlocked
-                    ? '<button disabled style="padding: 5px 15px; cursor: not-allowed;">Crafted</button>'
-                    : `<button onclick="craftPickaxe('${id}')" style="padding: 5px 15px; cursor: pointer;">Craft</button>`
-                }
-                <span class="tooltip-text">${lore}</span>
+        const actionHtml = isUnlocked
+            ? `<div style="font-size:12px;color:#aaa;margin-top:5px;">✔ Crafted</div>`
+            : `
+                <div class="tooltip-container">
+                    <button onclick="craftPickaxe('${id}')" style="padding:5px 15px;cursor:pointer;">
+                        Craft
+                    </button>
+                    <span class="tooltip-text">${lore}</span>
+                </div>
+            `;
+
+        const loreHtml = `
+            <div style="
+                margin-top:8px;
+                padding:6px 10px;
+                font-size:13px;
+                color:#bbb;
+                background:#1f1f24;
+                border-radius:4px;
+                line-height:1.4;
+            ">
+                ${lore}
             </div>
         `;
 
         return `
-            <div style="margin-bottom: 15px; padding: 12px; border: 1px solid #444; border-radius: 5px; background: #25252b;">
-                <div style="font-size: 16px; font-weight: bold;">
+            <div class="pickaxe-card" style="margin-bottom:15px;padding:12px;border:1px solid #444;border-radius:5px;background:#25252b;">
+                <div style="font-size:16px;font-weight:bold;">
                     ${recipe.name}
                 </div>
+
                 ${statsHtml}
                 ${materialDropdownHtml}
-                ${actionHtml}
+                ${isUnlocked ? loreHtml : actionHtml}
             </div>
         `;
-    }).join('');
-}
-function equipPickaxe(id) {
-    if (!unlockedPickaxes.includes(id)) {
-        return alert("Not crafted yet.");
-    }
-    currentPickaxe = id;
-    alert(`${pickaxes[id].name} Equipped!`);
-    renderPickaxesUI(); // 화면 갱신!
-    saveGame();
+    };
+
+    const craftedHtml = craftedList.length
+        ? `
+        <details class="section-box" open>
+            <summary class="section-summary">
+                🔧 Crafted (${craftedList.length})
+            </summary>
+            <div class="section-content">
+                ${craftedList.map(renderCard).join('')}
+            </div>
+        </details>
+        `
+        : '';
+
+    const uncraftedHtml = uncraftedList.length
+        ? `
+        <details class="section-box">
+            <summary class="section-summary">
+                🪨 Uncrafted (${uncraftedList.length})
+            </summary>
+            <div class="section-content">
+                ${uncraftedList.map(renderCard).join('')}
+            </div>
+        </details>
+        `
+        : '';
+
+    el.innerHTML = craftedHtml + uncraftedHtml;
+
+    // 🔥 BOTH sections stagger
+    requestAnimationFrame(() => {
+        document.querySelectorAll('.section-content').forEach(section => {
+            const cards = section.querySelectorAll('.pickaxe-card');
+
+            cards.forEach((card, i) => {
+                card.style.animation = 'none';
+
+                requestAnimationFrame(() => {
+                    card.style.animation = '';
+                    card.style.animationDelay = `${i * 70}ms`;
+                });
+            });
+        });
+    });
 }
 
 
@@ -2001,16 +2107,6 @@ function updateUI() {
     updateLayerUI();
 }
 
-function setupAutoMineButton() {
-    const autoMineBtn = document.getElementById('autoMineBtn');
-    if (!autoMineBtn) return;
-
-    autoMineBtn.addEventListener('click', () => {
-        isAutoMining = !isAutoMining;
-        autoMineBtn.innerText = isAutoMining ? "Auto Mining ON" : "Auto Mining OFF";
-        autoMineBtn.style.backgroundColor = isAutoMining ? "#4caf50" : "#ff4d4d";
-    });
-}
 function setupTabButtons() {
     const buttons = document.querySelectorAll('.tab-btn');
     
@@ -2035,13 +2131,9 @@ function setupTabButtons() {
 
 
 function initUI() {
-    updateUI();
-    updateLayerUI();
-    updateTotalMinedUI();
+updateUI();
 
-    renderInventory(true); // 🔥 강제 최초 렌더
-    renderEncyclopedia();
-    renderPickaxesUI();
+updateTotalMinedUI();
 }
 
 function updateInventoryCountsOnly() {
@@ -2097,10 +2189,7 @@ window.onload = () => {
 
     loadOfflineProgress(); 
 
-    setupAutoMineButton();
     setupTabButtons();
-
-    autoMineLoop();
 
     requestAnimationFrame(() => {
         initUI();
@@ -2129,3 +2218,10 @@ window.addEventListener('beforeunload', (event) => {
         saveGame();
     }
 });
+
+window.toggleCrafted = function () {
+    const el = document.getElementById('crafted-content');
+    if (!el) return;
+
+    el.classList.toggle('open');
+};

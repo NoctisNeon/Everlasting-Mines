@@ -28,14 +28,13 @@ function craftPickaxe(id) {
     // UI 및 데이터 갱신
     renderInventory(); 
     renderForge();     
-    renderPickaxeUI();
+    renderPickaxesUI();
     saveGame(); // 로컬 스토리지에 즉시 저장
 }
 
 // 5. 곡괭이 선택(장착) 함수
-function equipPickaxe(id) {
+function equipPickaxes(id) {
     currentPickaxe = id;
-    alert(`${pickaxes[id].name} Equipped!`);
-    renderPickaxeUI();
+    renderPickaxesUI();
     saveGame();
 }
