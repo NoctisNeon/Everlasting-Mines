@@ -667,10 +667,10 @@ const pickaxeRecipes = {
     'magstaff': { name: "Tier 7 / Magnetical Staff", cost: { 'Nitrogen Oxides': 1, 'Kabris-lx': 1, 'Oidilz': 4, 'Inlopext': 60, 'Marlenx': 923, 'Bromine': 4200, 'Stone': 856000}, power: 2500000 },
     'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 1, 'Enfinitricifite': 10, 'Ckyslop': 3, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
 
-    'endormat': { name: "Tier 8 / Endomatic Skimmer", cost: { 'Uleimoxic': 1, 'Anvilar': 1, 'Millennis': 3, 'Emerilyx': 7, 'Lunitem': 14, 'Majoritsim': 53, 'Grinyl': 231,'Durtlie': 16520, 'Slate': 310500}, power: 2500000 },
+    'endormat': { name: "Tier 8 / Endomatic Skimmer", cost: { 'Uleimoxic': 1, 'Anvilar': 1, 'Milennis': 3, 'Emerilyx': 7, 'Lunitem': 14, 'Majoritsim': 53, 'Grinyl': 231,'Durtlie': 16520, 'Slate': 310500}, power: 2500000 },
 
     'ultima': {name: "Tier 9 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
-    'hackaxe': { name: 'Developer Exclusive Axe', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':2e20 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 3e30, 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 250 },
+    'hackaxe': { name: 'Developer Exclusive Axe', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':2e20 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 3e30, 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 250 },
 };
 
 
