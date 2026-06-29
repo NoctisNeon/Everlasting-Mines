@@ -58,12 +58,15 @@ const ores = [
   ========================= */
 
   { name: 'The 64 Bits Over', iconKey: '64intlim', rarity: 'paradoxical', chance: 18446744073709551615, price: 293000000001, glowType: '64lim'},
+  { name: '𝘱 𝘰 𝘴 𝘵 𝘦 𝘳 𝘪 𝘵 𝘺', iconKey: 'posterity', rarity: 'paradoxical', chance: 920517483610274, price: 293000000001, glowType: 'posterity'},
 
   /* =========================
      SOLITUDE
   ========================= */
   { name: '?print=(1234567890123)', iconKey: 'solitude_print', rarity: 'solitude', chance: 1234567890123, price: 64912000820, glowType: 'int1234' },
   { name: 'everything.jpg', iconKey: 'solitude_every', rarity: 'solitude', chance: 1131068649219, price: 49400000000, glowType: 'eve1' },
+  { name: '.illumina', iconKey: 'solitude_illumia', rarity: 'solitude', chance: 853018921923, price: 39100004000, glowType: 'illumina' },
+
 
   /* =========================
      ILLIMITÁTUS
@@ -80,6 +83,7 @@ const ores = [
   { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', iconKey: 'abyssmolith', rarity: 'meaninglessness', chance: 50909000000, price: 4293000000, glowType: 'aby1' },
   { name: 'ℙ𝕚𝕧𝕟𝕚𝕔𝕦𝕣𝕩𝕚𝕔𝕝𝕖', iconKey: 'pivnicurxicle', rarity: 'meaninglessness', chance: 45413000000, price: 3020304980, glowType: 'pinv' },
   { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', iconKey: 'fabricalobidium', rarity: 'meaninglessness', chance: 41023000000, price: 260000000, color: 'rgb(99, 121, 89)' },
+  { name: '🅲🅸🆅🆁🅴🅱🅴🅼🅾🅱🅸🆃🅸🆂', iconKey: 'civrebemobitis', rarity: 'meaninglessness', chance: 39130000000, price: 240000000, color: 'rgb(255, 251, 0)' },
   { name: 'ℤ𝕖𝕥𝕥𝕒𝕓𝕪𝕥𝕖', iconKey: 'zetabyte', rarity: 'meaninglessness', chance: 35743000000, price: 232000000, glowType: 'zet' },
   /* =========================
      CREATIVE
@@ -96,8 +100,10 @@ const ores = [
      ABSTRUSE
   ========================= */
   { name: 'IXYSOPARDOX', iconKey: 'ixysopardox', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
-  { name: 'Faked Reality', iconKey: 'faked_reality', rarity: 'abstruse', chance: 392000000, price: 41002000, color: 'rgb(162, 175, 147)' },
-  { name: 'Ninumilium', iconKey: 'ninumilium', rarity: 'abstruse', chance: 342000000, price: 41002000, color: 'rgb(128, 251, 255)' },
+  { name: 'Uleimoxic', iconKey: 'uleimoxic', rarity: 'abstruse', chance: 409000000, price: 50902000, color: 'rgb(104, 66, 35)' },
+  { name: 'LOXIMODRILDOX', iconKey: 'loximodrildox', rarity: 'abstruse', chance: 631610000, price: 71006400, color: 'rgb(0, 255, 149)' },
+  { name: 'Faked Reality', iconKey: 'faked_reality', rarity: 'abstruse', chance: 392000000, price: 39202000, color: 'rgb(162, 175, 147)' },
+  { name: 'Ninumilium', iconKey: 'ninumilium', rarity: 'abstruse', chance: 342000000, price: 35002000, color: 'rgb(128, 251, 255)' },
   { name: 'Petabyte', iconKey: 'petabyte', rarity: 'abstruse', chance: 723300000, price: 74203000, color: 'rgb(0, 189, 25)' },
   /* =========================
      UNREAL
@@ -124,6 +130,9 @@ const ores = [
      MYTHIC
   ========================= */
   { name: 'Malux', iconKey: 'malux', rarity: 'mythic', chance: 23100000, price: 2205000, color: '#a2dac7' },
+  { name: 'Emerilyx', iconKey: 'emerilyx', rarity: 'mythic', chance: 19252000, price: 2205000, color: '#506830' },
+  { name: 'Panchireium', iconKey: 'panchireum', rarity: 'mythic', chance: 12100600, price: 1205000, color: '#00ffaa' },
+  { name: 'Bonnemium', iconKey: 'bonnemium', rarity: 'mythic', chance: 18271000, price: 1925000, color: '#4f5e27' },
   { name: 'Infinitricifite', iconKey: 'infinitricifite', rarity: 'mythic', chance: 10000000, price: 2100000, color: '#2f80ed' },
   { name: 'Corridilyx', iconKey: 'corridilyx', rarity: 'mythic', chance: 31300807, price: 2315000, color: '#444444' },
   { name: 'Hydroxyl Radical', iconKey: 'hydroxyl_radi', rarity: 'mythic', chance: 29300010, price: 2115000, color: '#568049' },
@@ -150,9 +159,9 @@ const ores = [
   /* =========================
      UNIQUE
   ========================= */
-  { name: 'Iciliyx', iconKey: 'iciliyx', rarity: 'unique', chance: 479302, price: 34020, color: '#98f0ff' },
-  { name: 'Nordex', iconKey: 'nordex', rarity: 'unique', chance: 437291, price: 34020, color: '#bb9f7a' },
-  { name: 'Nordex', iconKey: 'nordex', rarity: 'unique', chance: 437291, price: 34020, color: '#bb9f7a' },
+  { name: 'Iciliyx', iconKey: 'iciliyx', rarity: 'unique', chance: 479302, price: 49020, color: '#98f0ff' },
+  { name: 'Nordex', iconKey: 'nordex', rarity: 'unique', chance: 437291, price: 35020, color: '#bb9f7a' },
+  { name: 'Munixelic', iconKey: 'munixelic', rarity: 'unique', chance: 372191, price: 32150, color: '#6bcf95' },
   { name: 'Mapleix', iconKey: 'mapleix', rarity: 'unique', chance: 394203, price: 34020, color: '#cc8830' },
   { name: 'Inlopext', iconKey: 'inlopext', rarity: 'unique', chance: 241031, price: 23300, color: '#a9e98f' },
   { name: 'Catlyx', iconKey: 'catlyx', rarity: 'unique', chance: 124920, price: 19203, color: '#43e92d' },
@@ -218,6 +227,7 @@ const ores = [
   { name: 'Shoutle Stone', iconKey: 'shoutle_stone', rarity: 'common', chance: 3, price: 5, color: '#777' },
   { name: 'Daisy', iconKey: 'daisy', rarity: 'common', chance: 4, price: 5, color: '#fff490' },
   { name: 'Kinkil', iconKey: 'kinkil', rarity: 'common', chance: 5, price: 5, color: '#8d7508' },
+  { name: 'Moteb', iconKey: 'moteb', rarity: 'common', chance: 5, price: 5, color: '#f05045' },
 
   /* =========================
      BASIC
@@ -245,7 +255,7 @@ const ores = [
 const layers = [
 
  {
-        name: "invaild_id:layer_s",
+        name: "undefined:layer_bug",
         ores: [
             'Air',
         ]
@@ -260,7 +270,9 @@ const layers = [
             'Argon',
             'Nitrogen Oxides',
             'Hydroxyl Radical',
+            'LOXIMODRILDOX',
             'ɴᴏᴄᴛɪʟᴜᴄᴇɴᴛ ꜰʀᴀɢᴍᴇɴᴛ',
+            '𝘱 𝘰 𝘴 𝘵 𝘦 𝘳 𝘪 𝘵 𝘺',
             'ℙ𝕚𝕧𝕟𝕚𝕔𝕦𝕣𝕩𝕚𝕔𝕝𝕖',
             'everything.jpg'
         ]
@@ -273,8 +285,10 @@ const layers = [
             'Grass',
             'Daisy',
             'Rose',
+            'Uleimoxic',
             'Mored',
             'Nordex',
+            'Munixelic',
             'Inlopext',
             'Lunar',
             'Bromine',
@@ -285,7 +299,8 @@ const layers = [
             'Anvilar',
             'F L O W S C A P E',
             '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽',
-            'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎'
+            'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎',
+            '.illumina',
         ]
     },
 
@@ -315,18 +330,21 @@ const layers = [
         ores: [
             'Stone',
             'Iron',
+            'Moteb',
             'Monochromixel',
             'Musherin',
             'Spilkermizen',
             'Lunitem',
             'Catlyx',
+            'Emerilyx',
             'Corridilyx',
             'Sapphire',
             'Topaz',
             'Equatox',
             'Faked Reality',
             'Braxichroxmin',
-            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽'
+            '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽',
+            '🅲🅸🆅🆁🅴🅱🅴🅼🅾🅱🅸🆃🅸🆂',
         ]
     },
     {
@@ -341,6 +359,7 @@ const layers = [
             'Kanmolc',
             'Mapleix',
             'Ckyslop',
+            'Bonnemium',
             'Gold',
             'Bloody Bronze',
             'Milennis',
@@ -361,6 +380,7 @@ const layers = [
             'Gold',
             'Bismuth',
             'Mantadox',
+            'Panchireium',
             'Solavoltei',
             '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞',
             '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽',
@@ -419,7 +439,6 @@ const layers = [
             'Majoritsim',
             'Zinc',
             'Bismuth',
-            'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎',
             '?print=(1234567890123)'
         ]
     },
@@ -498,55 +517,55 @@ const potions = [
         { 
         id: 'luck2b', 
         name: 'Potion of Luck 2x3', 
-        price: 65250000, 
+        price: 45250000, 
         duration: 420, // 초 단위
         lore: 'Take a bite, Get luckier, Get more.', 
-        stats: 'Makes you 6x more luckier! / 65,250,000 Coins',
+        stats: 'Makes you 6x more luckier! / 45,250,000 Coins',
         effectIcon: '🍀'
     },
     { 
         id: 'luck3', 
         name: 'Potion of Luck Max', 
-        price: 325000000, 
+        price: 305000000, 
         duration: 480, // 초 단위
         lore: 'woah.. how did you get that?', 
-        stats: 'Makes you 8x more luckier! / 325,000,000 Coins',
+        stats: 'Makes you 8x more luckier! / 305,000,000 Coins',
         effectIcon: '🍀'
     },
         { 
         id: 'luck4', 
         name: 'Potion of Huge Max Luck', 
-        price: 2250000000, 
+        price: 230000000, 
         duration: 600, // 초 단위
         lore: 'becareful!', 
-        stats: 'Makes you 16x more luckier! / 2,250,000,000 Coins',
+        stats: 'Makes you 16x more luckier! / 2,300,000,000 Coins',
         effectIcon: '🍀'
     },
     { 
         id: 'speed', 
         name: 'Potion of Speed', 
-        price: 2650000, 
+        price: 1850000, 
         duration: 150, 
         lore: 'Gotta go fast-', 
-        stats: 'Makes you mine 1.5 times faster! / 2,650,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 1.5 times faster! / 1,850,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
         id: 'speed2', 
         name: 'Potion of Fast Speed', 
-        price: 255500000, 
+        price: 175500000, 
         duration: 300, 
         lore: 'oh no i\'m faster and faster', 
-        stats: 'Makes you mine 2 times faster! / 255,500,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 2 times faster! / 175,500,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     },
     { 
         id: 'speed3', 
         name: 'Potion of at Speed o\' Sound', 
-        price: 2650000000, 
+        price: 1250000000, 
         duration: 450, 
         lore: 'What?! How?', 
-        stats: 'Makes you mine 4 times faster! / 2,650,000,000 Coins (interval cooltime)',
+        stats: 'Makes you mine 4 times faster! / 1,250,000,000 Coins (interval cooltime)',
         effectIcon: '⚡'
     }
 ];
@@ -606,6 +625,8 @@ const pickaxeLore = {
     'magstaff': "This will work on gathering EVERY metals in the world!",
     'plamulc': '"Everlasting Inc.’s signature plasma-core tool for precision mining and excavation."',
 
+    'endormat': '"It\'s abilitry is best option for gathering ores!"',
+
     'ultima': "'Absolute! Plus! Ultra!'",
     'hackaxe': "What? You think You're going to get this? Fool.",
     'luhackaxe': "A pickaxe made by some hacker wandering..."
@@ -617,17 +638,18 @@ const pickaxes = {
     steel: { name: "Tier 2 / Steel Pickaxe", power: 2, luck: 1.1, superChance: 0.02, superCount: 100 },
     godPickaxe: { name: "Tier 3 / God Pickaxe", power: 5, luck: 1.4, superChance: 0.09, superCount: 250 },
     light: { name: "Tier 4 / Lightning Pickaxe", power: 7, luck: 1.85, superChance: 0.025, superCount: 850 },
-    bulk: { name: "Tier 4.5 / Bulk Pickaxe", power: 9, luck: 1.55, superChance: 0.01, superCount: 2000 },
-    frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 2.95, superChance: 0.0125, superCount: 2700 },
+    bulk: { name: "Tier 4.5 / Bulk Pickaxe", power: 11, luck: 1.65, superChance: 0.02, superCount: 2000 },
+    frozen: { name: "Tier 5 / Frozen Pickaxe", power: 7, luck: 2.95, superChance: 0.0175, superCount: 2700 },
     macicle: { name: "Tier 5 / Sabre Macicle", power: 10, luck: 2.15, superChance: 0.02, superCount: 6350 },
     powerful: { name: "Tier 5.5 / Malice Bumper", power: 13, luck: 2.95, superChance: 0.02, superCount: 6520 },
     irregul: { name: "Tier 6 / Irregular Pickaxe", power: 35, luck: 2.5, superChance: 0.015, superCount: 11500 },
     luhackaxe: { name: "Tier 6.5 / Lumina-Hackaxe", power: 32, luck: 3.8, superChance: 0.02, superCount: 10000},
-    magstaff: { name: "Tier 7 / Magnetical Staff", power: 51, luck: 3.35, superChance: 0.05, superCount: 8700},
-    plamulc: { name: "Tier 8 / Plasmatic Multicarver", power: 127, luck: 1.95, superChance: 0.02, superCount: 32500},
+    magstaff: { name: "Tier 7 / Magnetical Staff", power: 51, luck: 3.35, superChance: 0.035, superCount: 8700},
+    plamulc: { name: "Tier 8 / Plasmatic Multicarver", power: 167, luck: 1.85, superChance: 0.023, superCount: 32500},
+    endormat: { name: "Tier 8 / Endomatic Skimmer", power: 327, luck: 1.05, superChance: 0.01, superCount: 92000},
 
-    ultima: { name: "Tier 9 / Ultima Blastica", power: 75, luck: 3.55, superChance: 0.025, superCount: 31200 },
-    hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 25000, luck: 25999999.0, superChance: 0, superCount: 2500},
+    ultima: { name: "Tier 9 / Ultima Blastica", power: 81, luck: 3.5, superChance: 0.027, superCount: 27350 },
+    hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 25000, luck: 25999999999.0, superChance: 0, superCount: 2500},
 };
 
 const pickaxeRecipes = {
@@ -642,8 +664,10 @@ const pickaxeRecipes = {
     'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Malux': 1,'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
     'irregul': {name: "Tier 6 / Irregular Pickaxe", cost: { 'Anvilar': 1, 'Malux': 1, 'Infinitricifite': 2, 'Kanmolc': 73, 'Diamond': 192, 'Durtlie': 9300, 'Basalt': 320500}, power: 7},
     'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'GREENITCH': 1, 'Kryxim': 1, 'Faked Corridilyx': 2, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 32 },
-    'magstaff': { name: "Tier 7 / Magnetical Staff", cost: { 'Nitrogen Oxides': 1, 'Milennis': 2, 'Kabris-lx': 4, 'Oidilz': 8, 'Inlopext': 60, 'Marlenx': 923, 'Bromine': 4200, 'Stone': 856000}, power: 2500000 },
-    'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 2, 'Enfinitricifite': 10, 'Ckyslop': 9, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
+    'magstaff': { name: "Tier 7 / Magnetical Staff", cost: { 'Nitrogen Oxides': 1, 'Kabris-lx': 1, 'Oidilz': 4, 'Inlopext': 60, 'Marlenx': 923, 'Bromine': 4200, 'Stone': 856000}, power: 2500000 },
+    'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 1, 'Enfinitricifite': 10, 'Ckyslop': 3, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
+
+    'endormat': { name: "Tier 8 / Endomatic Skimmer", cost: { 'Uleimoxic': 1, 'Anvilar': 1, 'Millennis': 3, 'Emerilyx': 7, 'Lunitem': 14, 'Majoritsim': 53, 'Grinyl': 231,'Durtlie': 16520, 'Slate': 310500}, power: 2500000 },
 
     'ultima': {name: "Tier 9 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
     'hackaxe': { name: 'Developer Exclusive Axe', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':2e20 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋t̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 3e30, 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 250 },
@@ -663,6 +687,7 @@ const pickaxeSortOrder = {
     'luhackaxe': 5.2,
     'magstaff': 5.3,
     'plamulc': 5.4,
+    'endormat': 5.41,
     'irregul': 5.18,
     'ultima' : 5.5,
     'hackaxe': 6,
@@ -682,7 +707,7 @@ let notificationTimer = null;
 let resultTimer = null;
 let inventory = {}, foundCount = {}, currentPickaxe = 'basic', coins = 0, totalBlocksMined = 0, currentLayerIndex = 0;
 let unlockedPickaxes = ['basic'];
-const CLICK_COOLDOWN = 70; // 0.2초 (200ms) 동안은 클릭 무시
+const CLICK_COOLDOWN = 60; // 0.2초 (200ms) 동안은 클릭 무시
 let lastManualClickTime = 0; // 마지막 클릭 시간 기록용
 let lastRollDebug = { oreName: "없음", baseChance: 0, luck: 0, finalProbability: 0 };
 let lastRenderedLayerIndex = -1;
