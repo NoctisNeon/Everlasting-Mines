@@ -535,7 +535,7 @@ const potions = [
         { 
         id: 'luck4', 
         name: 'Potion of Huge Max Luck', 
-        price: 230000000, 
+        price: 2300000000, 
         duration: 600, // 초 단위
         lore: 'becareful!', 
         stats: 'Makes you 16x more luckier! / 2,300,000,000 Coins',
