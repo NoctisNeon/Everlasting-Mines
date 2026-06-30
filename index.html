@@ -24,7 +24,7 @@
     <div id="game-root">
         <div class="game-container">
             <div class="header">
-                <h1>Everlasting Mines (Beta v1.9)</h1>
+                <h1>Everlasting Mines (Beta v2.0)</h1>
                 <p id="total-mined-display" class="stats">Total Mined: 0</p>
             </div>
 
@@ -61,11 +61,12 @@
                 <div id="effects-list"></div>
             </div>
 
-            <div id="layer-control" class="card layer-card">
-                <button onclick="moveLayer(-1)">◀</button>
-                <span id="layer-display">Surface</span>
-                <button onclick="moveLayer(1)">▶</button>
-            </div>
+<div id="layer-control" class="card layer-card">
+    <label for="layer-select">Layer</label>
+
+    <select id="layer-select" onchange="selectLayer(this.value)">
+    </select>
+</div>
 
             <div class="card debug-card">
                 <h3 class="debug-title">🛠️ Debug Tool</h3>
@@ -78,7 +79,6 @@
         </div>
 
         <div class="mine-left">
-            <h2>Inventory</h2> 
             <div id="inventory" class="card"></div>
         </div>
 

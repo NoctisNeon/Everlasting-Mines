@@ -1,10 +1,10 @@
-setInterval(() => {
-   const start = Date.now();
-   debugger;
-   if (Date.now() - start > 100) {
-    console.warn("[DEBUG DETECTED]");
-   } 
-}, 100);
+// setInterval(() => {
+ //  const start = Date.now();
+  // debugger;
+  // if (Date.now() - start > 100) {
+  //  console.warn("[DEBUG DETECTED]");
+  // } 
+// }, 100);
 
 // 포션 line 1097, 628
 
@@ -27,22 +27,26 @@ const oreIcons = {
     bit: "assets/ores/basic/bit1.png",
 
     '64intlim': "assets/ores/paradoxical/64intlim1.png",
+    posterity: "assets/ores/paradoxical/posteri1.png",
 
     matizium: "assets/ores/nil/matiz1.png",
 
     solitude_every: "assets/ores/solitude/everythin1.png",
     solitude_print: "assets/ores/solitude/sp1.png",
+    solitude_illumia: "assets/ores/solitude/illu1.png",
 
     illimitatus_frost: "assets/ores/illimitatus/fca1.png",
     illimitatus_param1: "assets/ores/illimitatus/param1.png",
     illimitatus_paux: "assets/ores/illimitatus/paux1.png",
     illimitatus_yotta: "assets/ores/illimitatus/yottabyte1.png",
     illimitatus_noctil: "assets/ores/illimitatus/noctil1.png",
+    illimitatus_rigel: "assets/ores/illimitatus/rigel1.png",
 
     abyssmolith: "assets/ores/meaninglessness/aby2.png",
     pivnicurxicle: "assets/ores/meaninglessness/pinvc1.png",
     fabricalobidium: "assets/ores/meaninglessness/fabri1.png",
     zetabyte: "assets/ores/meaninglessness/zetabyte1.png",
+    civrebemobitis: "assets/ores/meaninglessness/civreb1.png",
 
     flowscape: "assets/ores/creative/flowscape1.png",
     braxichroxmin: "assets/ores/creative/braxi1.png",
@@ -76,6 +80,7 @@ const ores = [
   { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎', iconKey: 'illimitatus_param1', rarity: 'illimitátus', chance: 263000000000, price: 15913000000, glowType: 'legendary' },
   { name: '𝓟𝓪𝓵𝓾𝔁𝓲𝓬𝓮𝓶𝓲𝔃', iconKey: 'illimitatus_paux', rarity: 'illimitátus', chance: 236100000000, price: 10192100000, glowType: 'paux' },
   { name: '𝖄𝖔𝖙𝖙𝖆𝖇𝖞𝖙𝖊', iconKey: 'illimitatus_yotta', rarity: 'illimitátus', chance: 352000000000, price: 22392100000, glowType: 'yotta' },
+  { name: '𝐑𝐢𝐠𝐞𝐥', iconKey: 'illimitatus_rigel', rarity: 'illimitátus', chance: 352000000000, price: 22392100000, glowType: 'rigel' },
 
   /* =========================
      MEANINGLESSNESS
@@ -83,17 +88,19 @@ const ores = [
   { name: '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽', iconKey: 'abyssmolith', rarity: 'meaninglessness', chance: 50909000000, price: 4293000000, glowType: 'aby1' },
   { name: 'ℙ𝕚𝕧𝕟𝕚𝕔𝕦𝕣𝕩𝕚𝕔𝕝𝕖', iconKey: 'pivnicurxicle', rarity: 'meaninglessness', chance: 45413000000, price: 3020304980, glowType: 'pinv' },
   { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', iconKey: 'fabricalobidium', rarity: 'meaninglessness', chance: 41023000000, price: 260000000, color: 'rgb(99, 121, 89)' },
-  { name: '🅲🅸🆅🆁🅴🅱🅴🅼🅾🅱🅸🆃🅸🆂', iconKey: 'civrebemobitis', rarity: 'meaninglessness', chance: 39130000000, price: 240000000, color: 'rgb(255, 251, 0)' },
+  { name: '𝙘𝙞𝙫𝙧𝙚𝙗𝙚𝙢𝙤𝙗𝙞𝙩𝙞𝙨', iconKey: 'civrebemobitis', rarity: 'meaninglessness', chance: 39130000000, price: 240000000, color: '#fffb00' },
   { name: 'ℤ𝕖𝕥𝕥𝕒𝕓𝕪𝕥𝕖', iconKey: 'zetabyte', rarity: 'meaninglessness', chance: 35743000000, price: 232000000, glowType: 'zet' },
   /* =========================
      CREATIVE
   ========================= */
   { name: 'F L O W S C A P E', iconKey: 'flowscape', rarity: 'creative', chance: 1209000000, price: 92402000, color: 'rgb(175, 183, 255)' },
-  { name: 'Monochromixel', iconKey: 'monochromix', rarity: 'creative', chance: 1928000000, price: 12230000, color: 'rgb(136, 136, 136)' },
+  { name: 'Monochromixel', iconKey: 'monochromix', rarity: 'creative', chance: 1928000000, price: 122030000, color: 'rgb(136, 136, 136)' },
   { name: 'Cannidilit', iconKey: 'cannidilit', rarity: 'creative', chance: 1023003050, price: 87002000, glowType: 'cand' },
   { name: 'Moldivium', iconKey: 'moldivium', rarity: 'creative', chance: 1011003200, price: 82000000, color: '#12471b' },
+  { name: 'Mednicalovisix', iconKey: 'mednicalovisix', rarity: 'creative', chance: 1521000000, price: 62300000, color: '#1b7a81' },
   { name: 'Braxichroxmin', iconKey: 'braxichroxmin', rarity: 'creative', chance: 992000000, price: 75030000, color: '#a7b85b' },
   { name: 'Exabyte', iconKey: 'exabyte', rarity: 'creative', chance: 1620000000, price: 100030000, color: '#00970d' },
+  { name: 'KIC 8462852', iconKey: 'kic_846', rarity: 'creative', chance: 993010000, price: 65271000, color: '#ffe6a2' },
   
 
   /* =========================
@@ -101,6 +108,8 @@ const ores = [
   ========================= */
   { name: 'IXYSOPARDOX', iconKey: 'ixysopardox', rarity: 'abstruse', chance: 593000000, price: 65002000, color: '#88ff00ff' },
   { name: 'Uleimoxic', iconKey: 'uleimoxic', rarity: 'abstruse', chance: 409000000, price: 50902000, color: 'rgb(104, 66, 35)' },
+  { name: 'WR 104', iconKey: 'wr_104', rarity: 'abstruse', chance: 839206400, price: 61902000, color: 'rgb(255, 216, 184)' },
+  { name: 'R136a1', iconKey: 'r136a', rarity: 'abstruse', chance: 532206400, price: 47902000, color: 'rgb(111, 178, 255)' },
   { name: 'LOXIMODRILDOX', iconKey: 'loximodrildox', rarity: 'abstruse', chance: 631610000, price: 71006400, color: 'rgb(0, 255, 149)' },
   { name: 'Faked Reality', iconKey: 'faked_reality', rarity: 'abstruse', chance: 392000000, price: 39202000, color: 'rgb(162, 175, 147)' },
   { name: 'Ninumilium', iconKey: 'ninumilium', rarity: 'abstruse', chance: 342000000, price: 35002000, color: 'rgb(128, 251, 255)' },
@@ -242,6 +251,8 @@ const ores = [
   { name: 'Air', iconKey: 'air', rarity: 'basic', chance: 2, price: 1, color: '#ffffff' },
   { name: 'eRRoR', iconKey: 'error', rarity: 'basic', chance: 2, price: 1, color: '#000000' },
   { name: 'Bit', iconKey: 'bit', rarity: 'basic', chance: 2, price: 1, color: '#c8ffc6' },
+  { name: 'Dark Matter', iconKey: 'dark_matter', rarity: 'basic', chance: 2, price: 1, color: '#2e1630' },
+
 
     /* =========================
      NIL
@@ -258,6 +269,19 @@ const layers = [
         name: "undefined:layer_bug",
         ores: [
             'Air',
+        ]
+    },
+
+        {
+        name: "Stellaris",
+        ores: [
+            'WR 104',
+            'Dark Matter',
+            'KIC 8462852',
+            'R136a1',
+            '𝐑𝐢𝐠𝐞𝐥'
+
+
         ]
     },
 
@@ -344,7 +368,7 @@ const layers = [
             'Faked Reality',
             'Braxichroxmin',
             '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽',
-            '🅲🅸🆅🆁🅴🅱🅴🅼🅾🅱🅸🆃🅸🆂',
+            '𝙘𝙞𝙫𝙧𝙚𝙗𝙚𝙢𝙤𝙗𝙞𝙩𝙞𝙨',
         ]
     },
     {
@@ -416,6 +440,7 @@ const layers = [
             'Moluybix',
             'Iciliyx',
             'Icilei',
+            'Mednicalovisix',
             'Frosted Rock',
             'Kabris-lx',
             'Ninumilium',
@@ -623,11 +648,12 @@ const pickaxeLore = {
     'irregul': "error 214: cannot find pickaxe_id 'irregular'. (js:203)",
     'bulk': "'Even through hard ways, I never give up mining.'",
     'magstaff': "This will work on gathering EVERY metals in the world!",
-    'plamulc': '"Everlasting Inc.’s signature plasma-core tool for precision mining and excavation."',
+    'plamulc': '"Everlasting Inc.\'s signature plasma-core tool for precision mining and excavation."',
 
     'endormat': '"It\'s abilitry is best option for gathering ores!"',
 
     'ultima': "'Absolute! Plus! Ultra!'",
+    'prismatic': "Prismatic light guides you toward finale...",
     'hackaxe': "What? You think You're going to get this? Fool.",
     'luhackaxe': "A pickaxe made by some hacker wandering..."
 };
@@ -649,7 +675,10 @@ const pickaxes = {
     endormat: { name: "Tier 8 / Endomatic Skimmer", power: 327, luck: 1.05, superChance: 0.01, superCount: 92000},
 
     ultima: { name: "Tier 9 / Ultima Blastica", power: 81, luck: 3.5, superChance: 0.027, superCount: 27350 },
-    hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 25000, luck: 25999999999.0, superChance: 0, superCount: 2500},
+    prismatic: { name: "Tier 10 / Prismatic Demolisher", power: 161, luck: 3.25, superChance: 0.025, superCount: 39550 },
+
+
+    hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 25000, luck: 25999999999.0, superChance: 0, superCount: 250000000},
 };
 
 const pickaxeRecipes = {
@@ -670,6 +699,8 @@ const pickaxeRecipes = {
     'endormat': { name: "Tier 8 / Endomatic Skimmer", cost: { 'Uleimoxic': 1, 'Anvilar': 1, 'Milennis': 3, 'Emerilyx': 7, 'Lunitem': 14, 'Majoritsim': 53, 'Grinyl': 231,'Durtlie': 16520, 'Slate': 310500}, power: 2500000 },
 
     'ultima': {name: "Tier 9 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
+    'prismatic': {name: "Tier 10 / Prismatic Demolisher", cost: { 'Monochromixel': 2, 'Cannidilit': 2, 'LOXIMODRILDOX': 5, 'Macorl Esperatio': 5, 'Bonnemium': 13, 'Hydroxyl Radical': 6, 'map.34201pl': 150, 'Kanmolc': 281, 'Iciliyx': 512, 'Argon': 1023, 'Sapphire': 5390, 'Rose': 7231, 'Zinc': 17600}, power: 73},
+    
     'hackaxe': { name: 'Developer Exclusive Axe', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':2e20 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 3e30, 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 250 },
 };
 
@@ -690,6 +721,7 @@ const pickaxeSortOrder = {
     'endormat': 5.41,
     'irregul': 5.18,
     'ultima' : 5.5,
+    'prismatic': 5.7,
     'hackaxe': 6,
 };
 
@@ -1670,6 +1702,12 @@ oreCard.innerHTML = `
     });
 }
 
+function updateLayerUI() {
+    const el = document.getElementById("layer-display");
+    if (el)
+        el.innerText = `Current Layer: ${layers[currentLayerIndex].name}`;
+}
+
 function moveLayer(direction) {
     const newIndex = currentLayerIndex + direction;
     
@@ -1691,8 +1729,33 @@ function moveLayer(direction) {
     }
 }
 
+function initLayerSelect() {
+    const select = document.getElementById("layer-select");
+    if (!select) return;
 
-function updateLayerUI() { const el = document.getElementById('layer-display'); if (el) el.innerText = `Current Layer: ${layers[currentLayerIndex].name}`; }
+    select.innerHTML = "";
+
+    layers.forEach((layer, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = layer.name;
+        select.appendChild(option);
+    });
+
+    select.value = currentLayerIndex;
+}
+
+function selectLayer(value) {
+    const target = Number(value);
+
+    while (currentLayerIndex < target) {
+        moveLayer(1);
+    }
+
+    while (currentLayerIndex > target) {
+        moveLayer(-1);
+    }
+}
 function updateTotalMinedUI() { const el = document.getElementById('total-mined-display'); if(el) el.innerText = `Total Mined: ${totalBlocksMined.toLocaleString()}`; }
 function showSection(id) {
     const section = document.getElementById(id); // 요소를 먼저 찾습니다.
@@ -2013,178 +2076,234 @@ function renderForge() {
     });
 
     const renderCard = (id) => {
+
         const recipe = pickaxeRecipes[id];
         const stats = pickaxes[id];
         const lore = pickaxeLore[id] || "No description available.";
         const isUnlocked = unlockedPickaxes.includes(id);
-
         const materialDropdownHtml = `
             <details class="material-dropdown">
-                <summary>Materials</summary>
-                <div class="material-details">
-                    <ul style="list-style:none;padding:0;margin-bottom:0">
-                        ${Object.entries(recipe.cost).map(([name, qty]) => {
-                            const foundLayers = layers.filter(l => l.ores.includes(name));
-                            const layer = foundLayers.length > 0
-                                ? foundLayers.map(l => l.name).join(', ')
-                                : "Unknown";
 
-                            const oreData = ores.find(o => o.name === name) || { rarity: 'basic' };
-                            const rarityClass = `badge-${(oreData.rarity || 'unknown').toLowerCase().trim()}`;
+                <summary>Materials</summary>
+
+                <div class="material-details">
+
+                    <ul class="material-list">
+
+                        ${Object.entries(recipe.cost).map(([name, qty]) => {
+
+                            const foundLayers = layers.filter(l => l.ores.includes(name));
+
+                            const layer =
+                                foundLayers.length > 0
+                                    ? foundLayers.map(l => l.name).join(', ')
+                                    : "Unknown";
+
+                            const oreData =
+                                ores.find(o => o.name === name) ||
+                                { rarity: "basic" };
+
+                            const rarityClass =
+                                `badge-${(oreData.rarity || "unknown")
+                                    .toLowerCase()
+                                    .trim()}`;
 
                             return `
-                                <li style="display:flex;align-items:center;gap:8px;margin:5px 0;">
+                                <li class="material-item">
+
                                     <span class="rarity-badge ${rarityClass}">
                                         ${oreData.rarity}
                                     </span>
-                                    <span>
-                                        <strong>${name}</strong> (${qty}) / <em>${layer}</em>
+
+                                    <span class="material-text">
+                                        <strong>${name}</strong>
+                                        (${qty})
+                                        /
+                                        <em>${layer}</em>
                                     </span>
+
                                 </li>
                             `;
+
                         }).join('')}
+
                     </ul>
+
                 </div>
+
             </details>
         `;
-
         const statsHtml = `
-            <div style="font-size:13px;color:#ddd;margin:8px 0;padding:5px;background:#333;border-radius:4px;">
-                ⚡ Power: <b>${stats.power}</b> |
-                🍀 Luck: <b>x${stats.luck.toFixed(1)}</b> |
-                ✨ Bulk: <b>${(stats.superChance * 100).toFixed(1)}%</b>
-                (Mines ${stats.superCount})
+
+            <div class="pickaxe-stats">
+
+                <span class="stat">⚡ Power <b>${stats.power}</b></span>
+
+                <span class="stat">🍀 Luck <b>x${stats.luck.toFixed(1)}</b></span>
+
+                <span class="stat">
+                    ✨ Bulk
+                    <b>${(stats.superChance * 100).toFixed(1)}%</b>
+                    (Mines ${stats.superCount})
+                </span>
+
             </div>
+
         `;
+        const craftedHtml = `
 
-const actionHtml = isUnlocked
-    ? `
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            margin-top:8px;
-            padding:6px 10px;
-            background:#1a1a1f;
-            border:1px solid #2f2f35;
-            border-radius:6px;
-            font-size:12px;
-            color:#aaa;
-        ">
-            <span>✔ Crafted</span>
-            <span style="opacity:0.7;">Already unlocked</span>
-        </div>
-    `
-    : `
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:10px;
-            margin-top:8px;
-            padding:8px 10px;
-            background:linear-gradient(145deg,#1f1f24,#17171b);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:6px;
-        ">
-            <!-- Lore (왼쪽) -->
-            <span style="
-                font-size:15px;
-                color:#bbb;
-                white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
-                max-width:65%;
-            ">
-                ${lore}
-            </span>
+            <div class="craft-status crafted">
 
-            <!-- Button (오른쪽 강조) -->
-            <button onclick="craftPickaxe('${id}')" style="
-                padding:6px 14px;
-                cursor:pointer;
-                font-weight:700;
-                border-radius:5px;
-                border:1px solid rgba(255,255,255,0.1);
-                background:#2a2a32;
-                color:#fff;
-                transition:0.15s;
-            " onmouseover="this.style.background='#3a3a45'" onmouseout="this.style.background='#2a2a32'">
-                Craft
-            </button>
-        </div>
-    `;
+                <span>✔ Crafted</span>
 
+                <span class="craft-status-sub">
+                    Already crafted!
+                </span>
+
+            </div>
+
+        `;
+const craftHtml = `
+
+    <div class="craft-status not-crafted">
+
+        <button
+            class="craft-btn"
+            onclick="craftPickaxe('${id}')">
+
+            Craft
+
+        </button>
+
+        <span class="craft-status-sub">
+
+            Not Crafted
+
+        </span>
+
+    </div>
+
+    <div class="pickaxe-lore">
+
+        ${lore}
+
+    </div>
+
+`;
         const loreHtml = `
-            <div style="
-                margin-top:8px;
-                padding:6px 10px;
-                font-size:13px;
-                color:#bbb;
-                background:#1f1f24;
-                border-radius:4px;
-                line-height:1.4;
-            ">
-                ${lore}
-            </div>
-        `;
 
+            <div class="pickaxe-lore">
+
+                ${lore}
+
+            </div>
+
+        `;
         return `
-            <div class="pickaxe-card" style="margin-bottom:15px;padding:12px;border:1px solid #444;border-radius:5px;background:#25252b;">
-                <div style="font-size:16px;font-weight:bold;">
+
+            <div class="pickaxe-card">
+
+                <div class="pickaxe-title">
+
+                    <span class="pickaxe-name">
                     ${recipe.name}
+                    </span>
+
                 </div>
 
                 ${statsHtml}
+
                 ${materialDropdownHtml}
-                ${isUnlocked ? loreHtml : actionHtml}
+
+                ${isUnlocked
+    ? craftedHtml + loreHtml
+    : craftHtml}
+
             </div>
+
         `;
+
     };
-
-    const craftedHtml = craftedList.length
-        ? `
-        <details class="section-box" open>
-            <summary class="section-summary">
-                🔧 Crafted (${craftedList.length})
-            </summary>
-            <div class="section-content">
-                ${craftedList.map(renderCard).join('')}
-            </div>
-        </details>
-        `
-        : '';
-
-    const uncraftedHtml = uncraftedList.length
+    const craftedSection = craftedList.length
         ? `
         <details class="section-box">
+
             <summary class="section-summary">
-                🪨 Uncrafted (${uncraftedList.length})
+
+                🔧 Crafted
+                <span class="section-count">
+                    (${craftedList.length})
+                </span>
+
             </summary>
+
             <div class="section-content">
-                ${uncraftedList.map(renderCard).join('')}
+
+                ${craftedList.map(renderCard).join('')}
+
             </div>
+
         </details>
         `
         : '';
 
-    el.innerHTML = craftedHtml + uncraftedHtml;
 
-    // 🔥 BOTH sections stagger
-    requestAnimationFrame(() => {
-        document.querySelectorAll('.section-content').forEach(section => {
-            const cards = section.querySelectorAll('.pickaxe-card');
 
-            cards.forEach((card, i) => {
-                card.style.animation = 'none';
+    const uncraftedSection = uncraftedList.length
+        ? `
+        <details class="section-box">
 
-                requestAnimationFrame(() => {
-                    card.style.animation = '';
-                    card.style.animationDelay = `${i * 70}ms`;
-                });
-            });
+            <summary class="section-summary">
+
+                🪨 Uncrafted
+                <span class="section-count">
+                    (${uncraftedList.length})
+                </span>
+
+            </summary>
+
+            <div class="section-content">
+
+                ${uncraftedList.map(renderCard).join('')}
+
+            </div>
+
+        </details>
+        `
+        : '';
+
+
+
+    el.innerHTML =
+        craftedSection +
+        uncraftedSection;
+
+
+
+    document.querySelectorAll(".section-box").forEach(section => {
+
+    section.addEventListener("toggle", () => {
+
+        if (!section.open) return;
+
+        const cards = section.querySelectorAll(".pickaxe-card");
+
+        cards.forEach((card, i) => {
+
+            card.style.animation = "none";
+
+            // 강제 리플로우
+            void card.offsetWidth;
+
+            card.style.animation = `cardReveal .45s ease forwards`;
+            card.style.animationDelay = `${i * 70}ms`;
+
         });
+
     });
+
+});
+
 }
 
 
@@ -2199,6 +2318,7 @@ function resetGame() {
 
 // [2] 빠져있던 updateUI 함수 추가
 function updateUI() {
+    initLayerSelect();
     renderInventory();
     renderEncyclopedia();
     renderPickaxesUI();
@@ -2344,6 +2464,9 @@ async function bootGame() {
     setupTabButtons();
 
     initUI();
+
+    lastRenderedLayerIndex = -1;
+    updateUI();
 
     // ✔ 완료
 }
