@@ -502,7 +502,7 @@ body {
 
     padding-top: 10px;
 
-    max-height: 5000px;
+    max-height: 50000px;
 
     opacity: 1;
 
@@ -2859,6 +2859,18 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     font-weight: bold;
 }
 
+.glow-earth {
+    /* 기존 코드 */
+    background: linear-gradient(90deg, #13e3ff, #00ff9d, #00ff40);
+    
+    /* 여기서 추가! */
+    -webkit-background-clip: text;
+    background-clip: text; /* 이게 추가된 표준 속성입니다 */
+    
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
 .glow-rigel {
     /* 기존 코드 */
     background: linear-gradient(90deg, #bdf2ff, #6adcff, #1abeff);
@@ -2962,7 +2974,7 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     display: inline-block; /* 애니메이션을 위해 필요 */
     animation: posterity1 0.5s linear infinite;
 
-    text-shadow: 0 0 5px #273d3b, 0 0 10px #bdf7ff;
+    text-shadow: 0 0 5px #272d3d, 0 0 10px #7091bb;
 }
 
 @keyframes posterity1 {
@@ -2977,4 +2989,14 @@ h3 { font-size: 1rem; margin-bottom: 8px; }
     80%  { transform: translateX(3px); }
     90%  { transform: translateX(-2px); }
     100% { transform: translateX(1px); }
+}
+
+.glow-misery {
+    background: linear-gradient(90deg, #353535, #666666, #8b8b8b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+    text-shadow: 0 0 5px #686868, 0 0 10px #949494;
 }

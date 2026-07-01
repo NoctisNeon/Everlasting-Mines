@@ -62,7 +62,8 @@ const ores = [
   ========================= */
 
   { name: 'The 64 Bits Over', iconKey: '64intlim', rarity: 'paradoxical', chance: 18446744073709551615, price: 293000000001, glowType: '64lim'},
-  { name: '𝘱 𝘰 𝘴 𝘵 𝘦 𝘳 𝘪 𝘵 𝘺', iconKey: 'posterity', rarity: 'paradoxical', chance: 920517483610274, price: 293000000001, glowType: 'posterity'},
+  { name: '𝘱 𝘰 𝘴 𝘵 𝘦 𝘳 𝘪 𝘵 𝘺', iconKey: 'posterity', rarity: 'paradoxical', chance: 920517483610274, price: 192000000001, glowType: 'posterity'},
+  { name: '𝘮𝘪𝘴𝘦𝘳𝘺', iconKey: 'misery', rarity: 'paradoxical', chance: 81223109283723, price: 92000000001, glowType: 'misery'},
 
   /* =========================
      SOLITUDE
@@ -80,7 +81,7 @@ const ores = [
   { name: 'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎', iconKey: 'illimitatus_param1', rarity: 'illimitátus', chance: 263000000000, price: 15913000000, glowType: 'legendary' },
   { name: '𝓟𝓪𝓵𝓾𝔁𝓲𝓬𝓮𝓶𝓲𝔃', iconKey: 'illimitatus_paux', rarity: 'illimitátus', chance: 236100000000, price: 10192100000, glowType: 'paux' },
   { name: '𝖄𝖔𝖙𝖙𝖆𝖇𝖞𝖙𝖊', iconKey: 'illimitatus_yotta', rarity: 'illimitátus', chance: 352000000000, price: 22392100000, glowType: 'yotta' },
-  { name: '𝐑𝐢𝐠𝐞𝐥', iconKey: 'illimitatus_rigel', rarity: 'illimitátus', chance: 352000000000, price: 22392100000, glowType: 'rigel' },
+  { name: '𝐑𝐢𝐠𝐞𝐥', iconKey: 'illimitatus_rigel', rarity: 'illimitátus', chance: 192000000000, price: 22392100000, glowType: 'rigel' },
 
   /* =========================
      MEANINGLESSNESS
@@ -90,6 +91,7 @@ const ores = [
   { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', iconKey: 'fabricalobidium', rarity: 'meaninglessness', chance: 41023000000, price: 260000000, color: 'rgb(99, 121, 89)' },
   { name: '𝙘𝙞𝙫𝙧𝙚𝙗𝙚𝙢𝙤𝙗𝙞𝙩𝙞𝙨', iconKey: 'civrebemobitis', rarity: 'meaninglessness', chance: 39130000000, price: 240000000, color: '#fffb00' },
   { name: 'ℤ𝕖𝕥𝕥𝕒𝕓𝕪𝕥𝕖', iconKey: 'zetabyte', rarity: 'meaninglessness', chance: 35743000000, price: 232000000, glowType: 'zet' },
+  { name: '𝓉𝒽𝑒.𝑒𝒶𝓇𝓉𝒽', iconKey: 'theearth', rarity: 'meaninglessness', chance: 71300050000, price: 263000000, glowType: 'earth' },
   /* =========================
      CREATIVE
   ========================= */
@@ -120,9 +122,12 @@ const ores = [
   { name: 'Milennis', iconKey: 'milennis', rarity: 'unreal', chance: 292300000, price: 9302000, color: '#4b412e' },
   { name: 'Macorl Esperatio', iconKey: 'macorl_esperatio', rarity: 'unreal', chance: 153900000, price: 9302000, color: '#8A5FC9' },
   { name: 'Solavoltei', iconKey: 'solavoltei', rarity: 'unreal', chance: 112000000, price: 6408000, color: '#a9bb91' },
+  { name: 'Cimenix', iconKey: 'cimenix', rarity: 'unreal', chance: 179510003, price: 6100000, color: '#91ff00' },
   { name: 'Anvilar', iconKey: 'anvilar', rarity: 'unreal', chance: 101900000, price: 5302000, color: '#f83e3e' },
   { name: 'Kabris-lx', iconKey: 'kabris_lx', rarity: 'unreal', chance: 100200030, price: 4920000, color: '#aee0f3' },
-  { name: 'Terabyte', iconKey: 'terabyte', rarity: 'unreal', chance: 213029400, price: 4920000, color: '#18ce00' },
+  { name: 'Terabyte', iconKey: 'terabyte', rarity: 'unreal', chance: 213029400, price: 4226000, color: '#18ce00' },
+  { name: 'Eta Carinae', iconKey: 'eta_carinae', rarity: 'unreal', chance: 182319001, price: 4621000, color: '#ffebd1' },
+  { name: 'Helixemico', iconKey: 'helixemico', rarity: 'unreal', chance: 165990110, price: 4123000, color: '#7b628a' },
 
   /* =========================
      EPHEMERAL
@@ -130,6 +135,7 @@ const ores = [
   { name: 'Enfinitricifite', iconKey: 'enfinitricifite', rarity: 'ephemeral', chance: 94000200, price: 3250000, color: '#61738b' },
   { name: 'Ckyslop', iconKey: 'ckyslop', rarity: 'ephemeral', chance: 83903900, price: 3170000, color: '#723a05' },
   { name: 'GREENITCH', iconKey: 'greenitch', rarity: 'ephemeral', chance: 81300000, price: 2900000, color: '#00ff22' },
+  { name: 'Oumuamua', iconKey: 'oumuamua', rarity: 'ephemeral', chance: 91261050, price: 2184000, color: '#949494' },
   { name: 'Kryxim', iconKey: 'kryxim', rarity: 'ephemeral', chance: 74999931, price: 2742300, color: '#358162' },
   { name: 'Nitrogen Oxides', iconKey: 'nitrogen_oxides', rarity: 'ephemeral', chance: 61200000, price: 2430000, color: 'rgb(71, 109, 27)' },
   { name: 'Oidilz', iconKey: 'oidilz', rarity: 'ephemeral', chance: 72400000, price: 2630000, color: '#8b616a' },
@@ -139,7 +145,8 @@ const ores = [
      MYTHIC
   ========================= */
   { name: 'Malux', iconKey: 'malux', rarity: 'mythic', chance: 23100000, price: 2205000, color: '#a2dac7' },
-  { name: 'Emerilyx', iconKey: 'emerilyx', rarity: 'mythic', chance: 19252000, price: 2205000, color: '#506830' },
+  { name: 'Kivimly', iconKey: 'kivimly', rarity: 'mythic', chance: 47100000, price: 2713000, color: '#3d9276' },
+  { name: 'Emerilyx', iconKey: 'emerilyx', rarity: 'mythic', chance: 19252000, price: 2012000, color: '#506830' },
   { name: 'Panchireium', iconKey: 'panchireum', rarity: 'mythic', chance: 12100600, price: 1205000, color: '#00ffaa' },
   { name: 'Bonnemium', iconKey: 'bonnemium', rarity: 'mythic', chance: 18271000, price: 1925000, color: '#4f5e27' },
   { name: 'Infinitricifite', iconKey: 'infinitricifite', rarity: 'mythic', chance: 10000000, price: 2100000, color: '#2f80ed' },
@@ -150,9 +157,10 @@ const ores = [
      MIDAS
   ========================= */
   { name: 'Acrictopas', iconKey: 'acrictopas', rarity: 'midas', chance: 5940000, price: 360000, color: '#106954' },
-  { name: 'Crkyotopis', iconKey: 'crkyotopis', rarity: 'midas', chance: 1890000, price: 250000, color: '#666252' },
-  { name: 'Lunitem', iconKey: 'lunitem', rarity: 'midas', chance: 2999020, price: 250000, color: '#89af30' },
-  { name: 'Yiziun', iconKey: 'yiziun', rarity: 'midas', chance: 2720000, price: 250000, color: '#813dff' },
+  { name: 'Crkyotopis', iconKey: 'crkyotopis', rarity: 'midas', chance: 1890000, price: 257000, color: '#666252' },
+  { name: 'Lipxime', iconKey: 'lipxime', rarity: 'midas', chance: 1890000, price: 251000, color: '#15ff00' },
+  { name: 'Lunitem', iconKey: 'lunitem', rarity: 'midas', chance: 2999020, price: 230000, color: '#89af30' },
+  { name: 'Yiziun', iconKey: 'yiziun', rarity: 'midas', chance: 2720000, price: 260000, color: '#813dff' },
   { name: 'Megabyte', iconKey: 'megabyte', rarity: 'midas', chance: 1924800, price: 200000, color: '#5bff7e' },
 
   /* =========================
@@ -184,6 +192,7 @@ const ores = [
   { name: 'Topaz', iconKey: 'topaz', rarity: 'intrigue', chance: 31239, price: 2630, color: '#ffdc43' },
   { name: 'Kilobyte', iconKey: 'kilobyte', rarity: 'intrigue', chance: 49210, price: 2630, color: '#84ff98' },
   { name: 'Jade', iconKey: 'jade', rarity: 'intrigue', chance: 25930, price: 2512, color: '#00be19' },
+  { name: 'Minuwlyx', iconKey: 'minuwlyx', rarity: 'intrigue', chance: 35231, price: 5314, color: '#297e34' },
   { name: 'Bismuth', iconKey: 'bismuth', rarity: 'intrigue', chance: 25500, price: 2500, glowType: 'rainbow' },
 
   /* =========================
@@ -219,6 +228,7 @@ const ores = [
   { name: 'Iron', iconKey: 'iron', rarity: 'uncommon', chance: 50, price: 50, color: '#dff9fb' },
   { name: 'Bromine', iconKey: 'bromine', rarity: 'uncommon', chance: 23, price: 35, color: 'rgb(131, 207, 131)' },
   { name: 'Nitrogen', iconKey: 'nitrogen', rarity: 'uncommon', chance: 15, price: 25, color: '#147434' },
+  { name: 'Jollyine', iconKey: 'jollyine', rarity: 'uncommon', chance: 34, price: 31, color: '#ff6b6b' },
   { name: 'Liyze', iconKey: 'liyze', rarity: 'uncommon', chance: 13, price: 23, color: '#65799e' },
   { name: 'Solid Obsidian', iconKey: 'solid_obsidian', rarity: 'uncommon', chance: 13, price: 22, color: '#281c3a' },
   { name: 'Durtlie', iconKey: 'durtlie', rarity: 'uncommon', chance: 12, price: 20, color: '#65a727' },
@@ -231,12 +241,15 @@ const ores = [
   { name: 'Ash', iconKey: 'ash', rarity: 'common', chance: 6, price: 5, color: '#52503e' },
   { name: 'Mored', iconKey: 'mored', rarity: 'common', chance: 6, price: 5, color: '#c4a27c' },
   { name: 'Lunar', iconKey: 'lunar', rarity: 'common', chance: 5, price: 5, color: '#bc6aff' },
-  { name: 'Magenta', iconKey: 'magenta', rarity: 'common', chance: 4, price: 5, color: '#1a0e24' },
+  { name: 'Magenta', iconKey: 'magenta', rarity: 'common', chance: 4, price: 5, color: '#522279' },
   { name: 'Frosted Rock', iconKey: 'frosted_rock', rarity: 'common', chance: 3, price: 5, color: '#d2f8ff' },
   { name: 'Shoutle Stone', iconKey: 'shoutle_stone', rarity: 'common', chance: 3, price: 5, color: '#777' },
   { name: 'Daisy', iconKey: 'daisy', rarity: 'common', chance: 4, price: 5, color: '#fff490' },
   { name: 'Kinkil', iconKey: 'kinkil', rarity: 'common', chance: 5, price: 5, color: '#8d7508' },
   { name: 'Moteb', iconKey: 'moteb', rarity: 'common', chance: 5, price: 5, color: '#f05045' },
+  { name: 'Kije', iconKey: 'kije', rarity: 'common', chance: 6, price: 5, color: '#b96730' },
+  { name: 'Cyan', iconKey: 'cyan', rarity: 'common', chance: 5, price: 5, color: '#27d8f0' },
+  { name: 'Void', iconKey: 'void', rarity: 'common', chance: 8, price: 5, color: '#aaca5e' },
 
   /* =========================
      BASIC
@@ -252,6 +265,7 @@ const ores = [
   { name: 'eRRoR', iconKey: 'error', rarity: 'basic', chance: 2, price: 1, color: '#000000' },
   { name: 'Bit', iconKey: 'bit', rarity: 'basic', chance: 2, price: 1, color: '#c8ffc6' },
   { name: 'Dark Matter', iconKey: 'dark_matter', rarity: 'basic', chance: 2, price: 1, color: '#2e1630' },
+  { name: 'ore.bug', iconKey: 'bug', rarity: 'basic', chance: 2, price: 1, color: '#222222' },
 
 
     /* =========================
@@ -268,19 +282,22 @@ const layers = [
  {
         name: "undefined:layer_bug",
         ores: [
-            'Air',
+            'ore.bug',
         ]
     },
 
         {
         name: "Stellaris",
         ores: [
+            'Void',
             'WR 104',
             'Dark Matter',
             'KIC 8462852',
             'R136a1',
-            '𝐑𝐢𝐠𝐞𝐥'
-
+            '𝐑𝐢𝐠𝐞𝐥',
+            'Eta Carinae',
+            '𝓉𝒽𝑒.𝑒𝒶𝓇𝓉𝒽',
+            'Oumuamua',
 
         ]
     },
@@ -295,6 +312,7 @@ const layers = [
             'Nitrogen Oxides',
             'Hydroxyl Radical',
             'LOXIMODRILDOX',
+            'Kivimly',
             'ɴᴏᴄᴛɪʟᴜᴄᴇɴᴛ ꜰʀᴀɢᴍᴇɴᴛ',
             '𝘱 𝘰 𝘴 𝘵 𝘦 𝘳 𝘪 𝘵 𝘺',
             'ℙ𝕚𝕧𝕟𝕚𝕔𝕦𝕣𝕩𝕚𝕔𝕝𝕖',
@@ -309,6 +327,7 @@ const layers = [
             'Grass',
             'Daisy',
             'Rose',
+            'Kije',
             'Uleimoxic',
             'Mored',
             'Nordex',
@@ -319,6 +338,7 @@ const layers = [
             'Durtlie',
             'Iron',
             'GREENITCH',
+            'Helixemico',
             'Gold',
             'Anvilar',
             'F L O W S C A P E',
@@ -334,6 +354,7 @@ const layers = [
             'Slate',
             'Shoutle Stone',
             'Iron',
+            'Minuwlyx',
             'Mandrex',
             'Kinkil',
             'Lotus Stonis',
@@ -379,6 +400,7 @@ const layers = [
             'Grinyl',
             'Asphalt',
             'Yiziun',
+            'Cimenix',
             'Iron',
             'Kanmolc',
             'Mapleix',
@@ -398,6 +420,7 @@ const layers = [
         ores: [
             'Lava',
             'Ash',
+            'Lipxime',
             'Museliex',
             'Solid Obsidian',
             'Zinc',
@@ -440,12 +463,14 @@ const layers = [
             'Moluybix',
             'Iciliyx',
             'Icilei',
+            'Jollyine',
             'Mednicalovisix',
             'Frosted Rock',
             'Kabris-lx',
             'Ninumilium',
             'C4NMVO! SDK!S',
             'Ӻɍꝋꞩⱦ Ȼɍⱥȼҟӿīᵯ',
+            '𝘮𝘪𝘴𝘦𝘳𝘺',
         ]
     },
 
@@ -457,6 +482,7 @@ const layers = [
             'Oidilz',
             'Moldier',
             'Matizium',
+            'Cyan',
             'eRRoR',
             'Uncanore',
             'Liyze',
@@ -692,7 +718,7 @@ const pickaxeRecipes = {
     'macicle': {name: "Tier 5 / Sabre Macicle", cost: { 'Acrictopas': 1, 'Majoritsim': 2, 'Jade': 2, 'Lapis': 260, 'Slate': 85000}, power: 7},
     'powerful': {name: "Tier 5.5 / Malice Bumper", cost: { 'Malux': 1,'Bloody Bronze': 12, 'Inlopext': 35, 'Topaz': 164, 'Ash': 72000, 'Lava': 210000}, power: 7},
     'irregul': {name: "Tier 6 / Irregular Pickaxe", cost: { 'Anvilar': 1, 'Malux': 1, 'Infinitricifite': 2, 'Kanmolc': 73, 'Diamond': 192, 'Durtlie': 9300, 'Basalt': 320500}, power: 7},
-    'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'GREENITCH': 1, 'Kryxim': 1, 'Faked Corridilyx': 2, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 32 },
+    'luhackaxe': { name: "Tier 6.5 / Lumina-Hackaxe", cost: { 'GREENITCH': 1, 'Kryxim': 1, 'Faked Reality': 2, 'Infinitricifite': 2, 'Campallie': 62, 'Mored': 52000, 'Evening Snow': 532000}, power: 32 },
     'magstaff': { name: "Tier 7 / Magnetical Staff", cost: { 'Nitrogen Oxides': 1, 'Kabris-lx': 1, 'Oidilz': 4, 'Inlopext': 60, 'Marlenx': 923, 'Bromine': 4200, 'Stone': 856000}, power: 2500000 },
     'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 1, 'Enfinitricifite': 10, 'Ckyslop': 3, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
 
