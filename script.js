@@ -72,7 +72,6 @@ const ores = [
   { name: 'everything.jpg', iconKey: 'solitude_every', rarity: 'solitude', chance: 1131068649219, price: 49400000000, glowType: 'eve1' },
   { name: '.illumina', iconKey: 'solitude_illumia', rarity: 'solitude', chance: 853018921923, price: 39100004000, glowType: 'illumina' },
 
-
   /* =========================
      ILLIMITÁTUS
   ========================= */
@@ -90,6 +89,7 @@ const ores = [
   { name: 'ℙ𝕚𝕧𝕟𝕚𝕔𝕦𝕣𝕩𝕚𝕔𝕝𝕖', iconKey: 'pivnicurxicle', rarity: 'meaninglessness', chance: 45413000000, price: 3020304980, glowType: 'pinv' },
   { name: '𝔽𝕒𝕓𝕣𝕚𝕔𝕒𝕝𝕠𝕓𝕚𝕕𝕚𝕦𝕞', iconKey: 'fabricalobidium', rarity: 'meaninglessness', chance: 41023000000, price: 260000000, color: 'rgb(99, 121, 89)' },
   { name: '𝙘𝙞𝙫𝙧𝙚𝙗𝙚𝙢𝙤𝙗𝙞𝙩𝙞𝙨', iconKey: 'civrebemobitis', rarity: 'meaninglessness', chance: 39130000000, price: 240000000, color: '#fffb00' },
+  { name: '𝔐𝔦𝔶𝔱𝔬𝔭𝔩𝔞𝔠𝔱𝔦𝔠𝔬𝔭𝔞𝔰𝔪𝔬', iconKey: 'miytoplacticopasmo', rarity: 'meaninglessness', chance: 65120000000, price: 272000000, color: '#fca58f' },
   { name: 'ℤ𝕖𝕥𝕥𝕒𝕓𝕪𝕥𝕖', iconKey: 'zetabyte', rarity: 'meaninglessness', chance: 35743000000, price: 232000000, glowType: 'zet' },
   { name: '𝓉𝒽𝑒.𝑒𝒶𝓇𝓉𝒽', iconKey: 'theearth', rarity: 'meaninglessness', chance: 71300050000, price: 263000000, glowType: 'earth' },
   /* =========================
@@ -227,29 +227,29 @@ const ores = [
   { name: 'Asphalt', iconKey: 'asphalt', rarity: 'uncommon', chance: 53, price: 36, color: 'rgb(218, 176, 176)' },
   { name: 'Iron', iconKey: 'iron', rarity: 'uncommon', chance: 50, price: 50, color: '#dff9fb' },
   { name: 'Bromine', iconKey: 'bromine', rarity: 'uncommon', chance: 23, price: 35, color: 'rgb(131, 207, 131)' },
-  { name: 'Nitrogen', iconKey: 'nitrogen', rarity: 'uncommon', chance: 15, price: 25, color: '#147434' },
+  { name: 'Nitrogen', iconKey: 'nitrogen', rarity: 'uncommon', chance: 25, price: 25, color: '#147434' },
   { name: 'Jollyine', iconKey: 'jollyine', rarity: 'uncommon', chance: 34, price: 31, color: '#ff6b6b' },
-  { name: 'Liyze', iconKey: 'liyze', rarity: 'uncommon', chance: 13, price: 23, color: '#65799e' },
-  { name: 'Solid Obsidian', iconKey: 'solid_obsidian', rarity: 'uncommon', chance: 13, price: 22, color: '#281c3a' },
-  { name: 'Durtlie', iconKey: 'durtlie', rarity: 'uncommon', chance: 12, price: 20, color: '#65a727' },
+  { name: 'Liyze', iconKey: 'liyze', rarity: 'uncommon', chance: 23, price: 23, color: '#65799e' },
+  { name: 'Solid Obsidian', iconKey: 'solid_obsidian', rarity: 'uncommon', chance: 23, price: 22, color: '#281c3a' },
+  { name: 'Durtlie', iconKey: 'durtlie', rarity: 'uncommon', chance: 22, price: 20, color: '#65a727' },
 
   /* =========================
      COMMON
   ========================= */
-  { name: 'Musherin', iconKey: 'musherin', rarity: 'common', chance: 9, price: 5, color: '#a08997' },
-  { name: 'Moldier', iconKey: 'moldier', rarity: 'common', chance: 7, price: 5, color: '#281c3a' },
-  { name: 'Ash', iconKey: 'ash', rarity: 'common', chance: 6, price: 5, color: '#52503e' },
-  { name: 'Mored', iconKey: 'mored', rarity: 'common', chance: 6, price: 5, color: '#c4a27c' },
-  { name: 'Lunar', iconKey: 'lunar', rarity: 'common', chance: 5, price: 5, color: '#bc6aff' },
-  { name: 'Magenta', iconKey: 'magenta', rarity: 'common', chance: 4, price: 5, color: '#522279' },
-  { name: 'Frosted Rock', iconKey: 'frosted_rock', rarity: 'common', chance: 3, price: 5, color: '#d2f8ff' },
-  { name: 'Shoutle Stone', iconKey: 'shoutle_stone', rarity: 'common', chance: 3, price: 5, color: '#777' },
-  { name: 'Daisy', iconKey: 'daisy', rarity: 'common', chance: 4, price: 5, color: '#fff490' },
-  { name: 'Kinkil', iconKey: 'kinkil', rarity: 'common', chance: 5, price: 5, color: '#8d7508' },
-  { name: 'Moteb', iconKey: 'moteb', rarity: 'common', chance: 5, price: 5, color: '#f05045' },
-  { name: 'Kije', iconKey: 'kije', rarity: 'common', chance: 6, price: 5, color: '#b96730' },
-  { name: 'Cyan', iconKey: 'cyan', rarity: 'common', chance: 5, price: 5, color: '#27d8f0' },
-  { name: 'Void', iconKey: 'void', rarity: 'common', chance: 8, price: 5, color: '#aaca5e' },
+  { name: 'Musherin', iconKey: 'musherin', rarity: 'common', chance: 19, price: 5, color: '#a08997' },
+  { name: 'Moldier', iconKey: 'moldier', rarity: 'common', chance: 17, price: 5, color: '#281c3a' },
+  { name: 'Ash', iconKey: 'ash', rarity: 'common', chance: 16, price: 5, color: '#52503e' },
+  { name: 'Mored', iconKey: 'mored', rarity: 'common', chance: 16, price: 5, color: '#c4a27c' },
+  { name: 'Lunar', iconKey: 'lunar', rarity: 'common', chance: 15, price: 5, color: '#bc6aff' },
+  { name: 'Magenta', iconKey: 'magenta', rarity: 'common', chance: 14, price: 5, color: '#522279' },
+  { name: 'Frosted Rock', iconKey: 'frosted_rock', rarity: 'common', chance: 13, price: 5, color: '#d2f8ff' },
+  { name: 'Shoutle Stone', iconKey: 'shoutle_stone', rarity: 'common', chance: 13, price: 5, color: '#777' },
+  { name: 'Daisy', iconKey: 'daisy', rarity: 'common', chance: 19, price: 5, color: '#fff490' },
+  { name: 'Kinkil', iconKey: 'kinkil', rarity: 'common', chance: 15, price: 5, color: '#8d7508' },
+  { name: 'Moteb', iconKey: 'moteb', rarity: 'common', chance: 15, price: 5, color: '#f05045' },
+  { name: 'Kije', iconKey: 'kije', rarity: 'common', chance: 16, price: 5, color: '#b96730' },
+  { name: 'Cyan', iconKey: 'cyan', rarity: 'common', chance: 15, price: 5, color: '#27d8f0' },
+  { name: 'Void', iconKey: 'void', rarity: 'common', chance: 18, price: 5, color: '#aaca5e' },
 
   /* =========================
      BASIC
@@ -340,6 +340,7 @@ const layers = [
             'GREENITCH',
             'Helixemico',
             'Gold',
+            '𝔐𝔦𝔶𝔱𝔬𝔭𝔩𝔞𝔠𝔱𝔦𝔠𝔬𝔭𝔞𝔰𝔪𝔬',
             'Anvilar',
             'F L O W S C A P E',
             '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽',
@@ -680,6 +681,8 @@ const pickaxeLore = {
 
     'ultima': "'Absolute! Plus! Ultra!'",
     'prismatic': "Prismatic light guides you toward finale...",
+    'bdrill': "No idea what is this.",
+    'mirror': "Magic mirror that can be used for multiple times!",
     'hackaxe': "What? You think You're going to get this? Fool.",
     'luhackaxe': "A pickaxe made by some hacker wandering..."
 };
@@ -702,6 +705,8 @@ const pickaxes = {
 
     ultima: { name: "Tier 9 / Ultima Blastica", power: 81, luck: 3.5, superChance: 0.027, superCount: 27350 },
     prismatic: { name: "Tier 10 / Prismatic Demolisher", power: 161, luck: 3.25, superChance: 0.025, superCount: 39550 },
+    mirror: { name: "Tier 10 / Duplicating Mirror", power: 501, luck: 1.55, superChance: 0.015, superCount: 70500 },
+    bdrill: { name: "Tier 10 / Bulk Driller", power: 1, luck: 2.25, superChance: 1, superCount: 7500 },
 
 
     hackaxe: { name: "Developer Exclusive Axe But Weaker", power: 25000, luck: 25999999999.0, superChance: 0, superCount: 250000000},
@@ -723,9 +728,11 @@ const pickaxeRecipes = {
     'plamulc': { name: "Tier 8 / Plasmatic Multicarver", cost: { 'IXYSOPARDOX': 1, 'Solavoltei': 1, 'Enfinitricifite': 10, 'Ckyslop': 3, 'Yiziun': 35, 'Uncanore': 227, 'Mandrex': 826, 'Air': 321000}, power: 2500000 },
 
     'endormat': { name: "Tier 8 / Endomatic Skimmer", cost: { 'Uleimoxic': 1, 'Anvilar': 1, 'Milennis': 3, 'Emerilyx': 7, 'Lunitem': 14, 'Majoritsim': 53, 'Grinyl': 231,'Durtlie': 16520, 'Slate': 310500}, power: 2500000 },
-
+    
     'ultima': {name: "Tier 9 / Ultima Blastica", cost: { 'F L O W S C A P E': 1, 'Braxichroxmin': 2, 'IXYSOPARDOX': 3, 'Anvilar': 3, 'Diamond': 800, 'Iron': 650000}, power: 73},
+    'bdrill': { name: "Tier 9 / Bulk Driller", cost: { 'Moldivium': 1, 'R136a1': 3, 'Cimenix': 3, 'Panchireium': 5, 'Crkyotopis': 16, 'Kanmolc': 101, 'Nordex': 125,'Bismuth': 420, 'Oxygen': 1120, 'Moldier': 61000}, power: 2500000 },
     'prismatic': {name: "Tier 10 / Prismatic Demolisher", cost: { 'Monochromixel': 2, 'Cannidilit': 2, 'LOXIMODRILDOX': 5, 'Macorl Esperatio': 5, 'Bonnemium': 13, 'Hydroxyl Radical': 6, 'map.34201pl': 150, 'Kanmolc': 281, 'Iciliyx': 512, 'Argon': 1023, 'Sapphire': 5390, 'Rose': 7231, 'Zinc': 17600}, power: 73},
+    'mirror': { name: "Tier 10 / Duplicating Mirror", cost: { 'Mednicalovisix': 1, 'Braxichroxmin': 2, 'Milennis': 3, 'Anvilar': 3, 'Enfinitricifite': 7, 'Hydroxyl Radical': 15, 'Lipxime': 35,'Spilkermizen': 120, 'Grinyl': 310, 'Uncanore': 1000, 'Lotus Stonis': 1510, 'Mandrex': 6702, 'Bromine': 35230}, power: 2500000 },
     
     'hackaxe': { name: 'Developer Exclusive Axe', cost: { '𝒜𝒷𝓎𝓈𝓂𝑜𝓁𝒾𝓉𝒽':2e20 ,'P̲̆ả̢rḁ̈ṃ̑a̳̋d̖̍a̜̋d̦̅r̙̎ō̲x̖̎': 3e30, 'IXYSOPARDOX': 0, 'Iron': 0 }, power: 250 },
 };
@@ -747,7 +754,9 @@ const pickaxeSortOrder = {
     'endormat': 5.41,
     'irregul': 5.18,
     'ultima' : 5.5,
+    'bdrill': 5.6,
     'prismatic': 5.7,
+    'mirror': 5.75,
     'hackaxe': 6,
 };
 
